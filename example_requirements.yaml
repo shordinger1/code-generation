@@ -1,0 +1,328 @@
+TechnicalArchitecture:
+  language: Java
+  framework: Springboot
+
+Entities:
+  Buyer:
+    description: Used to store information about each buyer.
+    attributes:
+      required:
+        - id
+        - username
+        - password
+        - email
+        - registration_date
+      optional:
+        - phone_number
+        - address
+        - payment_method
+  Seller:
+    description: Used to store information about each seller.
+    attributes:
+      required:
+        - id
+        - store_name
+        - email
+        - registration_date
+      optional:
+        - phone_number
+        - store_description
+        - bank_account
+  Administrator:
+    description: Used to store information about each administrator.
+    attributes:
+      required:
+        - id
+        - username
+        - password
+        - email
+      optional:
+        - phone_number
+        - role
+  Product:
+    description: Used to store information about each product listed on the platform.
+    attributes:
+      required:
+        - id
+        - name
+        - description
+        - price
+        - stock
+        - seller_id
+      optional:
+        - images
+        - category
+        - tags
+  Order:
+    description: Used to store information about each order placed by a buyer.
+    attributes:
+      required:
+        - id
+        - buyer_id
+        - seller_id
+        - order_date
+        - status
+      optional:
+        - total_amount
+        - shipping_address
+        - payment_status
+
+Functions:
+  - name: Browse Products
+    belongs_to: Buyer
+    description: Allows buyers to view a list of available products, sorted by various criteria such as price, popularity, or new arrivals.
+    Test_cases_for_normal_scenarios:
+      - input: {buyer_id: 1, sort: 'price'}
+        expected_result: {status: 'success', message: 'Products listed successfully'}
+      - input: {buyer_id: 2, sort: 'popularity'}
+        expected_result: {status: 'success', message: 'Products listed successfully'}
+      - input: {buyer_id: 3, sort: 'new_arrival'}
+        expected_result: {status: 'success', message: 'Products listed successfully'}
+      - input: {buyer_id: 4, category: 'electronics'}
+        expected_result: {status: 'success', message: 'Products listed successfully'}
+      - input: {buyer_id: 5, tags: 'smartphone'}
+        expected_result: {status: 'success', message: 'Products listed successfully'}
+    Test_cases_for_error_scenarios:
+      - input: {buyer_id: '', sort: 'price'}
+        expected_result: {status: 'error', message: 'Buyer ID cannot be empty'}
+      - input: {buyer_id: 1, sort: ''}
+        expected_result: {status: 'error', message: 'Sort criteria cannot be empty'}
+      - input: {buyer_id: 999, sort: 'price'}
+        expected_result: {status: 'error', message: 'Buyer not found'}
+      - input: {buyer_id: 1, sort: 'invalid_sort'}
+        expected_result: {status: 'error', message: 'Invalid sort criteria'}
+      - input: {buyer_id: 1, category: ''}
+        expected_result: {status: 'error', message: 'Category cannot be empty'}
+
+  - name: Place Order
+    belongs_to: Buyer
+    description: Enables buyers to purchase products by adding them to a cart and completing the checkout process.
+    Test_cases_for_normal_scenarios:
+      - input: {buyer_id: 1, product_id: 101, quantity: 2}
+        expected_result: {status: 'success', message: 'Order placed successfully'}
+      - input: {buyer_id: 2, product_id: 102, quantity: 1}
+        expected_result: {status: 'success', message: 'Order placed successfully'}
+      - input: {buyer_id: 3, product_id: 103, quantity: 3}
+        expected_result: {status: 'success', message: 'Order placed successfully'}
+      - input: {buyer_id: 4, product_id: 104, quantity: 4}
+        expected_result: {status: 'success', message: 'Order placed successfully'}
+      - input: {buyer_id: 5, product_id: 105, quantity: 5}
+        expected_result: {status: 'success', message: 'Order placed successfully'}
+    Test_cases_for_error_scenarios:
+      - input: {buyer_id: '', product_id: 101, quantity: 2}
+        expected_result: {status: 'error', message: 'Buyer ID cannot be empty'}
+      - input: {buyer_id: 1, product_id: '', quantity: 2}
+        expected_result: {status: 'error', message: 'Product ID cannot be empty'}
+      - input: {buyer_id: 1, product_id: 999, quantity: 2}
+        expected_result: {status: 'error', message: 'Product not found'}
+      - input: {buyer_id: 1, product_id: 101, quantity: 0}
+        expected_result: {status: 'error', message: 'Quantity cannot be zero'}
+      - input: {buyer_id: 1, product_id: 101, quantity: -1}
+        expected_result: {status: 'error', message: 'Quantity cannot be negative'}
+
+  - name: Make Payment
+    belongs_to: Buyer
+    description: Allows buyers to finalize their purchase by selecting a payment method and confirming the transaction.
+    Test_cases_for_normal_scenarios:
+      - input: {order_id: 1, payment_method: 'credit_card'}
+        expected_result: {status: 'success', message: 'Payment successful'}
+      - input: {order_id: 2, payment_method: 'paypal'}
+        expected_result: {status: 'success', message: 'Payment successful'}
+      - input: {order_id: 3, payment_method: 'bank_transfer'}
+        expected_result: {status: 'success', message: 'Payment successful'}
+      - input: {order_id: 4, payment_method: 'cryptocurrency'}
+        expected_result: {status: 'success', message: 'Payment successful'}
+      - input: {order_id: 5, payment_method: 'gift_card'}
+        expected_result: {status: 'success', message: 'Payment successful'}
+    Test_cases_for_error_scenarios:
+      - input: {order_id: '', payment_method: 'credit_card'}
+        expected_result: {status: 'error', message: 'Order ID cannot be empty'}
+      - input: {order_id: 1, payment_method: ''}
+        expected_result: {status: 'error', message: 'Payment method cannot be empty'}
+      - input: {order_id: 999, payment_method: 'credit_card'}
+        expected_result: {status: 'error', message: 'Order not found'}
+      - input: {order_id: 1, payment_method: 'invalid_method'}
+        expected_result: {status: 'error', message: 'Invalid payment method'}
+      - input: {order_id: 1, payment_method: 'credit_card', amount: -100}
+        expected_result: {status: 'error', message: 'Invalid payment amount'}
+
+  - name: Manage Products
+    belongs_to: Seller
+    description: Allows sellers to add, update, or remove products from their store listings.
+    Test_cases_for_normal_scenarios:
+      - input: {seller_id: 1, action: 'add', product_data: {name: 'Product A', price: 100, stock: 10}}
+        expected_result: {status: 'success', message: 'Product added successfully'}
+      - input: {seller_id: 2, action: 'update', product_id: 201, new_data: {price: 150}}
+        expected_result: {status: 'success', message: 'Product updated successfully'}
+      - input: {seller_id: 3, action: 'remove', product_id: 202}
+        expected_result: {status: 'success', message: 'Product removed successfully'}
+      - input: {seller_id: 4, action: 'add', product_data: {name: 'Product B', price: 200, stock: 20}}
+        expected_result: {status: 'success', message: 'Product added successfully'}
+      - input: {seller_id: 5, action: 'update', product_id: 203, new_data: {stock: 5}}
+        expected_result: {status: 'success', message: 'Product updated successfully'}
+    Test_cases_for_error_scenarios:
+      - input: {seller_id: '', action: 'add', product_data: {name: 'Product A', price: 100, stock: 10}}
+        expected_result: {status: 'error', message: 'Seller ID cannot be empty'}
+      - input: {seller_id: 1, action: 'add', product_data: {}}
+        expected_result: {status: 'error', message: 'Product data cannot be empty'}
+      - input: {seller_id: 1, action: 'update', product_id: '', new_data: {price: 150}}
+        expected_result: {status: 'error', message: 'Product ID cannot be empty'}
+      - input: {seller_id: 1, action: 'remove', product_id: ''}
+        expected_result: {status: 'error', message: 'Product ID cannot be empty'}
+      - input: {seller_id: 999, action: 'add', product_data: {name: 'Product A', price: 100, stock: 10}}
+        expected_result: {status: 'error', message: 'Seller not found'}
+
+  - name: Manage Inventory
+    belongs_to: Seller
+    description: Enables sellers to track and update the stock levels of their products.
+    Test_cases_for_normal_scenarios:
+      - input: {seller_id: 1, product_id: 201, new_stock: 15}
+        expected_result: {status: 'success', message: 'Inventory updated successfully'}
+      - input: {seller_id: 2, product_id: 202, new_stock: 25}
+        expected_result: {status: 'success', message: 'Inventory updated successfully'}
+      - input: {seller_id: 3, product_id: 203, new_stock: 5}
+        expected_result: {status: 'success', message: 'Inventory updated successfully'}
+      - input: {seller_id: 4, product_id: 204, new_stock: 10}
+        expected_result: {status: 'success', message: 'Inventory updated successfully'}
+      - input: {seller_id: 5, product_id: 205, new_stock: 20}
+        expected_result: {status: 'success', message: 'Inventory updated successfully'}
+    Test_cases_for_error_scenarios:
+      - input: {seller_id: '', product_id: 201, new_stock: 15}
+        expected_result: {status: 'error', message: 'Seller ID cannot be empty'}
+      - input: {seller_id: 1, product_id: '', new_stock: 15}
+        expected_result: {status: 'error', message: 'Product ID cannot be empty'}
+      - input: {seller_id: 1, product_id: 999, new_stock: 15}
+        expected_result: {status: 'error', message: 'Product not found'}
+      - input: {seller_id: 1, product_id: 201, new_stock: -10}
+        expected_result: {status: 'error', message: 'Stock cannot be negative'}
+      - input: {seller_id: 1, product_id: 201, new_stock: 'ten'}
+        expected_result: {status: 'error', message: 'Invalid stock value'}
+
+  - name: Interact with Buyers
+    belongs_to: Seller
+    description: Allows sellers to communicate with buyers regarding orders, disputes, or other inquiries.
+    Test_cases_for_normal_scenarios:
+      - input: {seller_id: 1, buyer_id: 101, message: 'Hello, how can I assist you?'}
+        expected_result: {status: 'success', message: 'Message sent successfully'}
+      - input: {seller_id: 2, buyer_id: 102, message: 'Thank you for your purchase!'}
+        expected_result: {status: 'success', message: 'Message sent successfully'}
+      - input: {seller_id: 3, buyer_id: 103, message: 'I noticed there was an issue with your order.'}
+        expected_result: {status: 'success', message: 'Message sent successfully'}
+      - input: {seller_id: 4, buyer_id: 104, message: 'Please confirm your shipping address.'}
+        expected_result: {status: 'success', message: 'Message sent successfully'}
+      - input: {seller_id: 5, buyer_id: 105, message: 'Your order will be shipped tomorrow.'}
+        expected_result: {status: 'success', message: 'Message sent successfully'}
+    Test_cases_for_error_scenarios:
+      - input: {seller_id: '', buyer_id: 101, message: 'Hello, how can I assist you?'}
+        expected_result: {status: 'error', message: 'Seller ID cannot be empty'}
+      - input: {seller_id: 1, buyer_id: '', message: 'Hello, how can I assist you?'}
+        expected_result: {status: 'error', message: 'Buyer ID cannot be empty'}
+      - input: {seller_id: 999, buyer_id: 101, message: 'Hello, how can I assist you?'}
+        expected_result: {status: 'error', message: 'Seller not found'}
+      - input: {seller_id: 1, buyer_id: 999, message: 'Hello, how can I assist you?'}
+        expected_result: {status: 'error', message: 'Buyer not found'}
+      - input: {seller_id: 1, buyer_id: 101, message: ''}
+        expected_result: {status: 'error', message: 'Message cannot be empty'}
+
+
+  - name: Platform Security
+    belongs_to: Administrator
+    description: Enables administrators to monitor and enforce security policies across the platform.
+    Test_cases_for_normal_scenarios:
+      - input: {admin_id: 1, action: 'update_policy', policy_data: {policy_name: 'Password Policy', requirements: 'Minimum 8 characters'}}
+        expected_result: {status: 'success', message: 'Policy updated successfully'}
+      - input: {admin_id: 2, action: 'monitor_logs', log_type: 'access'}
+        expected_result: {status: 'success', message: 'Logs retrieved successfully'}
+      - input: {admin_id: 3, action: 'block_user', user_id: 999}
+        expected_result: {status: 'success', message: 'User blocked successfully'}
+      - input: {admin_id: 4, action: 'unblock_user', user_id: 998}
+        expected_result: {status: 'success', message: 'User unblocked successfully'}
+      - input: {admin_id: 5, action: 'update_policy', policy_data: {policy_name: 'Data Protection', requirements: 'Encrypted storage'}}
+        expected_result: {status: 'success', message: 'Policy updated successfully'}
+    Test_cases_for_error_scenarios:
+      - input: {admin_id: '', action: 'update_policy', policy_data: {policy_name: 'Password Policy', requirements: 'Minimum 8 characters'}}
+        expected_result: {status: 'error', message: 'Admin ID cannot be empty'}
+      - input: {admin_id: 1, action: 'update_policy', policy_data: {}}
+        expected_result: {status: 'error', message: 'Policy data cannot be empty'}
+      - input: {admin_id: 999, action: 'monitor_logs', log_type: 'access'}
+        expected_result: {status: 'error', message: 'Admin not found'}
+      - input: {admin_id: 1, action: 'block_user', user_id: ''}
+        expected_result: {status: 'error', message: 'User ID cannot be empty'}
+      - input: {admin_id: 1, action: 'unblock_user', user_id: ''}
+        expected_result: {status: 'error', message: 'User ID cannot be empty'}
+
+  - name: Policy Implementation
+    belongs_to: Administrator
+    description: Allows administrators to establish and update platform policies and guidelines.
+    Test_cases_for_normal_scenarios:
+      - input: {admin_id: 1, policy_name: 'Fraud Prevention', policy_content: 'All transactions must be verified.'}
+        expected_result: {status: 'success', message: 'Policy implemented successfully'}
+      - input: {admin_id: 2, policy_name: 'Dispute Resolution', policy_content: 'Disputes must be resolved within 30 days.'}
+        expected_result: {status: 'success', message: 'Policy implemented successfully'}
+      - input: {admin_id: 3, policy_name: 'User Conduct', policy_content: 'Users must adhere to community guidelines.'}
+        expected_result: {status: 'success', message: 'Policy implemented successfully'}
+      - input: {admin_id: 4, policy_name: 'Data Privacy', policy_content: 'Personal data must be protected.'}
+        expected_result: {status: 'success', message: 'Policy implemented successfully'}
+      - input: {admin_id: 5, policy_name: 'Intellectual Property', policy_content: 'Copyright infringement is not allowed.'}
+        expected_result: {status: 'success', message: 'Policy implemented successfully'}
+    Test_cases_for_error_scenarios:
+      - input: {admin_id: '', policy_name: 'Fraud Prevention', policy_content: 'All transactions must be verified.'}
+        expected_result: {status: 'error', message: 'Admin ID cannot be empty'}
+      - input: {admin_id: 1, policy_name: '', policy_content: 'All transactions must be verified.'}
+        expected_result: {status: 'error', message: 'Policy name cannot be empty'}
+      - input: {admin_id: 999, policy_name: 'Fraud Prevention', policy_content: 'All transactions must be verified.'}
+        expected_result: {status: 'error', message: 'Admin not found'}
+      - input: {admin_id: 1, policy_name: 'Fraud Prevention', policy_content: ''}
+        expected_result: {status: 'error', message: 'Policy content cannot be empty'}
+
+  - name: Dispute Resolution
+    belongs_to: Administrator
+    description: Enables administrators to handle and resolve disputes between buyers and sellers.
+    Test_cases_for_normal_scenarios:
+      - input: {admin_id: 1, dispute_id: 1001, resolution: 'Refund issued'}
+        expected_result: {status: 'success', message: 'Dispute resolved successfully'}
+      - input: {admin_id: 2, dispute_id: 1002, resolution: 'Product replacement approved'}
+        expected_result: {status: 'success', message: 'Dispute resolved successfully'}
+      - input: {admin_id: 3, dispute_id: 1003, resolution: 'Seller compensation confirmed'}
+        expected_result: {status: 'success', message: 'Dispute resolved successfully'}
+      - input: {admin_id: 4, dispute_id: 1004, resolution: 'Buyer education provided'}
+        expected_result: {status: 'success', message: 'Dispute resolved successfully'}
+      - input: {admin_id: 5, dispute_id: 1005, resolution: 'Dispute closed with no action'}
+        expected_result: {status: 'success', message: 'Dispute resolved successfully'}
+    Test_cases_for_error_scenarios:
+      - input: {admin_id: '', dispute_id: 1001, resolution: 'Refund issued'}
+        expected_result: {status: 'error', message: 'Admin ID cannot be empty'}
+      - input: {admin_id: 1, dispute_id: '', resolution: 'Refund issued'}
+        expected_result: {status: 'error', message: 'Dispute ID cannot be empty'}
+      - input: {admin_id: 999, dispute_id: 1001, resolution: 'Refund issued'}
+        expected_result: {status: 'error', message: 'Admin not found'}
+      - input: {admin_id: 1, dispute_id: 1001, resolution: ''}
+        expected_result: {status: 'error', message: 'Resolution cannot be empty'}
+      - input: {admin_id: 1, dispute_id: 9999, resolution: 'Refund issued'}
+        expected_result: {status: 'error', message: 'Dispute not found'}
+
+  - name: Platform Maintenance
+    belongs_to: Administrator
+    description: Allows administrators to perform routine checks and updates to ensure the platform's smooth operation.
+    Test_cases_for_normal_scenarios:
+      - input: {admin_id: 1, action: 'update_software', version: '2.0.1'}
+        expected_result: {status: 'success', message: 'Software updated successfully'}
+      - input: {admin_id: 2, action: 'backup_data', backup_date: '2024-07-25'}
+        expected_result: {status: 'success', message: 'Data backed up successfully'}
+      - input: {admin_id: 3, action: 'check_security', scan_result: 'No vulnerabilities found'}
+        expected_result: {status: 'success', message: 'Security check successful'}
+      - input: {admin_id: 4, action: 'update_database', changes: 'Indexes added'}
+        expected_result: {status: 'success', message: 'Database updated successfully'}
+      - input: {admin_id: 5, action: 'monitor_performance', metrics: 'Response time improved'}
+        expected_result: {status: 'success', message: 'Performance metrics updated'}
+    Test_cases_for_error_scenarios:
+      - input: {admin_id: '', action: 'update_software', version: '2.0.1'}
+        expected_result: {status: 'error', message: 'Admin ID cannot be empty'}
+      - input: {admin_id: 1, action: '', version: '2.0.1'}
+        expected_result: {status: 'error', message: 'Action cannot be empty'}
+      - input: {admin_id: 999, action: 'update_software', version: '2.0.1'}
+        expected_result: {status: 'error', message: 'Admin not found'}
+      - input: {admin_id: 1, action: 'update_software', version: ''}
+        expected_result: {status: 'error', message: 'Version cannot be empty'}
+      - input: {admin_id: 1, action: 'backup_data', backup_date: ''}
+        expected_result: {status: 'error', message: 'Backup date cannot be empty'}
