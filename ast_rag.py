@@ -19,6 +19,7 @@ class DynamicRAG:
             length_function=len
         )
         self.metadata_store = {}
+        self.logger = open("log.txt", "a")
 
     def _chunk_text(self, text: str) -> list:
         """文本分块处理"""
@@ -80,6 +81,9 @@ class DynamicRAG:
                 metadata = self.metadata_store.get(source_id)
                 if metadata:
                     final_results.append(metadata['value'])
+        self.logger.write(query_text)
+        self.logger.write('\n')
+        self.logger.write(final_results)
         return final_results
 
     # 添加批量插入功能

@@ -109,6 +109,18 @@ def analysis_java_files(root_dir):
     return methods
 
 
+def analysis_single_file(file_path):
+    analyzer = JavaAnalyzer(file_path)
+    is_valid = analyzer.analyze_syntax()
+
+    if not is_valid:
+        message = []
+        for error in analyzer.errors:
+            message.append(f"Line {error['line']}:{error['column']} - {error['type']} - {error['message']}")
+        return False, message
+    else:
+        return True, analyzer.extract_methods()
+
 
 if __name__ == "__main__":
     analysis_java_files("spring-lib")

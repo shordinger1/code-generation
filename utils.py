@@ -120,6 +120,32 @@ def class_generation_prompt(current_class_name, dependencies, code_storage):
     return s
 
 
+def class_reflection_prompt(current_class_name, code_storage, reflection, current_class_type):
+    a = json.loads(get_definition_results())
+
+    s = """Now you are given a code with syntax error You need to fix it by Java.
+        Here is the class you need to implement:
+        \n"""
+    for i in a:
+        if i["class_name"] == current_class_name:
+            s += str(i)
+    s += "\nHere is the preview code:"
+    s += str("package generation.code.test." + str(current_class_type) + ";\n")
+    s += str(code_storage.imports.replace("\\n", "\n"))
+    s += str('\n\n')
+    s += str(code_storage.contents.replace("\\n", "\n"))
+    s += "\nHere is the Error you get:"
+    for err in reflection:
+        s += err
+
+    s += """\n\nOther tips:
+        Assert the package root as generation.code.test, you should concat package definition after that.
+        Give the code only, do not give any summary or conclusion in the begin or end of the answer.
+        Only generate the single class and its functions I give to you."""
+
+    return s
+
+
 requirement_head = "You are now a professional program architect. Your job is to read a requirement document and " \
                    "provide a reasonable project structure based on this document.\n" \
                    "The following are the points for your analysis:\n" \

@@ -27,7 +27,6 @@ public class Buyer {
         this.paymentMethod = paymentMethod;
     }
 
-    // Getters and Setters
     public String getId() {
         return id;
     }
