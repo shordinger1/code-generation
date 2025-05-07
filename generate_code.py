@@ -4,8 +4,13 @@ import json
 import os
 from utils import *
 from java_test import analysis_java_files, analysis_single_file
+import shutil
+from pathlib import Path
+if os.path.exists("./test/generation"):
+    shutil.rmtree("./test/generation")
 
-java_root = "./test"
+
+java_root = "./test/generation/src/main/java"
 max_reflection = 10
 prompt = "Give me the dependency relationship of all following classes. For example, the class \"BookRepository\" " \
          "depends on the class \"Book\", and the class \"Book\" doesn't depend on any other classes.\nClass data:" + \
@@ -46,9 +51,10 @@ dependency_dict, dependency_levels = determine_level(dependency_result.dict()['l
 max_level = max(level for _, level in dependency_levels)
 
 code_storage = {}
-rag = get_rag()
-java_lib = analysis_java_files('./spring-lib')
-rag.batch_add_data(java_lib.items())
+# rag = get_rag()
+# java_lib = analysis_java_files('./spring-lib')
+# rag.batch_add_data(java_lib.items())
+init_lib()
 # outputs = rag.query('decode json files', 10)
 # print(outputs)
 for current_level in range(1, max_level + 1):
@@ -65,7 +71,7 @@ for current_level in range(1, max_level + 1):
             for j in class_definitions:
                 if j['class_name'] == i:
                     current_class_type = j['class_type']
-            code_storage[class_name].imports += "\nimport generation.code.test." + current_class_type + "." + i + ";"
+            code_storage[class_name].imports += "\nimport com.test.generation." + current_class_type + "." + i + ";"
         current_class_type = ""
         for i in class_definitions:
             if i['class_name'] == class_name:
@@ -76,16 +82,17 @@ for current_level in range(1, max_level + 1):
             code_storage[class_name].contents = "\n@Data\n" + code_storage[class_name].contents.lstrip()
 
         javaFileWriter(java_root, class_name, code_storage[class_name], current_class_type)
-        directories = "generation.code.test".split('.')
+        directories = "com.test.generation".split('.')
         path = os.path.join(java_root, *directories, current_class_type, f"{class_name}.java")
         ret, message = analysis_single_file(path)
         if ret:
             rag.batch_add_data(message.items())
         else:
+            Path(path).unlink()
             print(message)
             flag = False
             for i in range(max_reflection):
-                prompt = class_reflection_prompt(class_name, code_storage[class_name], message,current_class_type)
+                prompt = class_reflection_prompt(class_name, code_storage[class_name], message, current_class_type)
                 code_storage[class_name] = generation(prompt, code_generation)
 
                 class_definitions = json.loads(get_definition_results())
@@ -95,7 +102,7 @@ for current_level in range(1, max_level + 1):
                         if j['class_name'] == i:
                             current_class_type = j['class_type']
                     code_storage[
-                        class_name].imports += "\nimport generation.code.test." + current_class_type + "." + i + ";"
+                        class_name].imports += "\nimport com.test.generation." + current_class_type + "." + i + ";"
                 current_class_type = ""
                 for i in class_definitions:
                     if i['class_name'] == class_name:
@@ -106,7 +113,7 @@ for current_level in range(1, max_level + 1):
                     code_storage[class_name].contents = "\n@Data\n" + code_storage[class_name].contents.lstrip()
 
                 javaFileWriter(java_root, class_name, code_storage[class_name], current_class_type)
-                directories = "generation.code.test".split('.')
+                directories = "com.test.generation".split('.')
                 path = os.path.join(java_root, *directories, current_class_type, f"{class_name}.java")
                 ret, message = analysis_single_file(path)
                 if ret:

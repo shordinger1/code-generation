@@ -4,8 +4,9 @@ import os
 
 def javaFileWriter(root, class_name, code_result: code_generation, class_type, overwrite=False):
     # directories=code_result.package.split('.')
-    directories = "generation.code.test".split('.')
+    directories = "com.test.generation".split('.')
     path = os.path.join(root, *directories, class_type, f"{class_name}.java")
+    print(f"java file write to {path}")
     if not overwrite:
         if os.path.exists(path):
             print(f"File already exists at {path}, Skipped")

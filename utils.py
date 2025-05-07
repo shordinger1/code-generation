@@ -5,6 +5,8 @@ from pydantic import BaseModel
 import json
 from openai import OpenAI
 from ast_rag import DynamicRAG
+import zipfile
+import os
 
 # please use your own api-key instead of using ours
 api_key = 'sk-BGsbjdC7lXQGHgJyh61xf04bBeR1P6uFForzHoXU4jsmWsrx'
@@ -12,11 +14,20 @@ client = OpenAI(
     api_key=api_key,
     base_url="https://api.chatanywhere.tech/v1"
 )
+spring_lib = r"./spring-lib/generation.zip"
 rag = DynamicRAG()
 
 
 def get_rag():
     return rag
+
+
+def init_lib():
+    zip_path = spring_lib
+    save_path = './test'
+    file = zipfile.ZipFile(zip_path)
+    file.extractall(save_path)
+    file.close()
 
 
 class param(BaseModel):
