@@ -118,13 +118,14 @@ def class_generation_prompt(current_class_name, dependencies, code_storage):
         s += "\n\nDependency " + str(i + 1) + ":\n"
         for j in a:
             rag_result = rag.query(j["class_name"])
+            print(rag_result)
             for k in rag_result:
                 pair = k.split('&&&&&')
                 key, val = pair[0], pair[1]
                 if key == dependencies[i]:
                     s += f'{key}:{val}\n'
     s += """\n\nOther tips:
-        Assert the package root as generation.code.test, you should concat package definition after that.
+        Assert the package root as com.test.generation, you should concat package definition after that.
         Give the code only, do not give any summary or conclusion in the begin or end of the answer.
         Only generate the single class and its functions I give to you."""
 
@@ -141,7 +142,7 @@ def class_reflection_prompt(current_class_name, code_storage, reflection, curren
         if i["class_name"] == current_class_name:
             s += str(i)
     s += "\nHere is the preview code:"
-    s += str("package generation.code.test." + str(current_class_type) + ";\n")
+    s += str("package com.test.generation." + str(current_class_type) + ";\n")
     s += str(code_storage.imports.replace("\\n", "\n"))
     s += str('\n\n')
     s += str(code_storage.contents.replace("\\n", "\n"))
@@ -150,7 +151,7 @@ def class_reflection_prompt(current_class_name, code_storage, reflection, curren
         s += err
 
     s += """\n\nOther tips:
-        Assert the package root as generation.code.test, you should concat package definition after that.
+        Assert the package root as com.test.generation, you should concat package definition after that.
         Give the code only, do not give any summary or conclusion in the begin or end of the answer.
         Only generate the single class and its functions I give to you."""
 
@@ -204,7 +205,7 @@ Do not give any summary or conclusion in the begin or end of the answer.
 """
 
 code_foot = """
-assert the package root as generation.code.test, you should concat package definition after that.
+assert the package root as com.test.generation, you should concat package definition after that.
 give the code only, do not give any summary or conclusion in the begin or end of the answer.
 only generate the single class and its functions I give to you.
 """

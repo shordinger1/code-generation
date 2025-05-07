@@ -81,7 +81,13 @@ for current_level in range(1, max_level + 1):
             code_storage[class_name].imports += "\nimport lombok.Data;"
             code_storage[class_name].contents = "\n@Data\n" + code_storage[class_name].contents.lstrip()
 
-        javaFileWriter(java_root, class_name, code_storage[class_name], current_class_type)
+        # monkey patch
+        if("package" in code_storage[class_name].contents.lstrip()):
+            if(code_storage[class_name].contents[:7]=="\n@Data\n"): code_storage[class_name].contents = code_storage[class_name].contents[7:]
+            javaFileWriter(java_root, class_name, code_storage[class_name], current_class_type, overwrite=True, ignore_package_imports=True)
+        else: 
+            javaFileWriter(java_root, class_name, code_storage[class_name], current_class_type, overwrite=True)
+
         directories = "com.test.generation".split('.')
         path = os.path.join(java_root, *directories, current_class_type, f"{class_name}.java")
         ret, message = analysis_single_file(path)
@@ -101,8 +107,7 @@ for current_level in range(1, max_level + 1):
                     for j in class_definitions:
                         if j['class_name'] == i:
                             current_class_type = j['class_type']
-                    code_storage[
-                        class_name].imports += "\nimport com.test.generation." + current_class_type + "." + i + ";"
+                    code_storage[class_name].imports += "\nimport com.test.generation." + current_class_type + "." + i + ";"
                 current_class_type = ""
                 for i in class_definitions:
                     if i['class_name'] == class_name:
@@ -112,7 +117,13 @@ for current_level in range(1, max_level + 1):
                     code_storage[class_name].imports += "\nimport lombok.Data;"
                     code_storage[class_name].contents = "\n@Data\n" + code_storage[class_name].contents.lstrip()
 
-                javaFileWriter(java_root, class_name, code_storage[class_name], current_class_type)
+                # monkey patch
+                if("package" in code_storage[class_name].contents.lstrip()):
+                    if(code_storage[class_name].contents[:7]=="\n@Data\n"): code_storage[class_name].contents = code_storage[class_name].contents[7:]
+                    javaFileWriter(java_root, class_name, code_storage[class_name], current_class_type, overwrite=True, ignore_package_imports=True)
+                else: 
+                    javaFileWriter(java_root, class_name, code_storage[class_name], current_class_type, overwrite=True)
+
                 directories = "com.test.generation".split('.')
                 path = os.path.join(java_root, *directories, current_class_type, f"{class_name}.java")
                 ret, message = analysis_single_file(path)

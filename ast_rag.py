@@ -83,7 +83,7 @@ class DynamicRAG:
                     final_results.append(metadata['value'])
         self.logger.write(query_text)
         self.logger.write('\n')
-        self.logger.write(final_results)
+        self.logger.write(str(final_results))
         return final_results
 
     # 添加批量插入功能
