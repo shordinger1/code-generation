@@ -102,6 +102,7 @@ def analysis_java_files(root_dir):
                         for error in analyzer.errors:
                             print(f"Line {error['line']}:{error['column']} - {error['type']} - {error['message']}")
                     methods.update(analyzer.extract_methods())
+                    print(analyzer.extract_methods())
             except UnicodeEncodeError:
                 print("Error occurred while decode characters")
                 continue

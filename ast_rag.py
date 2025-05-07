@@ -28,6 +28,7 @@ class DynamicRAG:
         return self.text_splitter.split_text(text)
 
     def add_data(self, key: str, value: str):
+        value = f'{key}&&&&&{value}'
         """添加键值对数据"""
         # 生成唯一ID
         entry_id = str(hash(f"{key}_{value}"))
@@ -94,6 +95,7 @@ class DynamicRAG:
         all_metadatas = []
 
         for key, value in items:
+            value = f'{key}&&&&&{value}'
             entry_id = str(hash(f"{key}_{value}"))
             self.metadata_store[entry_id] = {
                 "original_key": key,

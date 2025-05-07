@@ -6,9 +6,9 @@ from utils import *
 from java_test import analysis_java_files, analysis_single_file
 import shutil
 from pathlib import Path
+
 if os.path.exists("./test/generation"):
     shutil.rmtree("./test/generation")
-
 
 java_root = "./test/generation/src/main/java"
 max_reflection = 10
@@ -82,10 +82,13 @@ for current_level in range(1, max_level + 1):
             code_storage[class_name].contents = "\n@Data\n" + code_storage[class_name].contents.lstrip()
 
         # monkey patch
-        if("package" in code_storage[class_name].contents.lstrip()):
-            if(code_storage[class_name].contents[:7]=="\n@Data\n"): code_storage[class_name].contents = code_storage[class_name].contents[7:]
-            javaFileWriter(java_root, class_name, code_storage[class_name], current_class_type, overwrite=True, ignore_package_imports=True)
-        else: 
+        if ("package" in code_storage[class_name].contents.lstrip()):
+            if (code_storage[class_name].contents[:7] == "\n@Data\n"): code_storage[class_name].contents = code_storage[
+                                                                                                               class_name].contents[
+                                                                                                           7:]
+            javaFileWriter(java_root, class_name, code_storage[class_name], current_class_type, overwrite=True,
+                           ignore_package_imports=True)
+        else:
             javaFileWriter(java_root, class_name, code_storage[class_name], current_class_type, overwrite=True)
 
         directories = "com.test.generation".split('.')
@@ -107,7 +110,8 @@ for current_level in range(1, max_level + 1):
                     for j in class_definitions:
                         if j['class_name'] == i:
                             current_class_type = j['class_type']
-                    code_storage[class_name].imports += "\nimport com.test.generation." + current_class_type + "." + i + ";"
+                    code_storage[
+                        class_name].imports += "\nimport com.test.generation." + current_class_type + "." + i + ";"
                 current_class_type = ""
                 for i in class_definitions:
                     if i['class_name'] == class_name:
@@ -118,10 +122,13 @@ for current_level in range(1, max_level + 1):
                     code_storage[class_name].contents = "\n@Data\n" + code_storage[class_name].contents.lstrip()
 
                 # monkey patch
-                if("package" in code_storage[class_name].contents.lstrip()):
-                    if(code_storage[class_name].contents[:7]=="\n@Data\n"): code_storage[class_name].contents = code_storage[class_name].contents[7:]
-                    javaFileWriter(java_root, class_name, code_storage[class_name], current_class_type, overwrite=True, ignore_package_imports=True)
-                else: 
+                if "package" in code_storage[class_name].contents.lstrip():
+                    if code_storage[class_name].contents[:7] == "\n@Data\n":
+                        code_storage[class_name].contents = \
+                            code_storage[class_name].contents[7:]
+                    javaFileWriter(java_root, class_name, code_storage[class_name], current_class_type, overwrite=True,
+                                   ignore_package_imports=True)
+                else:
                     javaFileWriter(java_root, class_name, code_storage[class_name], current_class_type, overwrite=True)
 
                 directories = "com.test.generation".split('.')
