@@ -1,9 +1,7 @@
 from collections import defaultdict
 from javaFileWriter import javaFileWriter
-import json
-import os
 from utils import *
-from java_test import analysis_java_files, analysis_single_file
+from java_grammar.java_test import analysis_single_file
 import shutil
 from pathlib import Path
 
