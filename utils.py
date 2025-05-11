@@ -1,12 +1,13 @@
-from pydantic import BaseModel
 from enum import Enum
-from openai import OpenAI
 from pydantic import BaseModel
 import json
 from openai import OpenAI
 from ast_rag import DynamicRAG
 import zipfile
 import os
+
+from java_grammar.java_test import analysis_java_files
+from log import get_logger
 
 # please use your own api-key instead of using ours
 api_key = 'sk-BGsbjdC7lXQGHgJyh61xf04bBeR1P6uFForzHoXU4jsmWsrx'
@@ -16,6 +17,9 @@ client = OpenAI(
 )
 spring_lib = r"./spring-lib/generation.zip"
 rag = DynamicRAG()
+java_lib = analysis_java_files('./spring-lib')
+rag.batch_add_data(java_lib.items())
+LOG = get_logger()
 
 
 def get_rag():
@@ -27,6 +31,18 @@ def init_lib():
     save_path = './test'
     file = zipfile.ZipFile(zip_path)
     file.extractall(save_path)
+    LOG.write("start generating basic files for spring project\n")
+    for root, dirs, files in os.walk(save_path):
+        for filename in files:
+            file_path = os.path.join(root, filename)
+            LOG.write(f'--- content：{file_path} ---')
+            try:
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    LOG.write(f.read())
+            except UnicodeDecodeError:
+                print('[invalid file while decode utf-8]')
+            except Exception as e:
+                print(f'[读取失败] {e}')
     file.close()
 
 
@@ -81,7 +97,9 @@ class all_dependency_relationships(BaseModel):
     list_of_dependency_relationships: list[dependency_relationship]
 
 
-def generation(content, generation_structure, model_type="gpt-4o-mini"):
+def generation(content, generation_structure, model_type="gpt-4o-mini", logger=LOG):
+    logger.write('--------------asking gpt for--------------\n')
+    logger.write(content + '\n')
     completion = client.beta.chat.completions.parse(
         model=model_type,
         messages=[
@@ -89,11 +107,13 @@ def generation(content, generation_structure, model_type="gpt-4o-mini"):
         ],
         response_format=generation_structure
     )
+    logger.write('--------------got response--------------\n')
+    logger.write(str(completion.choices[0].message.parsed) + '\n')
     return completion.choices[0].message.parsed
 
 
-def get_definition_results():
-    with open("tmp_class_definition.json", "r") as f:
+def get_definition_results(temp_file_path='tmp_class_definition.json'):
+    with open(temp_file_path, "r") as f:
         definition_results = f.read()
         return definition_results
 

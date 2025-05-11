@@ -192,30 +192,44 @@
         "class_type": "model"
     },
     {
-        "class_name": "ProductService",
-        "class_description": "Class for managing product listing and sorting features.",
+        "class_name": "OrderService",
+        "class_description": "This class handles business logic related to order processing and maintains current orders for buyers.",
         "properties": [],
         "methods": [
             {
-                "method_name": "browseProducts",
+                "method_name": "placeOrder",
                 "method_inputs": [
                     {
                         "param_name": "buyerId",
                         "param_type": "Long"
                     },
                     {
-                        "param_name": "sort",
-                        "param_type": "String"
+                        "param_name": "productId",
+                        "param_type": "Long"
+                    },
+                    {
+                        "param_name": "quantity",
+                        "param_type": "Integer"
                     }
                 ],
-                "method_return_type": "ResponseEntity<ProductResponse>"
+                "method_return_type": "OrderResponse"
+            },
+            {
+                "method_name": "viewOrdersByBuyer",
+                "method_inputs": [
+                    {
+                        "param_name": "buyerId",
+                        "param_type": "Long"
+                    }
+                ],
+                "method_return_type": "List<Order>"
             }
         ],
         "class_type": "service"
     },
     {
-        "class_name": "ProductResponse",
-        "class_description": "Class that provides responses for product browsing operations.",
+        "class_name": "OrderResponse",
+        "class_description": "This class is used for response objects returned from order operations, containing status messages.",
         "properties": [
             {
                 "param_name": "status",
@@ -230,119 +244,129 @@
         "class_type": "dto"
     },
     {
-        "class_name": "OrderService",
-        "class_description": "Service class that handles business logic for placing orders.",
-        "properties": [],
-        "methods": [
-            {
-                "method_name": "placeOrder",
-                "method_inputs": [
-                    {
-                        "param_name": "buyerId",
-                        "param_type": "Long"
-                    },
-                    {
-                        "param_name": "productId",
-                        "param_type": "Long"
-                    },
-                    {
-                        "param_name": "quantity",
-                        "param_type": "Integer"
-                    }
-                ],
-                "method_return_type": "Map<String, String>"
-            }
-        ],
-        "class_type": "service"
-    },
-    {
-        "class_name": "OrderController",
-        "class_description": "Controller class to handle HTTP requests related to orders.",
-        "properties": [],
-        "methods": [
-            {
-                "method_name": "placeOrder",
-                "method_inputs": [
-                    {
-                        "param_name": "buyerId",
-                        "param_type": "Long"
-                    },
-                    {
-                        "param_name": "productId",
-                        "param_type": "Long"
-                    },
-                    {
-                        "param_name": "quantity",
-                        "param_type": "Integer"
-                    }
-                ],
-                "method_return_type": "ResponseEntity<Map<String, String>>"
-            }
-        ],
-        "class_type": "controller"
-    },
-    {
         "class_name": "PaymentService",
-        "class_description": "Handles business logic for payment processing in relation to buyers.",
+        "class_description": "Service responsible for payment-related operations.",
         "properties": [],
         "methods": [
             {
                 "method_name": "processPayment",
                 "method_inputs": [
                     {
-                        "param_name": "orderId",
+                        "param_name": "buyer",
+                        "param_type": "Buyer"
+                    },
+                    {
+                        "param_name": "order_id",
                         "param_type": "Integer"
                     },
                     {
-                        "param_name": "paymentMethod",
+                        "param_name": "payment_method",
                         "param_type": "String"
+                    }
+                ],
+                "method_return_type": "OrderResponse"
+            }
+        ],
+        "class_type": "service"
+    },
+    {
+        "class_name": "PaymentGateway",
+        "class_description": "Handles payment transactions and authorization with various payment methods.",
+        "properties": [],
+        "methods": [
+            {
+                "method_name": "authorizePayment",
+                "method_inputs": [
+                    {
+                        "param_name": "order_id",
+                        "param_type": "Integer"
+                    },
+                    {
+                        "param_name": "payment_method",
+                        "param_type": "String"
+                    }
+                ],
+                "method_return_type": "boolean"
+            }
+        ],
+        "class_type": "other"
+    },
+    {
+        "class_name": "ProductService",
+        "class_description": "Contains business logic for managing products in the seller's store.",
+        "properties": [],
+        "methods": [
+            {
+                "method_name": "addProduct",
+                "method_inputs": [
+                    {
+                        "param_name": "sellerId",
+                        "param_type": "Long"
+                    },
+                    {
+                        "param_name": "action",
+                        "param_type": "String"
+                    },
+                    {
+                        "param_name": "productData",
+                        "param_type": "Product"
+                    }
+                ],
+                "method_return_type": "Map<String, String>"
+            },
+            {
+                "method_name": "updateProduct",
+                "method_inputs": [
+                    {
+                        "param_name": "sellerId",
+                        "param_type": "Long"
+                    },
+                    {
+                        "param_name": "productId",
+                        "param_type": "Long"
+                    },
+                    {
+                        "param_name": "newData",
+                        "param_type": "Product"
+                    }
+                ],
+                "method_return_type": "Map<String, String>"
+            },
+            {
+                "method_name": "removeProduct",
+                "method_inputs": [
+                    {
+                        "param_name": "sellerId",
+                        "param_type": "Long"
+                    },
+                    {
+                        "param_name": "productId",
+                        "param_type": "Long"
                     }
                 ],
                 "method_return_type": "Map<String, String>"
             }
         ],
         "class_type": "service"
-    },
-    {
-        "class_name": "PaymentController",
-        "class_description": "Responsible for handling HTTP requests related to payment operations for buyers.",
-        "properties": [],
-        "methods": [
-            {
-                "method_name": "makePayment",
-                "method_inputs": [
-                    {
-                        "param_name": "orderId",
-                        "param_type": "Integer"
-                    },
-                    {
-                        "param_name": "paymentMethod",
-                        "param_type": "String"
-                    }
-                ],
-                "method_return_type": "ResponseEntity<Map<String, String>>"
-            }
-        ],
-        "class_type": "controller"
     },
     {
         "class_name": "InventoryService",
-        "class_description": "Service layer for managing inventory of products for sellers.",
+        "class_description": "This class handles the inventory management operations for the sellers, including updating stock levels of their products.",
         "properties": [],
         "methods": [
             {
-                "method_name": "updateInventory",
+                "method_name": "updateStock",
                 "method_inputs": [
                     {
-                        "param_name": "seller_id",
+                        "param_name": "sellerId",
                         "param_type": "Long"
                     },
                     {
-                        "param_name": "product_id",
+                        "param_name": "productId",
                         "param_type": "Long"
                     },
                     {
-                        "param_name": "new_stock",
+                        "param_name": "newStock",
                         "param_type": "Integer"
                     }
                 ],
@@ -352,26 +376,47 @@
         "class_type": "service"
     },
     {
-        "class_name": "InventoryController",
-        "class_description": "Controller for managing inventory updates from sellers.",
-        "properties": [],
-        "methods": [
+        "class_name": "InventoryUpdateRequest",
+        "class_description": "This class represents an inventory update request from a seller, including validations for incoming data.",
+        "properties": [
             {
-                "method_name": "updateInventory",
-                "method_inputs": [
-                    {
-                        "param_name": "request",
-                        "param_type": "Map<String, Object>"
-                    }
-                ],
-                "method_return_type": "ResponseEntity<Map<String, String>>"
+                "param_name": "sellerId",
+                "param_type": "Long"
+            },
+            {
+                "param_name": "productId",
+                "param_type": "Long"
+            },
+            {
+                "param_name": "newStock",
+                "param_type": "Integer"
             }
         ],
-        "class_type": "controller"
+        "methods": [
+            {
+                "method_name": "isValid",
+                "method_inputs": [
+                    {
+                        "param_name": "sellerId",
+                        "param_type": "Long"
+                    },
+                    {
+                        "param_name": "productId",
+                        "param_type": "Long"
+                    },
+                    {
+                        "param_name": "newStock",
+                        "param_type": "Integer"
+                    }
+                ],
+                "method_return_type": "Map<String, String>"
+            }
+        ],
+        "class_type": "dto"
     },
     {
-        "class_name": "SellerService",
-        "class_description": "Handles business logic related to seller interactions with buyers.",
+        "class_name": "SellerInteractionService",
+        "class_description": "Used to manage seller interactions with buyers regarding orders, disputes, or other inquiries.",
         "properties": [],
         "methods": [
             {
@@ -396,12 +441,12 @@
         "class_type": "service"
     },
     {
-        "class_name": "SellerController",
-        "class_description": "Provides REST endpoints for seller related operations, including interacting with buyers.",
+        "class_name": "SellerInteractionController",
+        "class_description": "Handles the requests relating to seller interactions with buyers.",
         "properties": [],
         "methods": [
             {
-                "method_name": "sendBuyerMessage",
+                "method_name": "interactWithBuyer",
                 "method_inputs": [
                     {
                         "param_name": "sellerId",
@@ -422,24 +467,44 @@
         "class_type": "controller"
     },
     {
-        "class_name": "AdministratorService",
-        "class_description": "Handles the business logic related to the Administrator functionalities, including security policies.",
+        "class_name": "MessageRequest",
+        "class_description": "Holds the request data for sending a message from seller to buyer.",
+        "properties": [
+            {
+                "param_name": "sellerId",
+                "param_type": "Long"
+            },
+            {
+                "param_name": "buyerId",
+                "param_type": "Long"
+            },
+            {
+                "param_name": "message",
+                "param_type": "String"
+            }
+        ],
+        "methods": [],
+        "class_type": "dto"
+    },
+    {
+        "class_name": "PolicyService",
+        "class_description": "Contains business logic related to platform policy implementations.",
         "properties": [],
         "methods": [
             {
-                "method_name": "executeAction",
+                "method_name": "createPolicy",
                 "method_inputs": [
                     {
                         "param_name": "adminId",
                         "param_type": "Long"
                     },
                     {
-                        "param_name": "action",
+                        "param_name": "policyName",
                         "param_type": "String"
                     },
                     {
-                        "param_name": "policyData",
-                        "param_type": "Map<String, String>"
+                        "param_name": "policyContent",
+                        "param_type": "String"
                     }
                 ],
                 "method_return_type": "Map<String, String>"
@@ -448,122 +513,28 @@
         "class_type": "service"
     },
     {
-        "class_name": "AdministratorController",
-        "class_description": "Defines the endpoints for the Administrator functionalities, allowing HTTP requests to interact with the service.",
-        "properties": [],
-        "methods": [
-            {
-                "method_name": "updatePolicy",
-                "method_inputs": [
-                    {
-                        "param_name": "adminId",
-                        "param_type": "Long"
-                    },
-                    {
-                        "param_name": "action",
-                        "param_type": "String"
-                    },
-                    {
-                        "param_name": "policyData",
-                        "param_type": "Map<String, String>"
-                    }
-                ],
-                "method_return_type": "ResponseEntity<Map<String, String>>"
-            },
-            {
-                "method_name": "monitorLogs",
-                "method_inputs": [
-                    {
-                        "param_name": "adminId",
-                        "param_type": "Long"
-                    },
-                    {
-                        "param_name": "logType",
-                        "param_type": "String"
-                    }
-                ],
-                "method_return_type": "ResponseEntity<Map<String, String>>"
-            }
-        ],
-        "class_type": "controller"
-    },
-    {
-        "class_name": "AdministratorRepository",
-        "class_description": "Handles data access for administrator-related information, such as monitoring logs and policies.",
-        "properties": [],
-        "methods": [
-            {
-                "method_name": "findById",
-                "method_inputs": [
-                    {
-                        "param_name": "adminId",
-                        "param_type": "Long"
-                    }
-                ],
-                "method_return_type": "Optional<Administrator>"
-            },
-            {
-                "method_name": "findLogsByType",
-                "method_inputs": [
-                    {
-                        "param_name": "logType",
-                        "param_type": "String"
-                    }
-                ],
-                "method_return_type": "List<LogEntry>"
-            }
-        ],
-        "class_type": "repository"
-    },
-    {
-        "class_name": "PolicyService",
-        "class_description": "Service layer for managing policies within the platform.",
-        "properties": [],
-        "methods": [
-            {
-                "method_name": "implementPolicy",
-                "method_inputs": [
-                    {
-                        "param_name": "admin_id",
-                        "param_type": "Long"
-                    },
-                    {
-                        "param_name": "policy_name",
-                        "param_type": "String"
-                    },
-                    {
-                        "param_name": "policy_content",
-                        "param_type": "String"
-                    }
-                ],
-                "method_return_type": "HashMap<String, String>"
-            }
-        ],
-        "class_type": "service"
-    },
-    {
-        "class_name": "Policy",
-        "class_description": "Data structure for policy attributes and results.",
+        "class_name": "PolicyRequestDTO",
+        "class_description": "Data transfer object for policy implementation requests.",
         "properties": [
             {
-                "param_name": "policy_name",
+                "param_name": "adminId",
+                "param_type": "Long"
+            },
+            {
+                "param_name": "policyName",
                 "param_type": "String"
             },
             {
-                "param_name": "policy_content",
+                "param_name": "policyContent",
                 "param_type": "String"
-            },
-            {
-                "param_name": "is_active",
-                "param_type": "Boolean"
             }
         ],
         "methods": [],
-        "class_type": "model"
+        "class_type": "dto"
     },
     {
         "class_name": "Dispute",
-        "class_description": "Used to store information about disputes within the platform.",
+        "class_description": "Represents a dispute involving buyers and sellers on the platform.",
         "properties": [
             {
                 "param_name": "disputeId",
@@ -584,10 +555,6 @@
             {
                 "param_name": "description",
                 "param_type": "String"
-            },
-            {
-                "param_name": "createdDate",
-                "param_type": "LocalDateTime"
             }
         ],
         "methods": [
@@ -618,21 +585,7 @@
                 "method_return_type": "Dispute"
             },
             {
-                "method_name": "updateDisputeStatus",
-                "method_inputs": [
-                    {
-                        "param_name": "disputeId",
-                        "param_type": "Long"
-                    },
-                    {
-                        "param_name": "status",
-                        "param_type": "String"
-                    }
-                ],
-                "method_return_type": "Dispute"
-            },
-            {
-                "method_name": "getDisputeDetails",
+                "method_name": "getDisputeById",
                 "method_inputs": [
                     {
                         "param_name": "disputeId",
@@ -646,7 +599,7 @@
     },
     {
         "class_name": "DisputeResolutionService",
-        "class_description": "Contains business logic for resolving disputes between buyers and sellers.",
+        "class_description": "Handles operations related to dispute resolution by the administrator.",
         "properties": [],
         "methods": [
             {
@@ -672,7 +625,7 @@
     },
     {
         "class_name": "DisputeResolutionController",
-        "class_description": "Handles HTTP requests related to dispute resolution by administrators.",
+        "class_description": "Controller for managing dispute resolution requests.",
         "properties": [],
         "methods": [
             {
@@ -697,31 +650,115 @@
         "class_type": "controller"
     },
     {
-        "class_name": "DisputeRepository",
-        "class_description": "Handles data access for disputes.",
+        "class_name": "PlatformMaintenanceService",
+        "class_description": "Handles the logic for performing platform maintenance by the administrator.",
         "properties": [],
         "methods": [
             {
-                "method_name": "findDisputeById",
+                "method_name": "performAction",
                 "method_inputs": [
                     {
-                        "param_name": "disputeId",
+                        "param_name": "adminId",
                         "param_type": "Long"
-                    }
-                ],
-                "method_return_type": "Optional<Dispute>"
-            },
-            {
-                "method_name": "findDisputesByStatus",
-                "method_inputs": [
+                    },
                     {
-                        "param_name": "status",
+                        "param_name": "action",
+                        "param_type": "String"
+                    },
+                    {
+                        "param_name": "version",
                         "param_type": "String"
                     }
                 ],
-                "method_return_type": "List<Dispute>"
+                "method_return_type": "Map<String, String>"
+            },
+            {
+                "method_name": "performBackup",
+                "method_inputs": [
+                    {
+                        "param_name": "adminId",
+                        "param_type": "Long"
+                    },
+                    {
+                        "param_name": "action",
+                        "param_type": "String"
+                    },
+                    {
+                        "param_name": "backupDate",
+                        "param_type": "String"
+                    }
+                ],
+                "method_return_type": "Map<String, String>"
             }
         ],
-        "class_type": "repository"
+        "class_type": "service"
+    },
+    {
+        "class_name": "PlatformMaintenanceController",
+        "class_description": "Handles HTTP requests related to platform maintenance operations.",
+        "properties": [],
+        "methods": [
+            {
+                "method_name": "updateSoftware",
+                "method_inputs": [
+                    {
+                        "param_name": "adminId",
+                        "param_type": "Long"
+                    },
+                    {
+                        "param_name": "action",
+                        "param_type": "String"
+                    },
+                    {
+                        "param_name": "version",
+                        "param_type": "String"
+                    }
+                ],
+                "method_return_type": "ResponseEntity<Map<String, String>>"
+            },
+            {
+                "method_name": "backupData",
+                "method_inputs": [
+                    {
+                        "param_name": "adminId",
+                        "param_type": "Long"
+                    },
+                    {
+                        "param_name": "action",
+                        "param_type": "String"
+                    },
+                    {
+                        "param_name": "backupDate",
+                        "param_type": "String"
+                    }
+                ],
+                "method_return_type": "ResponseEntity<Map<String, String>>"
+            }
+        ],
+        "class_type": "controller"
+    },
+    {
+        "class_name": "MaintenanceActionRequest",
+        "class_description": "Represents the input request for platform maintenance actions.",
+        "properties": [
+            {
+                "param_name": "admin_id",
+                "param_type": "Long"
+            },
+            {
+                "param_name": "action",
+                "param_type": "String"
+            },
+            {
+                "param_name": "version",
+                "param_type": "String"
+            },
+            {
+                "param_name": "backup_date",
+                "param_type": "String"
+            }
+        ],
+        "methods": [],
+        "class_type": "dto"
     }
 ]

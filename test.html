@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Result Stream</title>
+    <style>
+        #output {
+            width: 100%;
+            height: 300px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<button id="startBtn">Start</button>
+<textarea id="output" readonly></textarea>
+
+<script>
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    document.getElementById('startBtn').addEventListener('click', async () => {
+        const output = document.getElementById('output');
+        output.value = '';  // 清空之前的内容
+
+        try {
+            const response = await fetch('http://127.0.0.1:9876/view-result');
+            if (!response.ok) {
+                output.value += 'Error: Failed to fetch stream.';
+                return;
+            }
+
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+
+            while (true) {
+                const {done, value} = await reader.read();
+                if (done) break;
+                output.value += decoder.decode(value, {stream: true});
+                output.scrollTop = output.scrollHeight; // 自动滚动到底部
+                await sleep(50);
+            }
+
+        } catch (error) {
+            output.value += 'Error: ' + error;
+        }
+    });
+</script>
+</body>
+</html>

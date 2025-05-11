@@ -8,6 +8,10 @@ from java_grammar.JavaLexer import JavaLexer
 from java_grammar.JavaParser import JavaParser
 from java_grammar.JavaParserListener import JavaParserListener
 
+from log import get_logger
+
+LOG = get_logger()
+
 
 class JavaAnalyzer:
     def __init__(self, file_path):
@@ -98,13 +102,16 @@ def analysis_java_files(root_dir):
                     analyzer = JavaAnalyzer(src_path)
                     is_valid = analyzer.analyze_syntax()
                     if not is_valid:
-                        print(f"语法错误列表：{src_path}")
+                        LOG.write(f"syntax error detected：{src_path}\n")
                         for error in analyzer.errors:
-                            print(f"Line {error['line']}:{error['column']} - {error['type']} - {error['message']}")
-                    methods.update(analyzer.extract_methods())
-                    print(analyzer.extract_methods())
+                            LOG.write(f"Line {error['line']}:{error['column']} - {error['type']} - {error['message']}")
+                    mtd = analyzer.extract_methods()
+                    methods.update(mtd)
+                    LOG.write(f"extracted abstract syntax tree from {filename}\n")
+                    # for m in mtd:
+                    #     LOG.write(analyzer.extract_methods())
             except UnicodeEncodeError:
-                print("Error occurred while decode characters")
+                LOG.write("Error occurred while decode characters\n")
                 continue
                 # methods.update()
     return methods

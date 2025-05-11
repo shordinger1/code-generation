@@ -2,6 +2,7 @@ from sentence_transformers import SentenceTransformer
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import chromadb
 from chromadb.config import Settings
+from log import get_logger
 
 MAX_TOKEN = 512  # 最大token限制
 EMBEDDING_MODEL = 'all-MiniLM-L6-v2'  # 小型高效embedding模型
@@ -19,7 +20,7 @@ class DynamicRAG:
             length_function=len
         )
         self.metadata_store = {}
-        self.logger = open("log.txt", "a")
+        self.logger = get_logger()
 
     def _chunk_text(self, text: str) -> list:
         """文本分块处理"""
@@ -82,9 +83,11 @@ class DynamicRAG:
                 metadata = self.metadata_store.get(source_id)
                 if metadata:
                     final_results.append(metadata['value'])
+        self.logger.write('asking rag for help\n')
         self.logger.write(query_text)
         self.logger.write('\n')
         self.logger.write(str(final_results))
+        self.logger.write('stop asking rag\n')
         return final_results
 
     # 添加批量插入功能
@@ -107,12 +110,16 @@ class DynamicRAG:
             all_ids.extend([f"{entry_id}_{i}" for i in range(len(chunks))])
             all_embeddings.extend(embeddings)
             all_metadatas.extend([{"source": entry_id} for _ in chunks])
-
+        if len(all_ids) == 0:
+            return
         self.collection.add(
             ids=all_ids,
             embeddings=all_embeddings,
             metadatas=all_metadatas
         )
+
+    def get_all_embedding(self):
+        return self.collection.json()
 
 
 def enhanced_query(self, query_text: str, top_k: int = 3) -> list:

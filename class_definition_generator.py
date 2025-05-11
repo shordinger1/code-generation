@@ -4,8 +4,6 @@ from utils import *
 import yaml
 import json
 
-requirements_document_path = "example_requirements.yaml"
-
 
 def post_process(response):
     result = []
@@ -116,8 +114,6 @@ def parse_yaml(yaml_file_path):
     return entity_mapping, functions_list
 
 
-entity_mapping, functions_list = parse_yaml(requirements_document_path)
-
 # 第二步，构建prompt
 # 在发送给ChatGPT的时候，我需要按照以下格式发送
 # 1. 头部：function_head + tech_head 
@@ -175,38 +171,41 @@ Test Cases for Error Scenarios:
     return prompt
 
 
-result = []
-exist_classes_name = []
-# 将现有的entity添加到class_definition_result里
-for entity_name, entity_details in entity_mapping.items():
-    single_class_instance = single_class(
-        class_name=entity_details["entity_name"],
-        class_description=entity_details["entity_description"],
-        properties=[
-            param(param_name=attr, param_type="str")  # entity的属性类型总是str
-            for attr in entity_details["attributes"]["required"] + entity_details["attributes"]["optional"]
-        ],
-        methods=[],  # entity没有方法
-        class_type=classType.model  # entity的类型总是"model"
-    )
-    result.append(single_class_instance.model_dump())
-for i in entity_mapping:
-    exist_classes_name.append(i)
+def generate_class_definition(temp_file_path="tmp_class_definition.json",
+                              requirements_document_path="example_requirements.yaml"):
+    entity_mapping, functions_list = parse_yaml(requirements_document_path)
+    result = []
+    exist_classes_name = []
+    # 将现有的entity添加到class_definition_result里
+    for entity_name, entity_details in entity_mapping.items():
+        from utils import single_class
+        single_class_instance = single_class(
+            class_name=entity_details["entity_name"],
+            class_description=entity_details["entity_description"],
+            properties=[
+                param(param_name=attr, param_type="str")  # entity的属性类型总是str
+                for attr in entity_details["attributes"]["required"] + entity_details["attributes"]["optional"]
+            ],
+            methods=[],  # entity没有方法
+            class_type=classType.model  # entity的类型总是"model"
+        )
+        result.append(single_class_instance.model_dump())
+    for i in entity_mapping:
+        exist_classes_name.append(i)
 
-for i in range(len(functions_list)):
-    prompt = generate_prompt(functions_list, i)
-    prompt = function_head + tech_head + "\n###Module and function definition###\n" + prompt + function_foot
-    if (len(exist_classes_name) != 0):
-        prompt += "exist elements that you should NOT implement again:" + str(exist_classes_name)
-    print(prompt)
-    # 第三步，发送给ChatGPT，生成classes_definition
-    definition_results = generation(prompt, classes_definition_generation)
+    for i in range(len(functions_list)):
+        prompt = generate_prompt(functions_list, i)
+        prompt = function_head + tech_head + "\n###Module and function definition###\n" + prompt + function_foot
+        if (len(exist_classes_name) != 0):
+            prompt += "exist elements that you should NOT implement again:" + str(exist_classes_name)
+        # 第三步，发送给ChatGPT，生成classes_definition
+        definition_results = generation(prompt, classes_definition_generation)
 
-    for single_class in definition_results.classes_to_implement_this_function:
-        # 如果重名，就不添加了
-        if single_class.class_name not in exist_classes_name:
-            result.append(single_class.model_dump())
-            exist_classes_name.append(single_class.class_name)
+        for single_class in definition_results.classes_to_implement_this_function:
+            # 如果重名，就不添加了
+            if single_class.class_name not in exist_classes_name:
+                result.append(single_class.model_dump())
+                exist_classes_name.append(single_class.class_name)
 
-with open("tmp_class_definition.json", "w") as f:
-    json.dump(result, f, ensure_ascii=False, indent=4)
+    with open(temp_file_path, "w") as f:
+        json.dump(result, f, ensure_ascii=False, indent=4)
