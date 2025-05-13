@@ -1,3 +1,5 @@
-1. 先运行python class_definition_generator.py，生成tmp_class_definition.json
-2. 运行python generate_code.py，生成java代码
-3. 打开test文件夹
+1. install neccessary lib for python
+2. run service.py
+3. install nodejs and npm
+4. run npm run dev in ui2 folder
+5. follow steps in projectvideo.mp4

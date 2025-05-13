@@ -39,7 +39,7 @@
                 if (done) break;
                 output.value += decoder.decode(value, {stream: true});
                 output.scrollTop = output.scrollHeight; // 自动滚动到底部
-                await sleep(50);
+                await sleep(10);
             }
 
         } catch (error) {

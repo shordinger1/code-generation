@@ -1,12 +1,10 @@
 import io
-import os
 import shutil
-import zipfile
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-from flask import Flask, request, send_file, jsonify, Response
+from flask import Flask, request, send_file, jsonify
 from flask_cors import CORS
 
 from class_definition_generator import generate_class_definition
@@ -25,7 +23,7 @@ class code_generator:
         self.root = root
         if os.path.exists(root):
             shutil.rmtree(root)
-        self.java_root = os.path.join(root, '/src/main/java')
+        self.java_root = './test/generation/src/main/java'
         self.max_reflection = 10
         self.requirement_file = requirement_file_path
         self.rag = get_rag()
@@ -71,6 +69,7 @@ class code_generator:
                         self.logger.write("please debug or write code by yourself\n")
         except Exception as e:
             self.logger.write('Error while generating\n')
+        compress_directory(self.root, './test/zip/generation.zip')
         self.finished = True
         self.logger.write('end generating\n')
 
@@ -147,11 +146,11 @@ class code_generator:
     def get_cached_result(self):
         max_len = len(self.logger.cache)
         prev = self.result_pointer
-        self.result_pointer = int(min(max_len, prev + 2))
+        self.result_pointer = int(min(max_len, prev + 20))
         if self.result_pointer > prev:
             return self.logger.cache[prev: self.result_pointer]
         else:
-            return ""
+            return "\n"
 
 
 def determine_level(data):
@@ -182,12 +181,35 @@ def determine_level(data):
     return dependencies, list(levels.items())
 
 
+def compress_directory(source_dir, zip_path):
+    """
+    压缩指定目录中的所有文件并保存为 zip 文件。
+
+    参数:
+        source_dir (str): 要压缩的目录路径。
+        zip_path (str): 压缩文件保存的完整路径（包括 .zip 文件名）。
+    """
+    # 确保目标目录存在
+    os.makedirs(os.path.dirname(zip_path), exist_ok=True)
+
+    # 创建 zip 文件并写入
+    with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+        for foldername, subfolders, filenames in os.walk(source_dir):
+            for filename in filenames:
+                file_path = os.path.join(foldername, filename)
+                arcname = os.path.relpath(file_path, source_dir)
+                zipf.write(file_path, arcname)
+
+    print(f"压缩完成，文件保存在：{zip_path}")
+
+
 app = Flask(__name__)
 CORS(app)  # 开放所有跨域请求
 UPLOAD_FOLDER = './uploads'
 RESULT_FOLDER = './results'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(RESULT_FOLDER, exist_ok=True)
+current_file = "example_requirements.yaml"
 
 
 @app.route('/submit-requirement-files', methods=['POST'])
@@ -198,13 +220,15 @@ def submit_requirement_files():
     if file.filename == '':
         return jsonify({"error": "No selected file"}), 400
     filepath = os.path.join(UPLOAD_FOLDER, file.filename)
+    global current_file
+    current_file = filepath
     file.save(filepath)
     return jsonify({"message": f"File {file.filename} uploaded successfully"}), 200
 
 
 @app.route('/download-result', methods=['GET'])
 def download_result():
-    result_zip_path = os.path.join(RESULT_FOLDER, 'result.zip')
+    result_zip_path = './test/zip/generation.zip'
 
     if os.path.exists(result_zip_path):
         return send_file(result_zip_path, as_attachment=True)
@@ -217,6 +241,44 @@ def download_result():
         return send_file(buffer, as_attachment=True, download_name='empty.zip', mimetype='application/zip')
 
 
+# @app.route('/view-result', methods=['GET'])
+# def view_result():
+#     def generate():
+#         executor = ThreadPoolExecutor(max_workers=5)
+#         generator = code_generator()
+#         executor.submit(code_generator.generate, generator)
+#         while not generator.finished:
+#             yield generator.get_cached_result().encode('utf-8')
+#         return download_result
+#
+#
+#     return Response(generate(), mimetype='text/event-stream')
+from flask import Response
+
+# @app.route('/view-result', methods=['GET'])
+# def view_result():
+#     def generate():
+#         if current_file is None:
+#             yield "data: [DONE]\n\n"
+#         generator = code_generator(requirement_file_path=current_file)
+#         generator.generate()  # 同步生成
+#
+#         for chunk in generator.get_cached_result_stream():
+#             print('[SSE CHUNK]', chunk)  # ✅后端调试日志
+#             yield f"{chunk}\n\n"
+#
+#         zip_path = os.path.join(RESULT_FOLDER, 'result.zip')
+#         if os.path.exists(zip_path):
+#             zip_url = 'http://localhost:9876/download-result'
+#             yield f"data: [ZIP]{zip_url}\n\n"
+#
+#         yield "data: [DONE]\n\n"
+#
+#     return Response(generate(), mimetype='text/event-stream')  # ✅正确类型
+# from flask import Response
+import time
+
+
 @app.route('/view-result', methods=['GET'])
 def view_result():
     def generate():
@@ -224,9 +286,24 @@ def view_result():
         generator = code_generator()
         executor.submit(code_generator.generate, generator)
         while not generator.finished:
-            yield generator.get_cached_result().encode('utf-8')
+            text = generator.get_cached_result()
+            while text == '\n':
+                text = generator.get_cached_result()
+                time.sleep(1)
+            yield f"data: {text.encode('utf-8')}\n\n"
+        # 设置伪数据块
+        # chunks = code_generator(requirement_file_path=current_file)
+        # chunks = ['流式内容1...', '流式内容2...', '流式内容3...']
+        # for chunk in chunks:
+        #     yield f"data: {chunk}\n\n"
+        #     time.sleep(1)
+        #
+        # 推送 ZIP 下载链接和结束标志
+        zip_url = 'http://localhost:9876/download-result'
+        yield f"data: [ZIP]{zip_url}\n\n"
+        yield "data: [DONE]\n\n"
 
-    return Response(generate(), mimetype='text/plain')
+    return Response(generate(), mimetype='text/event-stream')
 
 
 @app.route('/re-generate-single-file-with-comment', methods=['POST'])
