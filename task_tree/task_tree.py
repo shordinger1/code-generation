@@ -1,5 +1,5 @@
 class TaskNode:
-    def __init__(self, name, description, processor=None):
+    def __init__(self, name, description=None, processor=None):
         """
         任务节点类
         :param name: 任务名称
@@ -17,6 +17,8 @@ class TaskNode:
         print(f"[任务树] 添加子任务: '{child_node.name}' -> 父任务 '{self.name}'")
 
     def analyze(self):
+        # call llm
+
         pass
 
     def execute(self):

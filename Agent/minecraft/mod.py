@@ -3,7 +3,14 @@ import subprocess
 
 from Agent.minecraft.block import block_class
 from Agent.minecraft.item import item_class
+from Agent.minecraft.library_like_class import library_like_class
 from Agent.minecraft.static_files import *
+from Agent.minecraft.static_files import set_item_base, package_root, set_block_base, \
+    set_item_blocks_base, set_machine_entities_base, set_recipes_base, set_potions_base, set_renders_base, \
+    set_entities_base, set_mobs_base, set_item_register, set_block_register, set_item_blocks_register, \
+    set_machine_entities_register, set_recipes_register, set_potions_register, set_renders_register, \
+    set_entities_register, set_mobs_register
+from code_template.java_template_class import java_template_class
 from task_tree.task_tree import TaskTree
 
 
@@ -32,7 +39,7 @@ class minecraft_mod:
         self.renders = {}
         self.entities = {}
         self.mobs = {}
-        self.task_tree = TaskTree('automatic minecraft mod generation')
+        # self.task_tree = TaskTree('automatic minecraft mod generation')
         init_base_and_registry()
 
     def generate_main_mod_file(self):
@@ -355,6 +362,9 @@ disableSpotless = true\n \
         )
         client_proxy.write_to_file()
 
+    def process(self):
+        pass
+
     def add_items(self, *item_names):
         for item in item_names:
             print(f"Item {item} added to com/{self.dev_name}/{self.mod_name}/item")
@@ -398,7 +408,9 @@ disableSpotless = true\n \
         en = open(self.lang_file_en, 'w')
         zh = open(self.lang_file_zh, 'w')
         for k, v in self.lang_en.items():
-            en.write("")
+            en.write(f"{k}={v}\n")
+        for k, v in self.lang_zh.items():
+            en.write(f"{k}={v}\n")
 
     def read_lang_all(self):
         en = open(self.lang_file_en, 'r')
@@ -421,3 +433,38 @@ disableSpotless = true\n \
         subprocess.run([self.gradle_root, 'spotlessApply'], cwd=get_root(),
                        check=True,
                        stdout=subprocess.DEVNULL)
+
+
+def init_base_and_registry():
+    root = get_root()
+    if root == "default":
+        print("you should register a mod before init")
+        exit(1)
+
+    # 替换所有直接赋值为 set_ 函数调用
+    set_item_base(java_template_class(root, 'ItemBase', os.path.join(package_root, 'common/item')))
+    set_block_base(java_template_class(root, 'BlockBase', os.path.join(package_root, 'common/block')))
+    set_item_blocks_base(java_template_class(root, 'ItemBlocksBase', os.path.join(package_root, 'common/item')))
+    set_machine_entities_base(
+        java_template_class(root, 'MachineEntitiesBase', os.path.join(package_root, 'common/machine')))
+    set_recipes_base(java_template_class(root, 'RecipesBase', os.path.join(package_root, 'common/recipe')))
+    set_potions_base(java_template_class(root, 'PotionsBase', os.path.join(package_root, 'common/potion')))
+    set_renders_base(java_template_class(root, 'RendersBase', os.path.join(package_root, 'common/render')))
+    set_entities_base(java_template_class(root, 'EntitiesBase', os.path.join(package_root, 'common/entity')))
+    set_mobs_base(java_template_class(root, 'MobsBase', os.path.join(package_root, 'common/mob')))
+
+    set_item_register(library_like_class(root, 'ItemRegister', os.path.join(package_root, 'common/item')))
+    set_block_register(library_like_class(root, 'BlockRegister', os.path.join(package_root, 'common/block')))
+    set_item_blocks_register(
+        library_like_class(root, 'ItemBlocksRegister', os.path.join(package_root, 'common/item')))
+    set_machine_entities_register(
+        library_like_class(root, 'MachineEntitiesRegister', os.path.join(package_root, 'common/machine')))
+    set_recipes_register(
+        library_like_class(root, 'RecipesRegister', os.path.join(package_root, 'common/recipe')))
+    set_potions_register(
+        library_like_class(root, 'PotionsRegister', os.path.join(package_root, 'common/potion')))
+    set_renders_register(
+        library_like_class(root, 'RendersRegister', os.path.join(package_root, 'common/render')))
+    set_entities_register(
+        library_like_class(root, 'EntitiesRegister', os.path.join(package_root, 'common/entity')))
+    set_mobs_register(library_like_class(root, 'MobsRegister', os.path.join(package_root, 'common/mob')))

@@ -2,3 +2,5 @@
 /syntax_db/
 /temp/
 /.idea/
+config.json
+gpt.log

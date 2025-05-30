@@ -35,7 +35,7 @@ class logger:
         elif content is None:
             return
         else:
-            if content[-1] is not '\n':
+            if content[-1] != '\n':
                 content += '\n'
             self.cache += str(content)
             print(content)

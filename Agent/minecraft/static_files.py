@@ -1,8 +1,3 @@
-import os.path
-
-from Agent.minecraft.library_like_class import library_like_class
-from code_template.java_template_class import java_template_class
-
 project_root = "default"
 package_root = "default"
 
@@ -148,34 +143,3 @@ def set_entities_register(value): global entities_register; entities_register = 
 
 
 def set_mobs_register(value): global mobs_register; mobs_register = value
-
-
-def init_base_and_registry():
-    if project_root == "default":
-        print("you should register a mod before init")
-        exit(1)
-    global item_base, block_base, item_blocks_base, machine_entities_base, recipes_base, potions_base, renders_base, \
-        entities_base, mobs_base, item_register, block_register, item_blocks_register, machine_entities_register, \
-        recipes_register, potions_register, renders_register, entities_register, mobs_register
-    item_base = java_template_class(project_root, 'ItemBase', os.path.join(package_root, 'common/item'))
-    block_base = java_template_class(project_root, 'BlockBase', os.path.join(package_root, 'common/block'))
-    item_blocks_base = java_template_class(project_root, 'ItemBlocksBase', os.path.join(package_root, 'common/item'))
-    machine_entities_base = java_template_class(project_root, 'MachineEntitiesBase',
-                                                os.path.join(package_root, 'common/machine'))
-    recipes_base = java_template_class(project_root, 'RecipesBase', os.path.join(package_root, 'common/recipe'))
-    potions_base = java_template_class(project_root, 'PotionsBase', os.path.join(package_root, 'common/potion'))
-    renders_base = java_template_class(project_root, 'RendersBase', os.path.join(package_root, 'common/render'))
-    entities_base = java_template_class(project_root, 'EntitiesBase', os.path.join(package_root, 'common/entity'))
-    mobs_base = java_template_class(project_root, 'MobsBase', os.path.join(package_root, 'common/mob'))
-    item_register = library_like_class(project_root, 'ItemRegister', os.path.join(package_root, 'common/item'))
-    block_register = library_like_class(project_root, 'BlockRegister', os.path.join(package_root, 'common/block'))
-    item_blocks_register = library_like_class(project_root, 'ItemBlocksRegister',
-                                              os.path.join(package_root, 'common/item'))
-    machine_entities_register = library_like_class(project_root, 'MachineEntitiesRegister',
-                                                   os.path.join(package_root, 'common/machine'))
-    recipes_register = library_like_class(project_root, 'RecipesRegister', os.path.join(package_root, 'common/recipe'))
-    potions_register = library_like_class(project_root, 'PotionsRegister', os.path.join(package_root, 'common/potion'))
-    renders_register = library_like_class(project_root, 'RendersRegister', os.path.join(package_root, 'common/render'))
-    entities_register = library_like_class(project_root, 'EntitiesRegister',
-                                           os.path.join(package_root, 'common/entity'))
-    mobs_register = library_like_class(project_root, 'MobsRegister', os.path.join(package_root, 'common/mob'))

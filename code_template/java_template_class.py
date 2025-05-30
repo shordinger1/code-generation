@@ -1,7 +1,6 @@
 import os.path
 import subprocess
 
-from Agent.minecraft.static_files import get_root
 from java_grammar.JavaAnalyzer import analysis_java_file
 from chat.client import generation
 from chat.model import code_generation, prompt_code_generation, prompt_code_reflection
@@ -27,6 +26,7 @@ class java_template_class:
         print(f'java class inited as {class_name} in {self.class_path}')
 
     def write_to_file(self):
+
         os.makedirs(self.class_path, exist_ok=True)
         with open(self.file_path, "w", encoding='utf-8') as f:
             f.write(self.formatted_code())
@@ -68,8 +68,8 @@ class java_template_class:
         error = None
         try:
             result = subprocess.run(
-                [f'{get_root()}/gradlew.bat', 'build'],
-                cwd=get_root(),
+                [f'{self.project_root}/gradlew.bat', 'build'],
+                cwd=self.project_root,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,  # 分别捕获 stdout/stderr
                 text=True,

@@ -56,7 +56,7 @@ class all_dependency_relationships(BaseModel):
 def prompt_code_generation(description, code=None, template_code=None, rag_code=None):
     exist_code_part = f"""EXISTING CODE (base to improve, and your code should based on this part): 
     {code}
-    """ if code is not None else "No existing code provided ,you should generate your self."
+    """ if code is not None else "No existing code provided ,you should generate yourself."
     template_code_part = f"""TEMPLATE CODE (structural reference):
     {template_code}
     """ if template_code is not None else ""
