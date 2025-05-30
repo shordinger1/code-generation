@@ -1,0 +1,9 @@
+{
+    "file": "my/java/file.java",
+    "class_methods": [
+        {
+            "name": "myclass_method",
+            "code": "public static void myclass_method(){};"
+        }
+    ]
+}
