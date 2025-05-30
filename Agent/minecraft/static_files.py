@@ -1,6 +1,6 @@
 import os.path
 
-from code_template.library_like_class import library_like_class
+from Agent.minecraft.library_like_class import library_like_class
 from code_template.java_template_class import java_template_class
 
 project_root = "default"

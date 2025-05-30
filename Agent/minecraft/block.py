@@ -1,6 +1,8 @@
-from code_template.library_like_class import library_like_class
+from overrides import overrides
+
+from Agent.minecraft.library_like_class import library_like_class
 from code_template.java_template_class import java_template_class
-from Agent.static_files import get_block_register
+from Agent.minecraft.static_files import get_block_register
 
 
 class block_class(java_template_class):
@@ -181,3 +183,7 @@ public class {self.class_name} extends Block {{
         register_field = f"{self.class_name.upper()}(new {self.class_name}(blockCreativeTabs)),"
         get_block_register().add_static_field(register_field)
         get_block_register().add_import(f"import {self.package.replace('/', '.')}.{self.class_name};")
+
+    @overrides
+    def get_template(self):
+        pass

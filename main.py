@@ -4,7 +4,7 @@ import shutil
 import subprocess
 import zipfile
 from pathlib import Path
-from code_template.mod import minecraft_mod
+from Agent.minecraft.mod import minecraft_mod
 from java_grammar.JavaAnalyzer import analysis_java_files
 
 project_dir = r"C:\Users\bcjPr\Desktop\gtnh\Twist-Space-Technology-Mod"

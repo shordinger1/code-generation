@@ -1,9 +1,9 @@
 import os.path
 import subprocess
 
-from Agent.block import block_class
-from Agent.item import item_class
-from Agent.static_files import *
+from Agent.minecraft.block import block_class
+from Agent.minecraft.item import item_class
+from Agent.minecraft.static_files import *
 from task_tree.task_tree import TaskTree
 
 

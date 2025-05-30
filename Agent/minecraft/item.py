@@ -1,6 +1,8 @@
-from code_template.library_like_class import library_like_class
+from overrides import overrides
+
+from Agent.minecraft.library_like_class import library_like_class
 from code_template.java_template_class import java_template_class
-from Agent.static_files import get_item_register
+from Agent.minecraft.static_files import get_item_register
 
 
 class item_class(java_template_class):
@@ -54,4 +56,8 @@ public class {self.class_name} extends Item {{
         
         """)
         get_item_register().add_static_field(f"{self.class_name.upper()}(new {self.class_name}(itemCreativeTabs)),")
-        get_item_register().add_import(f"import {self.package}.{self.class_name};".replace('/','.'))
+        get_item_register().add_import(f"import {self.package}.{self.class_name};".replace('/', '.'))
+
+    @overrides
+    def get_template(self):
+        pass
