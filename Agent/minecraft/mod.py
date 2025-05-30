@@ -1,10 +1,9 @@
 import os.path
 import subprocess
 
-from code_template.block import block_class
-from code_template.java_template_class import java_template_class
-from code_template.item import item_class
-from code_template.static_files import *
+from Agent.block import block_class
+from Agent.item import item_class
+from Agent.static_files import *
 from task_tree.task_tree import TaskTree
 
 

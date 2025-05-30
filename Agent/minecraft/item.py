@@ -1,6 +1,6 @@
 from code_template.library_like_class import library_like_class
 from code_template.java_template_class import java_template_class
-from code_template.static_files import get_item_register
+from Agent.static_files import get_item_register
 
 
 class item_class(java_template_class):

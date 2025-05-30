@@ -1,6 +1,6 @@
 from code_template.library_like_class import library_like_class
 from code_template.java_template_class import java_template_class
-from code_template.static_files import get_block_register
+from Agent.static_files import get_block_register
 
 
 class block_class(java_template_class):
