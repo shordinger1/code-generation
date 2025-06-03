@@ -1,12 +1,12 @@
 import os
+import json
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from antlr4 import FileStream, CommonTokenStream, ParseTreeWalker
 from antlr4.error.ErrorListener import ErrorListener
-from java_grammar.JavaLexer import JavaLexer
-from java_grammar.JavaParser import JavaParser
-from java_grammar.JavaParserListener import JavaParserListener
-from util import read_temp, write_temp
+from language_provider.java.JavaLexer import JavaLexer
+from language_provider.java.JavaParser import JavaParser
+from language_provider.java.JavaParserListener import JavaParserListener
 
 
 def analysis_java_file(file_path):
@@ -24,24 +24,24 @@ def analysis_java_file(file_path):
 
 def analysis_java_files(root_dir):
     root_dir = Path(root_dir)
-    methods = {}
+    methods = []
     java_files = list(root_dir.glob('**/*.java'))
     rt = str(root_dir).split("\\")[-1]
     os.makedirs(f"temp/{rt}", exist_ok=True)
 
     def process_file(file_path):
         name = str(file_path).split(rt)[-1][1:-5].replace("\\", "-")
-        tempfile = f"temp/{rt}/{name}.txt"
+        tempfile = f"temp/{rt}/{name}.json"
         if os.path.exists(tempfile):
             # print(f"获取缓存文件：{file_path}")
-            return read_temp(tempfile)
+            return JavaMethods.read(tempfile)
         """处理单个Java文件的线程任务"""
         try:
             analyzer = JavaAnalyzer(str(file_path))
             if analyzer.analyze_syntax():
                 # print(f"成功分析: {file_path}")
                 method = analyzer.extract_methods()
-                write_temp(tempfile, method)
+                method.write(tempfile)
                 return method
             print(f"语法错误: {file_path}")
             return {}
@@ -62,11 +62,40 @@ def analysis_java_files(root_dir):
             file_path = futures[future]
             try:
                 result = future.result()
-                methods.update(result)
+                methods.append(result)
             except Exception as e:
                 print(f"结果合并异常 {file_path}: {str(e)}")
 
     return methods
+
+
+class JavaMethods:
+    def __init__(self, file_name, methods, temp_file=""):
+        self.file_name = file_name
+        self.methods = methods
+        self.temp_file = temp_file
+
+    def get(self):
+        return {
+            "file": self.file_name,
+            "class_methods": self.methods,
+            # "temp_file": self.temp_file
+        }
+
+    @classmethod
+    def read(cls, file_path):
+        """从JSON文件读取数据并创建JavaMethods对象"""
+        with open(file_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        return cls(data["file"], data["class_methods"], file_path)
+
+    def write(self, file_path):
+        """将JavaMethods对象写入JSON文件，使用类中的file_name作为路径"""
+        self.temp_file = file_path
+        data = self.get()
+
+        with open(file_path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=4)
 
 
 class JavaAnalyzer:
@@ -124,7 +153,7 @@ class JavaAnalyzer:
         walker.walk(extractor, self.tree)
 
         self.methods = extractor.methods
-        return self.methods
+        return JavaMethods(self.file_path, self.methods)
 
 
 class SyntaxErrorListener(ErrorListener):

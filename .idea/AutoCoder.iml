@@ -5,6 +5,7 @@
       <excludeFolder url="file://$MODULE_DIR$/java_lib" />
       <excludeFolder url="file://$MODULE_DIR$/syntax_db" />
       <excludeFolder url="file://$MODULE_DIR$/temp" />
+      <excludeFolder url="file://$MODULE_DIR$/data" />
     </content>
     <orderEntry type="jdk" jdkName="yoloe" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

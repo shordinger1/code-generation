@@ -1,9 +1,768 @@
-{
-    "file": "my/java/file.java",
-    "class_methods": [
-        {
-            "name": "myclass_method",
-            "code": "public static void myclass_method(){};"
+[{'file': 'C:\\Users\\bcjPr\\Desktop\\gtnh\\Twist-Space-Technology-Mod\\build\\rfg\\minecraft-src\\java\
+et\\minecraft\\item\\Item.java', 'class_methods': {'Item.getIdFromItem': 'int getIdFromItem(Item p_150891_0_)\r
+    {\r
+        return p_150891_0_ == null ? 0 : itemRegistry.getIDForObject(p_150891_0_);\r
+    }', 'Item.getItemById': 'Item getItemById(int p_150899_0_)\r
+    {\r
+        return (Item)itemRegistry.getObjectById(p_150899_0_);\r
+    }', 'Item.getItemFromBlock': 'Item getItemFromBlock(Block p_150898_0_)\r
+    {\r
+        return getItemById(Block.getIdFromBlock(p_150898_0_));\r
+    }', 'Item.registerItems': 'void registerItems()\r
+    {\r
+        itemRegistry.addObject(256, "iron_shovel", (new ItemSpade(Item.ToolMaterial.IRON)).setUnlocalizedName("shovelIron").setTextureName("iron_shovel"));\r
+        itemRegistry.addObject(257, "iron_pickaxe", (new ItemPickaxe(Item.ToolMaterial.IRON)).setUnlocalizedName("pickaxeIron").setTextureName("iron_pickaxe"));\r
+        itemRegistry.addObject(258, "iron_axe", (new ItemAxe(Item.ToolMaterial.IRON)).setUnlocalizedName("hatchetIron").setTextureName("iron_axe"));\r
+        itemRegistry.addObject(259, "flint_and_steel", (new ItemFlintAndSteel()).setUnlocalizedName("flintAndSteel").setTextureName("flint_and_steel"));\r
+        itemRegistry.addObject(260, "apple", (new ItemFood(4, 0.3F, false)).setUnlocalizedName("apple").setTextureName("apple"));\r
+        itemRegistry.addObject(261, "bow", (new ItemBow()).setUnlocalizedName("bow").setTextureName("bow"));\r
+        itemRegistry.addObject(262, "arrow", (new Item()).setUnlocalizedName("arrow").setCreativeTab(CreativeTabs.tabCombat).setTextureName("arrow"));\r
+        itemRegistry.addObject(263, "coal", (new ItemCoal()).setUnlocalizedName("coal").setTextureName("coal"));\r
+        itemRegistry.addObject(264, "diamond", (new Item()).setUnlocalizedName("diamond").setCreativeTab(CreativeTabs.tabMaterials).setTextureName("diamond"));\r
+        itemRegistry.addObject(265, "iron_ingot", (new Item()).setUnlocalizedName("ingotIron").setCreativeTab(CreativeTabs.tabMaterials).setTextureName("iron_ingot"));\r
+        itemRegistry.addObject(266, "gold_ingot", (new Item()).setUnlocalizedName("ingotGold").setCreativeTab(CreativeTabs.tabMaterials).setTextureName("gold_ingot"));\r
+        itemRegistry.addObject(267, "iron_sword", (new ItemSword(Item.ToolMaterial.IRON)).setUnlocalizedName("swordIron").setTextureName("iron_sword"));\r
+        itemRegistry.addObject(268, "wooden_sword", (new ItemSword(Item.ToolMaterial.WOOD)).setUnlocalizedName("swordWood").setTextureName("wood_sword"));\r
+        itemRegistry.addObject(269, "wooden_shovel", (new ItemSpade(Item.ToolMaterial.WOOD)).setUnlocalizedName("shovelWood").setTextureName("wood_shovel"));\r
+        itemRegistry.addObject(270, "wooden_pickaxe", (new ItemPickaxe(Item.ToolMaterial.WOOD)).setUnlocalizedName("pickaxeWood").setTextureName("wood_pickaxe"));\r
+        itemRegistry.addObject(271, "wooden_axe", (new ItemAxe(Item.ToolMaterial.WOOD)).setUnlocalizedName("hatchetWood").setTextureName("wood_axe"));\r
+        itemRegistry.addObject(272, "stone_sword", (new ItemSword(Item.ToolMaterial.STONE)).setUnlocalizedName("swordStone").setTextureName("stone_sword"));\r
+        itemRegistry.addObject(273, "stone_shovel", (new ItemSpade(Item.ToolMaterial.STONE)).setUnlocalizedName("shovelStone").setTextureName("stone_shovel"));\r
+        itemRegistry.addObject(274, "stone_pickaxe", (new ItemPickaxe(Item.ToolMaterial.STONE)).setUnlocalizedName("pickaxeStone").setTextureName("stone_pickaxe"));\r
+        itemRegistry.addObject(275, "stone_axe", (new ItemAxe(Item.ToolMaterial.STONE)).setUnlocalizedName("hatchetStone").setTextureName("stone_axe"));\r
+        itemRegistry.addObject(276, "diamond_sword", (new ItemSword(Item.ToolMaterial.EMERALD)).setUnlocalizedName("swordDiamond").setTextureName("diamond_sword"));\r
+        itemRegistry.addObject(277, "diamond_shovel", (new ItemSpade(Item.ToolMaterial.EMERALD)).setUnlocalizedName("shovelDiamond").setTextureName("diamond_shovel"));\r
+        itemRegistry.addObject(278, "diamond_pickaxe", (new ItemPickaxe(Item.ToolMaterial.EMERALD)).setUnlocalizedName("pickaxeDiamond").setTextureName("diamond_pickaxe"));\r
+        itemRegistry.addObject(279, "diamond_axe", (new ItemAxe(Item.ToolMaterial.EMERALD)).setUnlocalizedName("hatchetDiamond").setTextureName("diamond_axe"));\r
+        itemRegistry.addObject(280, "stick", (new Item()).setFull3D().setUnlocalizedName("stick").setCreativeTab(CreativeTabs.tabMaterials).setTextureName("stick"));\r
+        itemRegistry.addObject(281, "bowl", (new Item()).setUnlocalizedName("bowl").setCreativeTab(CreativeTabs.tabMaterials).setTextureName("bowl"));\r
+        itemRegistry.addObject(282, "mushroom_stew", (new ItemSoup(6)).setUnlocalizedName("mushroomStew").setTextureName("mushroom_stew"));\r
+        itemRegistry.addObject(283, "golden_sword", (new ItemSword(Item.ToolMaterial.GOLD)).setUnlocalizedName("swordGold").setTextureName("gold_sword"));\r
+        itemRegistry.addObject(284, "golden_shovel", (new ItemSpade(Item.ToolMaterial.GOLD)).setUnlocalizedName("shovelGold").setTextureName("gold_shovel"));\r
+        itemRegistry.addObject(285, "golden_pickaxe", (new ItemPickaxe(Item.ToolMaterial.GOLD)).setUnlocalizedName("pickaxeGold").setTextureName("gold_pickaxe"));\r
+        itemRegistry.addObject(286, "golden_axe", (new ItemAxe(Item.ToolMaterial.GOLD)).setUnlocalizedName("hatchetGold").setTextureName("gold_axe"));\r
+        itemRegistry.addObject(287, "string", (new ItemReed(Blocks.tripwire)).setUnlocalizedName("string").setCreativeTab(CreativeTabs.tabMaterials).setTextureName("string"));\r
+        itemRegistry.addObject(288, "feather", (new Item()).setUnlocalizedName("feather").setCreativeTab(CreativeTabs.tabMaterials).setTextureName("feather"));\r
+        itemRegistry.addObject(289, "gunpowder", (new Item()).setUnlocalizedName("sulphur").setPotionEffect(PotionHelper.gunpowderEffect).setCreativeTab(CreativeTabs.tabMaterials).setTextureName("gunpowder"));\r
+        itemRegistry.addObject(290, "wooden_hoe", (new ItemHoe(Item.ToolMaterial.WOOD)).setUnlocalizedName("hoeWood").setTextureName("wood_hoe"));\r
+        itemRegistry.addObject(291, "stone_hoe", (new ItemHoe(Item.ToolMaterial.STONE)).setUnlocalizedName("hoeStone").setTextureName("stone_hoe"));\r
+        itemRegistry.addObject(292, "iron_hoe", (new ItemHoe(Item.ToolMaterial.IRON)).setUnlocalizedName("hoeIron").setTextureName("iron_hoe"));\r
+        itemRegistry.addObject(293, "diamond_hoe", (new ItemHoe(Item.ToolMaterial.EMERALD)).setUnlocalizedName("hoeDiamond").setTextureName("diamond_hoe"));\r
+        itemRegistry.addObject(294, "golden_hoe", (new ItemHoe(Item.ToolMaterial.GOLD)).setUnlocalizedName("hoeGold").setTextureName("gold_hoe"));\r
+        itemRegistry.addObject(295, "wheat_seeds", (new ItemSeeds(Blocks.wheat, Blocks.farmland)).setUnlocalizedName("seeds").setTextureName("seeds_wheat"));\r
+        itemRegistry.addObject(296, "wheat", (new Item()).setUnlocalizedName("wheat").setCreativeTab(CreativeTabs.tabMaterials).setTextureName("wheat"));\r
+        itemRegistry.addObject(297, "bread", (new ItemFood(5, 0.6F, false)).setUnlocalizedName("bread").setTextureName("bread"));\r
+        itemRegistry.addObject(298, "leather_helmet", (new ItemArmor(ItemArmor.ArmorMaterial.CLOTH, 0, 0)).setUnlocalizedName("helmetCloth").setTextureName("leather_helmet"));\r
+        itemRegistry.addObject(299, "leather_chestplate", (new ItemArmor(ItemArmor.ArmorMaterial.CLOTH, 0, 1)).setUnlocalizedName("chestplateCloth").setTextureName("leather_chestplate"));\r
+        itemRegistry.addObject(300, "leather_leggings", (new ItemArmor(ItemArmor.ArmorMaterial.CLOTH, 0, 2)).setUnlocalizedName("leggingsCloth").setTextureName("leather_leggings"));\r
+        itemRegistry.addObject(301, "leather_boots", (new ItemArmor(ItemArmor.ArmorMaterial.CLOTH, 0, 3)).setUnlocalizedName("bootsCloth").setTextureName("leather_boots"));\r
+        itemRegistry.addObject(302, "chainmail_helmet", (new ItemArmor(ItemArmor.ArmorMaterial.CHAIN, 1, 0)).setUnlocalizedName("helmetChain").setTextureName("chainmail_helmet"));\r
+        itemRegistry.addObject(303, "chainmail_chestplate", (new ItemArmor(ItemArmor.ArmorMaterial.CHAIN, 1, 1)).setUnlocalizedName("chestplateChain").setTextureName("chainmail_chestplate"));\r
+        itemRegistry.addObject(304, "chainmail_leggings", (new ItemArmor(ItemArmor.ArmorMaterial.CHAIN, 1, 2)).setUnlocalizedName("leggingsChain").setTextureName("chainmail_leggings"));\r
+        itemRegistry.addObject(305, "chainmail_boots", (new ItemArmor(ItemArmor.ArmorMaterial.CHAIN, 1, 3)).setUnlocalizedName("bootsChain").setTextureName("chainmail_boots"));\r
+        itemRegistry.addObject(306, "iron_helmet", (new ItemArmor(ItemArmor.ArmorMaterial.IRON, 2, 0)).setUnlocalizedName("helmetIron").setTextureName("iron_helmet"));\r
+        itemRegistry.addObject(307, "iron_chestplate", (new ItemArmor(ItemArmor.ArmorMaterial.IRON, 2, 1)).setUnlocalizedName("chestplateIron").setTextureName("iron_chestplate"));\r
+        itemRegistry.addObject(308, "iron_leggings", (new ItemArmor(ItemArmor.ArmorMaterial.IRON, 2, 2)).setUnlocalizedName("leggingsIron").setTextureName("iron_leggings"));\r
+        itemRegistry.addObject(309, "iron_boots", (new ItemArmor(ItemArmor.ArmorMaterial.IRON, 2, 3)).setUnlocalizedName("bootsIron").setTextureName("iron_boots"));\r
+        itemRegistry.addObject(310, "diamond_helmet", (new ItemArmor(ItemArmor.ArmorMaterial.DIAMOND, 3, 0)).setUnlocalizedName("helmetDiamond").setTextureName("diamond_helmet"));\r
+        itemRegistry.addObject(311, "diamond_chestplate", (new ItemArmor(ItemArmor.ArmorMaterial.DIAMOND, 3, 1)).setUnlocalizedName("chestplateDiamond").setTextureName("diamond_chestplate"));\r
+        itemRegistry.addObject(312, "diamond_leggings", (new ItemArmor(ItemArmor.ArmorMaterial.DIAMOND, 3, 2)).setUnlocalizedName("leggingsDiamond").setTextureName("diamond_leggings"));\r
+        itemRegistry.addObject(313, "diamond_boots", (new ItemArmor(ItemArmor.ArmorMaterial.DIAMOND, 3, 3)).setUnlocalizedName("bootsDiamond").setTextureName("diamond_boots"));\r
+        itemRegistry.addObject(314, "golden_helmet", (new ItemArmor(ItemArmor.ArmorMaterial.GOLD, 4, 0)).setUnlocalizedName("helmetGold").setTextureName("gold_helmet"));\r
+        itemRegistry.addObject(315, "golden_chestplate", (new ItemArmor(ItemArmor.ArmorMaterial.GOLD, 4, 1)).setUnlocalizedName("chestplateGold").setTextureName("gold_chestplate"));\r
+        itemRegistry.addObject(316, "golden_leggings", (new ItemArmor(ItemArmor.ArmorMaterial.GOLD, 4, 2)).setUnlocalizedName("leggingsGold").setTextureName("gold_leggings"));\r
+        itemRegistry.addObject(317, "golden_boots", (new ItemArmor(ItemArmor.ArmorMaterial.GOLD, 4, 3)).setUnlocalizedName("bootsGold").setTextureName("gold_boots"));\r
+        itemRegistry.addObject(318, "flint", (new Item()).setUnlocalizedName("flint").setCreativeTab(CreativeTabs.tabMaterials).setTextureName("flint"));\r
+        itemRegistry.addObject(319, "porkchop", (new ItemFood(3, 0.3F, true)).setUnlocalizedName("porkchopRaw").setTextureName("porkchop_raw"));\r
+        itemRegistry.addObject(320, "cooked_porkchop", (new ItemFood(8, 0.8F, true)).setUnlocalizedName("porkchopCooked").setTextureName("porkchop_cooked"));\r
+        itemRegistry.addObject(321, "painting", (new ItemHangingEntity(EntityPainting.class)).setUnlocalizedName("painting").setTextureName("painting"));\r
+        itemRegistry.addObject(322, "golden_apple", (new ItemAppleGold(4, 1.2F, false)).setAlwaysEdible().setPotionEffect(Potion.regeneration.id, 5, 1, 1.0F).setUnlocalizedName("appleGold").setTextureName("apple_golden"));\r
+        itemRegistry.addObject(323, "sign", (new ItemSign()).setUnlocalizedName("sign").setTextureName("sign"));\r
+        itemRegistry.addObject(324, "wooden_door", (new ItemDoor(Material.wood)).setUnlocalizedName("doorWood").setTextureName("door_wood"));\r
+        Item item = (new ItemBucket(Blocks.air)).setUnlocalizedName("bucket").setMaxStackSize(16).setTextureName("bucket_empty");\r
+        itemRegistry.addObject(325, "bucket", item);\r
+        itemRegistry.addObject(326, "water_bucket", (new ItemBucket(Blocks.flowing_water)).setUnlocalizedName("bucketWater").setContainerItem(item).setTextureName("bucket_water"));\r
+        itemRegistry.addObject(327, "lava_bucket", (new ItemBucket(Blocks.flowing_lava)).setUnlocalizedName("bucketLava").setContainerItem(item).setTextureName("bucket_lava"));\r
+        itemRegistry.addObject(328, "minecart", (new ItemMinecart(0)).setUnlocalizedName("minecart").setTextureName("minecart_normal"));\r
+        itemRegistry.addObject(329, "saddle", (new ItemSaddle()).setUnlocalizedName("saddle").setTextureName("saddle"));\r
+        itemRegistry.addObject(330, "iron_door", (new ItemDoor(Material.iron)).setUnlocalizedName("doorIron").setTextureName("door_iron"));\r
+        itemRegistry.addObject(331, "redstone", (new ItemRedstone()).setUnlocalizedName("redstone").setPotionEffect(PotionHelper.redstoneEffect).setTextureName("redstone_dust"));\r
+        itemRegistry.addObject(332, "snowball", (new ItemSnowball()).setUnlocalizedName("snowball").setTextureName("snowball"));\r
+        itemRegistry.addObject(333, "boat", (new ItemBoat()).setUnlocalizedName("boat").setTextureName("boat"));\r
+        itemRegistry.addObject(334, "leather", (new Item()).setUnlocalizedName("leather").setCreativeTab(CreativeTabs.tabMaterials).setTextureName("leather"));\r
+        itemRegistry.addObject(335, "milk_bucket", (new ItemBucketMilk()).setUnlocalizedName("milk").setContainerItem(item).setTextureName("bucket_milk"));\r
+        itemRegistry.addObject(336, "brick", (new Item()).setUnlocalizedName("brick").setCreativeTab(CreativeTabs.tabMaterials).setTextureName("brick"));\r
+        itemRegistry.addObject(337, "clay_ball", (new Item()).setUnlocalizedName("clay").setCreativeTab(CreativeTabs.tabMaterials).setTextureName("clay_ball"));\r
+        itemRegistry.addObject(338, "reeds", (new ItemReed(Blocks.reeds)).setUnlocalizedName("reeds").setCreativeTab(CreativeTabs.tabMaterials).setTextureName("reeds"));\r
+        itemRegistry.addObject(339, "paper", (new Item()).setUnlocalizedName("paper").setCreativeTab(CreativeTabs.tabMisc).setTextureName("paper"));\r
+        itemRegistry.addObject(340, "book", (new ItemBook()).setUnlocalizedName("book").setCreativeTab(CreativeTabs.tabMisc).setTextureName("book_normal"));\r
+        itemRegistry.addObject(341, "slime_ball", (new Item()).setUnlocalizedName("slimeball").setCreativeTab(CreativeTabs.tabMisc).setTextureName("slimeball"));\r
+        itemRegistry.addObject(342, "chest_minecart", (new ItemMinecart(1)).setUnlocalizedName("minecartChest").setTextureName("minecart_chest"));\r
+        itemRegistry.addObject(343, "furnace_minecart", (new ItemMinecart(2)).setUnlocalizedName("minecartFurnace").setTextureName("minecart_furnace"));\r
+        itemRegistry.addObject(344, "egg", (new ItemEgg()).setUnlocalizedName("egg").setTextureName("egg"));\r
+        itemRegistry.addObject(345, "compass", (new Item()).setUnlocalizedName("compass").setCreativeTab(CreativeTabs.tabTools).setTextureName("compass"));\r
+        itemRegistry.addObject(346, "fishing_rod", (new ItemFishingRod()).setUnlocalizedName("fishingRod").setTextureName("fishing_rod"));\r
+        itemRegistry.addObject(347, "clock", (new Item()).setUnlocalizedName("clock").setCreativeTab(CreativeTabs.tabTools).setTextureName("clock"));\r
+        itemRegistry.addObject(348, "glowstone_dust", (new Item()).setUnlocalizedName("yellowDust").setPotionEffect(PotionHelper.glowstoneEffect).setCreativeTab(CreativeTabs.tabMaterials).setTextureName("glowstone_dust"));\r
+        itemRegistry.addObject(349, "fish", (new ItemFishFood(false)).setUnlocalizedName("fish").setTextureName("fish_raw").setHasSubtypes(true));\r
+        itemRegistry.addObject(350, "cooked_fished", (new ItemFishFood(true)).setUnlocalizedName("fish").setTextureName("fish_cooked").setHasSubtypes(true));\r
+        itemRegistry.addObject(351, "dye", (new ItemDye()).setUnlocalizedName("dyePowder").setTextureName("dye_powder"));\r
+        itemRegistry.addObject(352, "bone", (new Item()).setUnlocalizedName("bone").setFull3D().setCreativeTab(CreativeTabs.tabMisc).setTextureName("bone"));\r
+        itemRegistry.addObject(353, "sugar", (new Item()).setUnlocalizedName("sugar").setPotionEffect(PotionHelper.sugarEffect).setCreativeTab(CreativeTabs.tabMaterials).setTextureName("sugar"));\r
+        itemRegistry.addObject(354, "cake", (new ItemReed(Blocks.cake)).setMaxStackSize(1).setUnlocalizedName("cake").setCreativeTab(CreativeTabs.tabFood).setTextureName("cake"));\r
+        itemRegistry.addObject(355, "bed", (new ItemBed()).setMaxStackSize(1).setUnlocalizedName("bed").setTextureName("bed"));\r
+        itemRegistry.addObject(356, "repeater", (new ItemReed(Blocks.unpowered_repeater)).setUnlocalizedName("diode").setCreativeTab(CreativeTabs.tabRedstone).setTextureName("repeater"));\r
+        itemRegistry.addObject(357, "cookie", (new ItemFood(2, 0.1F, false)).setUnlocalizedName("cookie").setTextureName("cookie"));\r
+        itemRegistry.addObject(358, "filled_map", (new ItemMap()).setUnlocalizedName("map").setTextureName("map_filled"));\r
+        itemRegistry.addObject(359, "shears", (new ItemShears()).setUnlocalizedName("shears").setTextureName("shears"));\r
+        itemRegistry.addObject(360, "melon", (new ItemFood(2, 0.3F, false)).setUnlocalizedName("melon").setTextureName("melon"));\r
+        itemRegistry.addObject(361, "pumpkin_seeds", (new ItemSeeds(Blocks.pumpkin_stem, Blocks.farmland)).setUnlocalizedName("seeds_pumpkin").setTextureName("seeds_pumpkin"));\r
+        itemRegistry.addObject(362, "melon_seeds", (new ItemSeeds(Blocks.melon_stem, Blocks.farmland)).setUnlocalizedName("seeds_melon").setTextureName("seeds_melon"));\r
+        itemRegistry.addObject(363, "beef", (new ItemFood(3, 0.3F, true)).setUnlocalizedName("beefRaw").setTextureName("beef_raw"));\r
+        itemRegistry.addObject(364, "cooked_beef", (new ItemFood(8, 0.8F, true)).setUnlocalizedName("beefCooked").setTextureName("beef_cooked"));\r
+        itemRegistry.addObject(365, "chicken", (new ItemFood(2, 0.3F, true)).setPotionEffect(Potion.hunger.id, 30, 0, 0.3F).setUnlocalizedName("chickenRaw").setTextureName("chicken_raw"));\r
+        itemRegistry.addObject(366, "cooked_chicken", (new ItemFood(6, 0.6F, true)).setUnlocalizedName("chickenCooked").setTextureName("chicken_cooked"));\r
+        itemRegistry.addObject(367, "rotten_flesh", (new ItemFood(4, 0.1F, true)).setPotionEffect(Potion.hunger.id, 30, 0, 0.8F).setUnlocalizedName("rottenFlesh").setTextureName("rotten_flesh"));\r
+        itemRegistry.addObject(368, "ender_pearl", (new ItemEnderPearl()).setUnlocalizedName("enderPearl").setTextureName("ender_pearl"));\r
+        itemRegistry.addObject(369, "blaze_rod", (new Item()).setUnlocalizedName("blazeRod").setCreativeTab(CreativeTabs.tabMaterials).setTextureName("blaze_rod"));\r
+        itemRegistry.addObject(370, "ghast_tear", (new Item()).setUnlocalizedName("ghastTear").setPotionEffect(PotionHelper.ghastTearEffect).setCreativeTab(CreativeTabs.tabBrewing).setTextureName("ghast_tear"));\r
+        itemRegistry.addObject(371, "gold_nugget", (new Item()).setUnlocalizedName("goldNugget").setCreativeTab(CreativeTabs.tabMaterials).setTextureName("gold_nugget"));\r
+        itemRegistry.addObject(372, "nether_wart", (new ItemSeeds(Blocks.nether_wart, Blocks.soul_sand)).setUnlocalizedName("netherStalkSeeds").setPotionEffect("+4").setTextureName("nether_wart"));\r
+        itemRegistry.addObject(373, "potion", (new ItemPotion()).setUnlocalizedName("potion").setTextureName("potion"));\r
+        itemRegistry.addObject(374, "glass_bottle", (new ItemGlassBottle()).setUnlocalizedName("glassBottle").setTextureName("potion_bottle_empty"));\r
+        itemRegistry.addObject(375, "spider_eye", (new ItemFood(2, 0.8F, false)).setPotionEffect(Potion.poison.id, 5, 0, 1.0F).setUnlocalizedName("spiderEye").setPotionEffect(PotionHelper.spiderEyeEffect).setTextureName("spider_eye"));\r
+        itemRegistry.addObject(376, "fermented_spider_eye", (new Item()).setUnlocalizedName("fermentedSpiderEye").setPotionEffect(PotionHelper.fermentedSpiderEyeEffect).setCreativeTab(CreativeTabs.tabBrewing).setTextureName("spider_eye_fermented"));\r
+        itemRegistry.addObject(377, "blaze_powder", (new Item()).setUnlocalizedName("blazePowder").setPotionEffect(PotionHelper.blazePowderEffect).setCreativeTab(CreativeTabs.tabBrewing).setTextureName("blaze_powder"));\r
+        itemRegistry.addObject(378, "magma_cream", (new Item()).setUnlocalizedName("magmaCream").setPotionEffect(PotionHelper.magmaCreamEffect).setCreativeTab(CreativeTabs.tabBrewing).setTextureName("magma_cream"));\r
+        itemRegistry.addObject(379, "brewing_stand", (new ItemReed(Blocks.brewing_stand)).setUnlocalizedName("brewingStand").setCreativeTab(CreativeTabs.tabBrewing).setTextureName("brewing_stand"));\r
+        itemRegistry.addObject(380, "cauldron", (new ItemReed(Blocks.cauldron)).setUnlocalizedName("cauldron").setCreativeTab(CreativeTabs.tabBrewing).setTextureName("cauldron"));\r
+        itemRegistry.addObject(381, "ender_eye", (new ItemEnderEye()).setUnlocalizedName("eyeOfEnder").setTextureName("ender_eye"));\r
+        itemRegistry.addObject(382, "speckled_melon", (new Item()).setUnlocalizedName("speckledMelon").setPotionEffect(PotionHelper.speckledMelonEffect).setCreativeTab(CreativeTabs.tabBrewing).setTextureName("melon_speckled"));\r
+        itemRegistry.addObject(383, "spawn_egg", (new ItemMonsterPlacer()).setUnlocalizedName("monsterPlacer").setTextureName("spawn_egg"));\r
+        itemRegistry.addObject(384, "experience_bottle", (new ItemExpBottle()).setUnlocalizedName("expBottle").setTextureName("experience_bottle"));\r
+        itemRegistry.addObject(385, "fire_charge", (new ItemFireball()).setUnlocalizedName("fireball").setTextureName("fireball"));\r
+        itemRegistry.addObject(386, "writable_book", (new ItemWritableBook()).setUnlocalizedName("writingBook").setCreativeTab(CreativeTabs.tabMisc).setTextureName("book_writable"));\r
+        itemRegistry.addObject(387, "written_book", (new ItemEditableBook()).setUnlocalizedName("writtenBook").setTextureName("book_written").setMaxStackSize(16));\r
+        itemRegistry.addObject(388, "emerald", (new Item()).setUnlocalizedName("emerald").setCreativeTab(CreativeTabs.tabMaterials).setTextureName("emerald"));\r
+        itemRegistry.addObject(389, "item_frame", (new ItemHangingEntity(EntityItemFrame.class)).setUnlocalizedName("frame").setTextureName("item_frame"));\r
+        itemRegistry.addObject(390, "flower_pot", (new ItemReed(Blocks.flower_pot)).setUnlocalizedName("flowerPot").setCreativeTab(CreativeTabs.tabDecorations).setTextureName("flower_pot"));\r
+        itemRegistry.addObject(391, "carrot", (new ItemSeedFood(4, 0.6F, Blocks.carrots, Blocks.farmland)).setUnlocalizedName("carrots").setTextureName("carrot"));\r
+        itemRegistry.addObject(392, "potato", (new ItemSeedFood(1, 0.3F, Blocks.potatoes, Blocks.farmland)).setUnlocalizedName("potato").setTextureName("potato"));\r
+        itemRegistry.addObject(393, "baked_potato", (new ItemFood(6, 0.6F, false)).setUnlocalizedName("potatoBaked").setTextureName("potato_baked"));\r
+        itemRegistry.addObject(394, "poisonous_potato", (new ItemFood(2, 0.3F, false)).setPotionEffect(Potion.poison.id, 5, 0, 0.6F).setUnlocalizedName("potatoPoisonous").setTextureName("potato_poisonous"));\r
+        itemRegistry.addObject(395, "map", (new ItemEmptyMap()).setUnlocalizedName("emptyMap").setTextureName("map_empty"));\r
+        itemRegistry.addObject(396, "golden_carrot", (new ItemFood(6, 1.2F, false)).setUnlocalizedName("carrotGolden").setPotionEffect(PotionHelper.goldenCarrotEffect).setTextureName("carrot_golden"));\r
+        itemRegistry.addObject(397, "skull", (new ItemSkull()).setUnlocalizedName("skull").setTextureName("skull"));\r
+        itemRegistry.addObject(398, "carrot_on_a_stick", (new ItemCarrotOnAStick()).setUnlocalizedName("carrotOnAStick").setTextureName("carrot_on_a_stick"));\r
+        itemRegistry.addObject(399, "nether_star", (new ItemSimpleFoiled()).setUnlocalizedName("netherStar").setCreativeTab(CreativeTabs.tabMaterials).setTextureName("nether_star"));\r
+        itemRegistry.addObject(400, "pumpkin_pie", (new ItemFood(8, 0.3F, false)).setUnlocalizedName("pumpkinPie").setCreativeTab(CreativeTabs.tabFood).setTextureName("pumpkin_pie"));\r
+        itemRegistry.addObject(401, "fireworks", (new ItemFirework()).setUnlocalizedName("fireworks").setTextureName("fireworks"));\r
+        itemRegistry.addObject(402, "firework_charge", (new ItemFireworkCharge()).setUnlocalizedName("fireworksCharge").setCreativeTab(CreativeTabs.tabMisc).setTextureName("fireworks_charge"));\r
+        itemRegistry.addObject(403, "enchanted_book", (new ItemEnchantedBook()).setMaxStackSize(1).setUnlocalizedName("enchantedBook").setTextureName("book_enchanted"));\r
+        itemRegistry.addObject(404, "comparator", (new ItemReed(Blocks.unpowered_comparator)).setUnlocalizedName("comparator").setCreativeTab(CreativeTabs.tabRedstone).setTextureName("comparator"));\r
+        itemRegistry.addObject(405, "netherbrick", (new Item()).setUnlocalizedName("netherbrick").setCreativeTab(CreativeTabs.tabMaterials).setTextureName("netherbrick"));\r
+        itemRegistry.addObject(406, "quartz", (new Item()).setUnlocalizedName("netherquartz").setCreativeTab(CreativeTabs.tabMaterials).setTextureName("quartz"));\r
+        itemRegistry.addObject(407, "tnt_minecart", (new ItemMinecart(3)).setUnlocalizedName("minecartTnt").setTextureName("minecart_tnt"));\r
+        itemRegistry.addObject(408, "hopper_minecart", (new ItemMinecart(5)).setUnlocalizedName("minecartHopper").setTextureName("minecart_hopper"));\r
+        itemRegistry.addObject(417, "iron_horse_armor", (new Item()).setUnlocalizedName("horsearmormetal").setMaxStackSize(1).setCreativeTab(CreativeTabs.tabMisc).setTextureName("iron_horse_armor"));\r
+        itemRegistry.addObject(418, "golden_horse_armor", (new Item()).setUnlocalizedName("horsearmorgold").setMaxStackSize(1).setCreativeTab(CreativeTabs.tabMisc).setTextureName("gold_horse_armor"));\r
+        itemRegistry.addObject(419, "diamond_horse_armor", (new Item()).setUnlocalizedName("horsearmordiamond").setMaxStackSize(1).setCreativeTab(CreativeTabs.tabMisc).setTextureName("diamond_horse_armor"));\r
+        itemRegistry.addObject(420, "lead", (new ItemLead()).setUnlocalizedName("leash").setTextureName("lead"));\r
+        itemRegistry.addObject(421, "name_tag", (new ItemNameTag()).setUnlocalizedName("nameTag").setTextureName("name_tag"));\r
+        itemRegistry.addObject(422, "command_block_minecart", (new ItemMinecart(6)).setUnlocalizedName("minecartCommandBlock").setTextureName("minecart_command_block").setCreativeTab((CreativeTabs)null));\r
+        itemRegistry.addObject(2256, "record_13", (new ItemRecord("13")).setUnlocalizedName("record").setTextureName("record_13"));\r
+        itemRegistry.addObject(2257, "record_cat", (new ItemRecord("cat")).setUnlocalizedName("record").setTextureName("record_cat"));\r
+        itemRegistry.addObject(2258, "record_blocks", (new ItemRecord("blocks")).setUnlocalizedName("record").setTextureName("record_blocks"));\r
+        itemRegistry.addObject(2259, "record_chirp", (new ItemRecord("chirp")).setUnlocalizedName("record").setTextureName("record_chirp"));\r
+        itemRegistry.addObject(2260, "record_far", (new ItemRecord("far")).setUnlocalizedName("record").setTextureName("record_far"));\r
+        itemRegistry.addObject(2261, "record_mall", (new ItemRecord("mall")).setUnlocalizedName("record").setTextureName("record_mall"));\r
+        itemRegistry.addObject(2262, "record_mellohi", (new ItemRecord("mellohi")).setUnlocalizedName("record").setTextureName("record_mellohi"));\r
+        itemRegistry.addObject(2263, "record_stal", (new ItemRecord("stal")).setUnlocalizedName("record").setTextureName("record_stal"));\r
+        itemRegistry.addObject(2264, "record_strad", (new ItemRecord("strad")).setUnlocalizedName("record").setTextureName("record_strad"));\r
+        itemRegistry.addObject(2265, "record_ward", (new ItemRecord("ward")).setUnlocalizedName("record").setTextureName("record_ward"));\r
+        itemRegistry.addObject(2266, "record_11", (new ItemRecord("11")).setUnlocalizedName("record").setTextureName("record_11"));\r
+        itemRegistry.addObject(2267, "record_wait", (new ItemRecord("wait")).setUnlocalizedName("record").setTextureName("record_wait"));\r
+        HashSet hashset = Sets.newHashSet(new Block[] {Blocks.air, Blocks.brewing_stand, Blocks.bed, Blocks.nether_wart, Blocks.cauldron, Blocks.flower_pot, Blocks.wheat, Blocks.reeds, Blocks.cake, Blocks.skull, Blocks.piston_head, Blocks.piston_extension, Blocks.lit_redstone_ore, Blocks.powered_repeater, Blocks.pumpkin_stem, Blocks.standing_sign, Blocks.powered_comparator, Blocks.tripwire, Blocks.lit_redstone_lamp, Blocks.melon_stem, Blocks.unlit_redstone_torch, Blocks.unpowered_comparator, Blocks.redstone_wire, Blocks.wall_sign, Blocks.unpowered_repeater, Blocks.iron_door, Blocks.wooden_door});\r
+        Iterator iterator = Block.blockRegistry.getKeys().iterator();\r
+\r
+        while (iterator.hasNext())\r
+        {\r
+            String s = (String)iterator.next();\r
+            Block block = (Block)Block.blockRegistry.getObject(s);\r
+            Object object;\r
+\r
+            if (block == Blocks.wool)\r
+            {\r
+                object = (new ItemCloth(Blocks.wool)).setUnlocalizedName("cloth");\r
+            }\r
+            else if (block == Blocks.stained_hardened_clay)\r
+            {\r
+                object = (new ItemCloth(Blocks.stained_hardened_clay)).setUnlocalizedName("clayHardenedStained");\r
+            }\r
+            else if (block == Blocks.stained_glass)\r
+            {\r
+                object = (new ItemCloth(Blocks.stained_glass)).setUnlocalizedName("stainedGlass");\r
+            }\r
+            else if (block == Blocks.stained_glass_pane)\r
+            {\r
+                object = (new ItemCloth(Blocks.stained_glass_pane)).setUnlocalizedName("stainedGlassPane");\r
+            }\r
+            else if (block == Blocks.carpet)\r
+            {\r
+                object = (new ItemCloth(Blocks.carpet)).setUnlocalizedName("woolCarpet");\r
+            }\r
+            else if (block == Blocks.dirt)\r
+            {\r
+                object = (new ItemMultiTexture(Blocks.dirt, Blocks.dirt, BlockDirt.field_150009_a)).setUnlocalizedName("dirt");\r
+            }\r
+            else if (block == Blocks.sand)\r
+            {\r
+                object = (new ItemMultiTexture(Blocks.sand, Blocks.sand, BlockSand.field_149838_a)).setUnlocalizedName("sand");\r
+            }\r
+            else if (block == Blocks.log)\r
+            {\r
+                object = (new ItemMultiTexture(Blocks.log, Blocks.log, BlockOldLog.field_150168_M)).setUnlocalizedName("log");\r
+            }\r
+            else if (block == Blocks.log2)\r
+            {\r
+                object = (new ItemMultiTexture(Blocks.log2, Blocks.log2, BlockNewLog.field_150169_M)).setUnlocalizedName("log");\r
+            }\r
+            else if (block == Blocks.planks)\r
+            {\r
+                object = (new ItemMultiTexture(Blocks.planks, Blocks.planks, BlockWood.field_150096_a)).setUnlocalizedName("wood");\r
+            }\r
+            else if (block == Blocks.monster_egg)\r
+            {\r
+                object = (new ItemMultiTexture(Blocks.monster_egg, Blocks.monster_egg, BlockSilverfish.field_150198_a)).setUnlocalizedName("monsterStoneEgg");\r
+            }\r
+            else if (block == Blocks.stonebrick)\r
+            {\r
+                object = (new ItemMultiTexture(Blocks.stonebrick, Blocks.stonebrick, BlockStoneBrick.field_150142_a)).setUnlocalizedName("stonebricksmooth");\r
+            }\r
+            else if (block == Blocks.sandstone)\r
+            {\r
+                object = (new ItemMultiTexture(Blocks.sandstone, Blocks.sandstone, BlockSandStone.field_150157_a)).setUnlocalizedName("sandStone");\r
+            }\r
+            else if (block == Blocks.quartz_block)\r
+            {\r
+                object = (new ItemMultiTexture(Blocks.quartz_block, Blocks.quartz_block, BlockQuartz.field_150191_a)).setUnlocalizedName("quartzBlock");\r
+            }\r
+            else if (block == Blocks.stone_slab)\r
+            {\r
+                object = (new ItemSlab(Blocks.stone_slab, Blocks.stone_slab, Blocks.double_stone_slab, false)).setUnlocalizedName("stoneSlab");\r
+            }\r
+            else if (block == Blocks.double_stone_slab)\r
+            {\r
+                object = (new ItemSlab(Blocks.double_stone_slab, Blocks.stone_slab, Blocks.double_stone_slab, true)).setUnlocalizedName("stoneSlab");\r
+            }\r
+            else if (block == Blocks.wooden_slab)\r
+            {\r
+                object = (new ItemSlab(Blocks.wooden_slab, Blocks.wooden_slab, Blocks.double_wooden_slab, false)).setUnlocalizedName("woodSlab");\r
+            }\r
+            else if (block == Blocks.double_wooden_slab)\r
+            {\r
+                object = (new ItemSlab(Blocks.double_wooden_slab, Blocks.wooden_slab, Blocks.double_wooden_slab, true)).setUnlocalizedName("woodSlab");\r
+            }\r
+            else if (block == Blocks.sapling)\r
+            {\r
+                object = (new ItemMultiTexture(Blocks.sapling, Blocks.sapling, BlockSapling.field_149882_a)).setUnlocalizedName("sapling");\r
+            }\r
+            else if (block == Blocks.leaves)\r
+            {\r
+                object = (new ItemLeaves(Blocks.leaves)).setUnlocalizedName("leaves");\r
+            }\r
+            else if (block == Blocks.leaves2)\r
+            {\r
+                object = (new ItemLeaves(Blocks.leaves2)).setUnlocalizedName("leaves");\r
+            }\r
+            else if (block == Blocks.vine)\r
+            {\r
+                object = new ItemColored(Blocks.vine, false);\r
+            }\r
+            else if (block == Blocks.tallgrass)\r
+            {\r
+                object = (new ItemColored(Blocks.tallgrass, true)).func_150943_a(new String[] {"shrub", "grass", "fern"});\r
+            }\r
+            else if (block == Blocks.yellow_flower)\r
+            {\r
+                object = (new ItemMultiTexture(Blocks.yellow_flower, Blocks.yellow_flower, BlockFlower.field_149858_b)).setUnlocalizedName("flower");\r
+            }\r
+            else if (block == Blocks.red_flower)\r
+            {\r
+                object = (new ItemMultiTexture(Blocks.red_flower, Blocks.red_flower, BlockFlower.field_149859_a)).setUnlocalizedName("rose");\r
+            }\r
+            else if (block == Blocks.snow_layer)\r
+            {\r
+                object = new ItemSnow(Blocks.snow_layer, Blocks.snow_layer);\r
+            }\r
+            else if (block == Blocks.waterlily)\r
+            {\r
+                object = new ItemLilyPad(Blocks.waterlily);\r
+            }\r
+            else if (block == Blocks.piston)\r
+            {\r
+                object = new ItemPiston(Blocks.piston);\r
+            }\r
+            else if (block == Blocks.sticky_piston)\r
+            {\r
+                object = new ItemPiston(Blocks.sticky_piston);\r
+            }\r
+            else if (block == Blocks.cobblestone_wall)\r
+            {\r
+                object = (new ItemMultiTexture(Blocks.cobblestone_wall, Blocks.cobblestone_wall, BlockWall.field_150092_a)).setUnlocalizedName("cobbleWall");\r
+            }\r
+            else if (block == Blocks.anvil)\r
+            {\r
+                object = (new ItemAnvilBlock(Blocks.anvil)).setUnlocalizedName("anvil");\r
+            }\r
+            else if (block == Blocks.double_plant)\r
+            {\r
+                object = (new ItemDoublePlant(Blocks.double_plant, Blocks.double_plant, BlockDoublePlant.field_149892_a)).setUnlocalizedName("doublePlant");\r
+            }\r
+            else\r
+            {\r
+                if (hashset.contains(block))\r
+                {\r
+                    continue;\r
+                }\r
+\r
+                object = new ItemBlock(block);\r
+            }\r
+\r
+            itemRegistry.addObject(Block.getIdFromBlock(block), s, object);\r
+        }\r
+    }', 'Item.setMaxStackSize': 'Item setMaxStackSize(int p_77625_1_)\r
+    {\r
+        this.maxStackSize = p_77625_1_;\r
+        return this;\r
+    }', 'Item.getSpriteNumber': 'int getSpriteNumber()\r
+    {\r
+        return 1;\r
+    }', 'Item.getIconFromDamage': 'IIcon getIconFromDamage(int p_77617_1_)\r
+    {\r
+        return this.itemIcon;\r
+    }', 'Item.getIconIndex': 'IIcon getIconIndex(ItemStack p_77650_1_)\r
+    {\r
+        return this.getIconFromDamage(p_77650_1_.getItemDamage());\r
+    }', 'Item.onItemUse': 'boolean onItemUse(ItemStack p_77648_1_, EntityPlayer p_77648_2_, World p_77648_3_, int p_77648_4_, int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_)\r
+    {\r
+        return false;\r
+    }', 'Item.func_150893_a': 'float func_150893_a(ItemStack p_150893_1_, Block p_150893_2_)\r
+    {\r
+        return 1.0F;\r
+    }', 'Item.onItemRightClick': 'ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer player)\r
+    {\r
+        return itemStackIn;\r
+    }', 'Item.onEaten': 'ItemStack onEaten(ItemStack p_77654_1_, World p_77654_2_, EntityPlayer p_77654_3_)\r
+    {\r
+        return p_77654_1_;\r
+    }', 'Item.getItemStackLimit': 'int getItemStackLimit(ItemStack stack)\r
+    {\r
+        return this.getItemStackLimit();\r
+    }', 'Item.getMetadata': 'int getMetadata(int p_77647_1_)\r
+    {\r
+        return 0;\r
+    }', 'Item.getHasSubtypes': 'boolean getHasSubtypes()\r
+    {\r
+        return this.hasSubtypes;\r
+    }', 'Item.setHasSubtypes': 'Item setHasSubtypes(boolean p_77627_1_)\r
+    {\r
+        this.hasSubtypes = p_77627_1_;\r
+        return this;\r
+    }', 'Item.getMaxDamage': 'int getMaxDamage(ItemStack stack)\r
+    {\r
+        return getMaxDamage();\r
+    }', 'Item.setMaxDamage': 'Item setMaxDamage(int p_77656_1_)\r
+    {\r
+        this.maxDamage = p_77656_1_;\r
+        return this;\r
+    }', 'Item.isDamageable': 'boolean isDamageable()\r
+    {\r
+        return this.maxDamage > 0 && !this.hasSubtypes;\r
+    }', 'Item.hitEntity': 'boolean hitEntity(ItemStack stack, EntityLivingBase p_77644_2_, EntityLivingBase p_77644_3_)\r
+    {\r
+        return false;\r
+    }', 'Item.onBlockDestroyed': 'boolean onBlockDestroyed(ItemStack stack, World worldIn, Block blockIn, int p_150894_4_, int p_150894_5_, int p_150894_6_, EntityLivingBase p_150894_7_)\r
+    {\r
+        return false;\r
+    }', 'Item.func_150897_b': 'boolean func_150897_b(Block p_150897_1_)\r
+    {\r
+        return false;\r
+    }', 'Item.itemInteractionForEntity': 'boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target)\r
+    {\r
+        return false;\r
+    }', 'Item.setFull3D': 'Item setFull3D()\r
+    {\r
+        this.bFull3D = true;\r
+        return this;\r
+    }', 'Item.isFull3D': 'boolean isFull3D()\r
+    {\r
+        return this.bFull3D;\r
+    }', 'Item.shouldRotateAroundWhenRendering': 'boolean shouldRotateAroundWhenRendering()\r
+    {\r
+        return false;\r
+    }', 'Item.setUnlocalizedName': 'Item setUnlocalizedName(String p_77655_1_)\r
+    {\r
+        this.unlocalizedName = p_77655_1_;\r
+        return this;\r
+    }', 'Item.getUnlocalizedNameInefficiently': 'String getUnlocalizedNameInefficiently(ItemStack p_77657_1_)\r
+    {\r
+        String s = this.getUnlocalizedName(p_77657_1_);\r
+        return s == null ? "" : StatCollector.translateToLocal(s);\r
+    }', 'Item.getUnlocalizedName': 'String getUnlocalizedName(ItemStack stack)\r
+    {\r
+        return "item." + this.unlocalizedName;\r
+    }', 'Item.setContainerItem': 'Item setContainerItem(Item p_77642_1_)\r
+    {\r
+        this.containerItem = p_77642_1_;\r
+        return this;\r
+    }', 'Item.doesContainerItemLeaveCraftingGrid': 'boolean doesContainerItemLeaveCraftingGrid(ItemStack p_77630_1_)\r
+    {\r
+        return true;\r
+    }', 'Item.getShareTag': 'boolean getShareTag()\r
+    {\r
+        return true;\r
+    }', 'Item.getContainerItem': 'ItemStack getContainerItem(ItemStack itemStack)\r
+    {\r
+        if (!hasContainerItem(itemStack))\r
+        {\r
+            return null;\r
+        }\r
+        return new ItemStack(getContainerItem());\r
+    }', 'Item.hasContainerItem': 'boolean hasContainerItem(ItemStack stack)\r
+    {\r
+        return hasContainerItem();\r
+    }', 'Item.getColorFromItemStack': 'int getColorFromItemStack(ItemStack p_82790_1_, int p_82790_2_)\r
+    {\r
+        return 16777215;\r
+    }', 'Item.onUpdate': 'void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int p_77663_4_, boolean p_77663_5_) {}', 'Item.onCreated': 'void onCreated(ItemStack p_77622_1_, World p_77622_2_, EntityPlayer p_77622_3_) {}', 'Item.isMap': 'boolean isMap()\r
+    {\r
+        return false;\r
+    }', 'Item.getItemUseAction': 'EnumAction getItemUseAction(ItemStack stack)\r
+    {\r
+        return EnumAction.none;\r
+    }', 'Item.getMaxItemUseDuration': 'int getMaxItemUseDuration(ItemStack p_77626_1_)\r
+    {\r
+        return 0;\r
+    }', 'Item.onPlayerStoppedUsing': 'void onPlayerStoppedUsing(ItemStack p_77615_1_, World p_77615_2_, EntityPlayer p_77615_3_, int p_77615_4_) {}', 'Item.setPotionEffect': 'Item setPotionEffect(String p_77631_1_)\r
+    {\r
+        this.potionEffect = p_77631_1_;\r
+        return this;\r
+    }', 'Item.getPotionEffect': 'String getPotionEffect(ItemStack p_150896_1_)\r
+    {\r
+        return this.potionEffect;\r
+    }', 'Item.isPotionIngredient': 'boolean isPotionIngredient(ItemStack p_150892_1_)\r
+    {\r
+        return this.getPotionEffect(p_150892_1_) != null;\r
+    }', 'Item.addInformation': 'void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List<String> p_77624_3_, boolean p_77624_4_) {}', 'Item.getItemStackDisplayName': 'String getItemStackDisplayName(ItemStack p_77653_1_)\r
+    {\r
+        return ("" + StatCollector.translateToLocal(this.getUnlocalizedNameInefficiently(p_77653_1_) + ".name")).trim();\r
+    }', 'Item.hasEffect': 'boolean hasEffect(ItemStack par1ItemStack, int pass)\r
+    {\r
+        return hasEffect(par1ItemStack) && (pass == 0 || this != Items.potionitem);\r
+    }', 'Item.getRarity': 'EnumRarity getRarity(ItemStack p_77613_1_)\r
+    {\r
+        return p_77613_1_.isItemEnchanted() ? EnumRarity.rare : EnumRarity.common;\r
+    }', 'Item.isItemTool': 'boolean isItemTool(ItemStack p_77616_1_)\r
+    {\r
+        return this.getItemStackLimit(p_77616_1_) == 1 && this.isDamageable();\r
+    }', 'Item.getMovingObjectPositionFromPlayer': 'MovingObjectPosition getMovingObjectPositionFromPlayer(World worldIn, EntityPlayer player, boolean useLiquids)\r
+    {\r
+        float f = 1.0F;\r
+        float f1 = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * f;\r
+        float f2 = player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * f;\r
+        double d0 = player.prevPosX + (player.posX - player.prevPosX) * (double)f;\r
+        double d1 = player.prevPosY + (player.posY - player.prevPosY) * (double)f + (double)(worldIn.isRemote ? player.getEyeHeight() - player.getDefaultEyeHeight() : player.getEyeHeight()); // isRemote check to revert changes to ray trace position due to adding the eye height clientside and player yOffset differences\r
+        double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * (double)f;\r
+        Vec3 vec3 = Vec3.createVectorHelper(d0, d1, d2);\r
+        float f3 = MathHelper.cos(-f2 * 0.017453292F - (float)Math.PI);\r
+        float f4 = MathHelper.sin(-f2 * 0.017453292F - (float)Math.PI);\r
+        float f5 = -MathHelper.cos(-f1 * 0.017453292F);\r
+        float f6 = MathHelper.sin(-f1 * 0.017453292F);\r
+        float f7 = f4 * f5;\r
+        float f8 = f3 * f5;\r
+        double d3 = 5.0D;\r
+        if (player instanceof EntityPlayerMP)\r
+        {\r
+            d3 = ((EntityPlayerMP)player).theItemInWorldManager.getBlockReachDistance();\r
+        }\r
+        Vec3 vec31 = vec3.addVector((double)f7 * d3, (double)f6 * d3, (double)f8 * d3);\r
+        return worldIn.func_147447_a(vec3, vec31, useLiquids, !useLiquids, false);\r
+    }', 'Item.getItemEnchantability': 'int getItemEnchantability(ItemStack stack)\r
+    {\r
+        return getItemEnchantability();\r
+    }', 'Item.requiresMultipleRenderPasses': 'boolean requiresMultipleRenderPasses()\r
+    {\r
+        return false;\r
+    }', 'Item.getIconFromDamageForRenderPass': 'IIcon getIconFromDamageForRenderPass(int p_77618_1_, int p_77618_2_)\r
+    {\r
+        return this.getIconFromDamage(p_77618_1_);\r
+    }', 'Item.getSubItems': 'void getSubItems(Item p_150895_1_, CreativeTabs p_150895_2_, List<net.minecraft.item.ItemStack> p_150895_3_)\r
+    {\r
+        p_150895_3_.add(new ItemStack(p_150895_1_, 1, 0));\r
+    }', 'Item.setCreativeTab': 'Item setCreativeTab(CreativeTabs p_77637_1_)\r
+    {\r
+        this.tabToDisplayOn = p_77637_1_;\r
+        return this;\r
+    }', 'Item.getCreativeTab': 'CreativeTabs getCreativeTab()\r
+    {\r
+        return this.tabToDisplayOn;\r
+    }', 'Item.canItemEditBlocks': 'boolean canItemEditBlocks()\r
+    {\r
+        return true;\r
+    }', 'Item.getIsRepairable': 'boolean getIsRepairable(ItemStack p_82789_1_, ItemStack p_82789_2_)\r
+    {\r
+        return false;\r
+    }', 'Item.registerIcons': 'void registerIcons(IIconRegister register)\r
+    {\r
+        this.itemIcon = register.registerIcon(this.getIconString());\r
+    }', 'Item.getItemAttributeModifiers': 'Multimap<String, net.minecraft.entity.ai.attributes.AttributeModifier> getItemAttributeModifiers()\r
+    {\r
+        return HashMultimap.create();\r
+    }', 'Item.setTextureName': 'Item setTextureName(String p_111206_1_)\r
+    {\r
+        this.iconString = p_111206_1_;\r
+        return this;\r
+    }', 'Item.getIconString': 'String getIconString()\r
+    {\r
+        return this.iconString == null ? "MISSING_ICON_ITEM_" + itemRegistry.getIDForObject(this) + "_" + this.unlocalizedName : this.iconString;\r
+    }', 'Item.getAttributeModifiers': 'Multimap<String, net.minecraft.entity.ai.attributes.AttributeModifier> getAttributeModifiers(ItemStack stack)\r
+    {\r
+        return this.getItemAttributeModifiers();\r
+    }', 'Item.onDroppedByPlayer': 'boolean onDroppedByPlayer(ItemStack item, EntityPlayer player)\r
+    {\r
+        return true;\r
+    }', 'Item.onItemUseFirst': 'boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)\r
+    {\r
+        return false;\r
+    }', 'Item.getDigSpeed': 'float getDigSpeed(ItemStack itemstack, Block block, int metadata)\r
+    {\r
+        return func_150893_a(itemstack, block);\r
+    }', 'Item.isRepairable': 'boolean isRepairable()\r
+    {\r
+        return canRepair && isDamageable();\r
+    }', 'Item.setNoRepair': 'Item setNoRepair()\r
+    {\r
+        canRepair = false;\r
+        return this;\r
+    }', 'Item.onBlockStartBreak': 'boolean onBlockStartBreak(ItemStack itemstack, int X, int Y, int Z, EntityPlayer player)\r
+    {\r
+        return false;\r
+    }', 'Item.onUsingTick': 'void onUsingTick(ItemStack stack, EntityPlayer player, int count)\r
+    {\r
+    }', 'Item.onLeftClickEntity': 'boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity)\r
+    {\r
+        return false;\r
+    }', 'Item.getIcon': 'IIcon getIcon(ItemStack stack, int pass)\r
+    {\r
+        return getIconFromDamageForRenderPass(stack.getItemDamage(), pass);\r
+    }', 'Item.getRenderPasses': 'int getRenderPasses(int metadata)\r
+    {\r
+        return requiresMultipleRenderPasses() ? 2 : 1;\r
+    }', 'Item.getEntityLifespan': 'int getEntityLifespan(ItemStack itemStack, World world)\r
+    {\r
+        return 6000;\r
+    }', 'Item.hasCustomEntity': 'boolean hasCustomEntity(ItemStack stack)\r
+    {\r
+        return false;\r
+    }', 'Item.createEntity': 'Entity createEntity(World world, Entity location, ItemStack itemstack)\r
+    {\r
+        return null;\r
+    }', 'Item.onEntityItemUpdate': 'boolean onEntityItemUpdate(EntityItem entityItem)\r
+    {\r
+        return false;\r
+    }', 'Item.getCreativeTabs': 'CreativeTabs[] getCreativeTabs()\r
+    {\r
+        return new CreativeTabs[]{ getCreativeTab() };\r
+    }', 'Item.getSmeltingExperience': 'float getSmeltingExperience(ItemStack item)\r
+    {\r
+        return -1; //-1 will default to the old lookups.\r
+    }', 'Item.getChestGenBase': 'WeightedRandomChestContent getChestGenBase(ChestGenHooks chest, Random rnd, WeightedRandomChestContent original)\r
+    {\r
+        if (this instanceof ItemEnchantedBook)\r
+        {\r
+            return ((ItemEnchantedBook)this).func_92112_a(rnd,\r
+                    original.theMinimumChanceToGenerateItem,\r
+                    original.theMaximumChanceToGenerateItem, original.itemWeight);\r
+        }\r
+        return original;\r
+    }', 'Item.doesSneakBypassUse': 'boolean doesSneakBypassUse(World world, int x, int y, int z, EntityPlayer player)\r
+    {\r
+        return false;\r
+    }', 'Item.onArmorTick': 'void onArmorTick(World world, EntityPlayer player, ItemStack itemStack)\r
+    {\r
+\r
+    }', 'Item.isValidArmor': 'boolean isValidArmor(ItemStack stack, int armorType, Entity entity)\r
+    {\r
+        if (this instanceof ItemArmor)\r
+        {\r
+            return ((ItemArmor)this).armorType == armorType;\r
+        }\r
+\r
+        if (armorType == 0)\r
+        {\r
+            return this == Item.getItemFromBlock(Blocks.pumpkin) || this == Items.skull;\r
+        }\r
+\r
+        return false;\r
+    }', 'Item.isBookEnchantable': 'boolean isBookEnchantable(ItemStack stack, ItemStack book)\r
+    {\r
+        return true;\r
+    }', 'Item.getArmorTexture': 'String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)\r
+    {\r
+        return null;\r
+    }', 'Item.getFontRenderer': 'FontRenderer getFontRenderer(ItemStack stack)\r
+    {\r
+        return null;\r
+    }', 'Item.getArmorModel': 'ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, int armorSlot)\r
+    {\r
+        return null;\r
+    }', 'Item.onEntitySwing': 'boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack)\r
+    {\r
+        return false;\r
+    }', 'Item.renderHelmetOverlay': 'void renderHelmetOverlay(ItemStack stack, EntityPlayer player, ScaledResolution resolution, float partialTicks, boolean hasScreen, int mouseX, int mouseY){}', 'Item.getDamage': 'int getDamage(ItemStack stack)\r
+    {\r
+        return stack.itemDamage;\r
+    }', 'Item.getDisplayDamage': 'int getDisplayDamage(ItemStack stack)\r
+    {\r
+        return stack.itemDamage;\r
+    }', 'Item.showDurabilityBar': 'boolean showDurabilityBar(ItemStack stack)\r
+    {\r
+        return stack.isItemDamaged();\r
+    }', 'Item.getDurabilityForDisplay': 'double getDurabilityForDisplay(ItemStack stack)\r
+    {\r
+        return (double)stack.getItemDamageForDisplay() / (double)stack.getMaxDamage();\r
+    }', 'Item.isDamaged': 'boolean isDamaged(ItemStack stack)\r
+    {\r
+        return stack.itemDamage > 0;\r
+    }', 'Item.setDamage': 'void setDamage(ItemStack stack, int damage)\r
+    {\r
+        stack.itemDamage = damage;\r
+\r
+        if (stack.itemDamage < 0)\r
+        {\r
+            stack.itemDamage = 0;\r
+        }\r
+    }', 'Item.canHarvestBlock': 'boolean canHarvestBlock(Block par1Block, ItemStack itemStack)\r
+    {\r
+        return func_150897_b(par1Block);\r
+    }', 'Item.setHarvestLevel': 'void setHarvestLevel(String toolClass, int level)\r
+    {\r
+        if (level < 0)\r
+            toolClasses.remove(toolClass);\r
+        else\r
+            toolClasses.put(toolClass, level);\r
+    }', 'Item.getToolClasses': 'Set<String> getToolClasses(ItemStack stack)\r
+    {\r
+        return toolClasses.keySet();\r
+    }', 'Item.getHarvestLevel': 'int getHarvestLevel()\r
+        {\r
+            return this.harvestLevel;\r
+        }', 'Item.isBeaconPayment': 'boolean isBeaconPayment(ItemStack stack)\r
+    {\r
+        return this == Items.emerald || this == Items.diamond || this == Items.gold_ingot || this == Items.iron_ingot;\r
+    }', 'Item.getMaxUses': 'int getMaxUses()\r
+        {\r
+            return this.maxUses;\r
+        }', 'Item.getEfficiencyOnProperMaterial': 'float getEfficiencyOnProperMaterial()\r
+        {\r
+            return this.efficiencyOnProperMaterial;\r
+        }', 'Item.getDamageVsEntity': 'float getDamageVsEntity()\r
+        {\r
+            return this.damageVsEntity;\r
+        }', 'Item.getEnchantability': 'int getEnchantability()\r
+        {\r
+            return this.enchantability;\r
+        }', 'Item.func_150995_f': 'Item func_150995_f()\r
+        {\r
+            switch (this)\r
+            {\r
+                case WOOD:    return Item.getItemFromBlock(Blocks.planks);\r
+                case STONE:   return Item.getItemFromBlock(Blocks.cobblestone);\r
+                case GOLD:    return Items.gold_ingot;\r
+                case IRON:    return Items.iron_ingot;\r
+                case EMERALD: return Items.diamond;\r
+                default:      return customCraftingMaterial;\r
+            }\r
+        }', 'Item.setRepairItem': 'ToolMaterial setRepairItem(ItemStack stack)\r
+        {\r
+            if (this.repairMaterial != null || customCraftingMaterial != null) throw new RuntimeException("Can not change already set repair material");\r
+            if (this == WOOD || this == STONE || this == GOLD || this == IRON || this == EMERALD) throw new RuntimeException("Can not change vanilla tool repair materials");\r
+            this.repairMaterial = stack;\r
+            this.customCraftingMaterial = stack.getItem();\r
+            return this;\r
+        }', 'Item.getRepairItemStack': 'ItemStack getRepairItemStack()\r
+        {\r
+            if (repairMaterial != null) return repairMaterial;\r
+            Item ret = this.func_150995_f();\r
+            if (ret == null) return null;\r
+            repairMaterial = new ItemStack(ret, 1, net.minecraftforge.oredict.OreDictionary.WILDCARD_VALUE);\r
+            return repairMaterial;\r
+        }'}}, {'file': 'C:\\Users\\bcjPr\\Desktop\\gtnh\\Twist-Space-Technology-Mod\\src\\main\\java\\com\
+xer\\TwistSpaceTechnology\\util\\rewrites\\TST_ItemID.java', 'class_methods': {'TST_ItemID.create': 'TST_ItemID[] create(ItemStack... itemStacks) {
+        TST_ItemID[] out = new TST_ItemID[itemStacks.length];
+        for (int i = 0; i < itemStacks.length; i++) {
+            out[i] = TST_ItemID.create(itemStacks[i]);
         }
-    ]
-}
+        return out;
+    }', 'TST_ItemID.createNoNBT': 'TST_ItemID createNoNBT(ItemStack itemStack) {
+        if (null == itemStack) return NULL;
+        return new TST_ItemID(itemStack.getItem(), itemStack.getItemDamage());
+    }', 'TST_ItemID.createAsWildcard': 'TST_ItemID createAsWildcard(ItemStack itemStack) {
+        if (null == itemStack) return NULL;
+        return new TST_ItemID(itemStack.getItem(), OreDictionary.WILDCARD_VALUE);
+    }', 'TST_ItemID.getItemStack': 'ItemStack getItemStack(int amount) {
+        ItemStack r = new ItemStack(item, amount, metaData);
+        if (nbt != null) {
+            r.setTagCompound(nbt);
+        }
+        return r;
+    }', 'TST_ItemID.getItemStackWithNBT': 'ItemStack getItemStackWithNBT(int amount) {
+        ItemStack itemStack = new ItemStack(item, amount, metaData);
+        itemStack.setTagCompound(nbt);
+        return itemStack;
+    }', 'TST_ItemID.getItemStackWithoutNBT': 'ItemStack getItemStackWithoutNBT(int amount) {
+        return new ItemStack(item, amount, metaData);
+    }', 'TST_ItemID.isWildcard': 'boolean isWildcard() {
+        return this.metaData == OreDictionary.WILDCARD_VALUE;
+    }', 'TST_ItemID.setItem': 'TST_ItemID setItem(Item item) {
+        this.item = item;
+        return this;
+    }', 'TST_ItemID.setMetaData': 'TST_ItemID setMetaData(int metaData) {
+        this.metaData = metaData;
+        return this;
+    }', 'TST_ItemID.setNbt': 'TST_ItemID setNbt(NBTTagCompound nbt) {
+        this.nbt = nbt;
+        return this;
+    }', 'TST_ItemID.item': 'Item item() {
+        return item;
+    }', 'TST_ItemID.metaData': 'int metaData() {
+        return metaData;
+    }', 'TST_ItemID.nbt': 'NBTTagCompound nbt() {
+        return nbt;
+    }', 'TST_ItemID.stackSize': 'Integer stackSize() {
+        // todo
+        return null;
+    }', 'TST_ItemID.getNBT': 'NBTTagCompound getNBT() {
+        return nbt;
+    }', 'TST_ItemID.getItem': 'Item getItem() {
+        return item;
+    }', 'TST_ItemID.getMetaData': 'int getMetaData() {
+        return metaData;
+    }', 'TST_ItemID.equalItemStack': 'boolean equalItemStack(ItemStack itemStack) {
+        if (isWildcard()) return equals(createAsWildcard(itemStack));
+        if (nbt != null) return equals(create(itemStack));
+        return equals(createNoNBT(itemStack));
+    }', 'TST_ItemID.equals': 'boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof TST_ItemID)) {
+            return false;
+        }
+        TST_ItemID tstItemID = (TST_ItemID) o;
+        return metaData == tstItemID.metaData && Objects.equals(item, tstItemID.item)
+            && Objects.equals(nbt, tstItemID.nbt);
+    }', 'TST_ItemID.hashCode': 'int hashCode() {
+        return Objects.hash(item, metaData, nbt);
+    }'}}]

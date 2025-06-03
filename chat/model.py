@@ -53,6 +53,10 @@ class all_dependency_relationships(BaseModel):
     list_of_dependency_relationships: list[dependency_relationship]
 
 
+class rag_problems(BaseModel):
+    problems: list[str]
+
+
 def prompt_code_generation(description, code=None, template_code=None, rag_code=None):
     exist_code_part = f"""EXISTING CODE (base to improve, and your code should based on this part): 
     {code}
@@ -122,5 +126,33 @@ def prompt_code_reflection(description, error_message, code=None, template_code=
         imports: str
         contents: str
     
+    FINAL OUTPUT:
+    """
+
+
+def prompt_rag_question_generator(description, max_questions=5):
+    return f"""
+    ROLE: You are a code analysis specialist generating retrieval questions for RAG systems.
+
+    TASK DESCRIPTION:
+    Analyze the following technical description to generate concise questions that would effectively retrieve 
+    relevant function and class names from a code knowledge base.
+
+    TECHNICAL DESCRIPTION:
+    {description}
+
+    INSTRUCTIONS:
+    1. Generate only questions targeting function/class names (e.g., "validate_user()", "DatabaseConnector")
+    2. Keep questions extremely short (3-8 words) and action-oriented
+    3. Prioritize core functionality questions first
+    4. Use verb-first question structure
+    5. Exclude questions about parameters, implementations, or non-code concepts
+    6. OUTPUT ONLY THE QUESTIONS in this format:
+       Q1: [verb] [target] [type]?
+       Q2: [verb] [target] [type]?
+       (Example: "Q1: validate password function?")
+
+    MAXIMUM QUESTIONS TO GENERATE: {max_questions}
+
     FINAL OUTPUT:
     """

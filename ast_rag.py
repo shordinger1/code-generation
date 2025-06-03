@@ -112,25 +112,25 @@ class DynamicRAG:
         all_embeddings = []
         all_metadatas = []
 
-        for key, value in items:
-            file_path = value["file_path"]
-            content = value["content"]
+        for item in items:
+            file_path = item.temp_file
+            content = item.get()
 
             # 记录需要写入的文件
             file_write_map[file_path] = content
+            for key, value in content["class_methods"].items():
+                entry_id = str(hash(f"{key}_{file_path}"))
+                self.metadata_store[entry_id] = {
+                    "original_key": key,
+                    "file_path": file_path
+                }
 
-            entry_id = str(hash(f"{key}_{file_path}"))
-            self.metadata_store[entry_id] = {
-                "original_key": key,
-                "file_path": file_path
-            }
+                chunks = self._chunk_text(key)
+                embeddings = self.embedder.encode(chunks).tolist()
 
-            chunks = self._chunk_text(key)
-            embeddings = self.embedder.encode(chunks).tolist()
-
-            all_ids.extend([f"{entry_id}_{i}" for i in range(len(chunks))])
-            all_embeddings.extend(embeddings)
-            all_metadatas.extend([{"source": entry_id} for _ in chunks])
+                all_ids.extend([f"{entry_id}_{i}" for i in range(len(chunks))])
+                all_embeddings.extend(embeddings)
+                all_metadatas.extend([{"source": entry_id} for _ in chunks])
 
         # 批量写入文件
         for path, content in file_write_map.items():
@@ -163,39 +163,48 @@ class DynamicRAG:
     def get_all_embedding(self):
         return self.collection.get()
 
+    def enhanced_query(self, query_text: str, top_k: int = 3) -> list[tuple[float, str, dict]]:
+        """带相似度得分的增强检索
+        返回: 包含(得分, key, value)的元组列表
+        """
+        query_embedding = self.embedder.encode(query_text).tolist()
+        results = self.collection.query(
+            query_embeddings=[query_embedding],
+            n_results=top_k * 3  # 扩大召回数量
+        )
 
-def enhanced_query(self, query_text: str, top_k: int = 3) -> list:
-    """带相似度得分的增强检索"""
-    query_embedding = self.embedder.encode(query_text).tolist()
-    results = self.collection.query(
-        query_embeddings=[query_embedding],
-        n_results=top_k * 3  # 扩大召回数量
-    )
+        score_map = {}
+        # 同时保存key和对应的metadata
+        key_metadata_map = {}
+        for i, result_id in enumerate(results['ids'][0]):
+            source_id = results['metadatas'][0][i]['source']
+            distance = results['distances'][0][i]
+            if source_id not in score_map or distance < score_map[source_id]:
+                score_map[source_id] = distance
+                key_metadata_map[source_id] = results['metadatas'][0][i]
 
-    score_map = {}
-    for i, result_id in enumerate(results['ids'][0]):
-        source_id = results['metadatas'][0][i]['source']
-        distance = results['distances'][0][i]
-        if source_id not in score_map or distance < score_map[source_id]:
-            score_map[source_id] = distance
+        # 按相似度排序并返回top_k
+        sorted_results = sorted(
+            [(k, v) for k, v in score_map.items()],
+            key=lambda x: x[1]
+        )[:top_k]
 
-    # 按相似度排序并返回top_k
-    sorted_results = sorted(
-        [(k, v) for k, v in score_map.items()],
-        key=lambda x: x[1]
-    )[:top_k]
+        return [
+            (1 - res[1], res[0], json.loads(self.metadata_store[res[0]]['value']))  # 这里解析JSON字符串
+            for res in sorted_results
+        ]
 
-    return [
-        (self.metadata_store[res[0]]['value'], 1 - res[1])
-        for res in sorted_results
-    ]
+
 
 
 # 使用示例
 
 
-rag = DynamicRAG()
-
+# rag = DynamicRAG()
+#
+#
+# def get_rag():
+#     return rag
 
 # 添加数据
 # rag.add_data(key="UserController",
@@ -212,4 +221,5 @@ rag = DynamicRAG()
 #
 # # 查询
 # results = rag.query("How to create user?", top_k=2)
+# print(results)
 # 返回: [{"file": "...", "class_methods": [...]}, ...]

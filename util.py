@@ -1,19 +1,4 @@
-from ast_rag import rag
-
-
-def read_temp(root):
-    dic = {}
-    with open(root, "r") as f:
-        lines = f.read().split('++++|++++')
-        for i in range(1, len(lines), 2):
-            dic[lines[i - 1]] = lines[i]
-    return dic
-
-
-def write_temp(root, dic):
-    with open(root, "w") as f:
-        for k, v in dic.items():
-            f.write(f"{k}\n++++|++++\n{v}\n++++|++++\n")
+from ast_rag import DynamicRAG
 
 
 class logger:
@@ -43,10 +28,10 @@ class logger:
 
 
 LOG = logger()
-RAG = rag
+RAG = DynamicRAG()
 
 
-def get_rag():
+def get_rag() -> DynamicRAG:
     return RAG
 
 
