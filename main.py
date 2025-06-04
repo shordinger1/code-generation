@@ -74,10 +74,10 @@ class DependencyAnalyzer:
         dependencies = _parse_dependencies()
 
         # 分析每个依赖
-        dependency_methods = {}
+        dependency_methods = []
         for dep in dependencies:
             dep_methods = self._process_dependency(dep)
-            dependency_methods.update(dep_methods)
+            dependency_methods.extend(dep_methods)
 
         return dependency_methods
 
@@ -243,19 +243,19 @@ class MethodClassifier:
             f.close()
 
 
-def rag_init():
+def rag_init(test=True):
     print("start rag init:\n")
     project_methods = analysis_java_files(project_dir)
     # project_methods = {}
     # 分析依赖库
-    # dep_analyzer = DependencyAnalyzer()
-    # try:
-    #     dependency_methods = dep_analyzer.analyze_dependencies()
-    # finally:
-    #     dep_analyzer.cleanup()
+    dep_analyzer = DependencyAnalyzer()
+    try:
+        dependency_methods = dep_analyzer.analyze_dependencies()
+    finally:
+        dep_analyzer.cleanup()
     #
     # # 合并结果
-    # all_methods = [project_methods, dependency_methods]
+    project_methods.extend(dependency_methods)
     # classifier = MethodClassifier()
     # classifier.classify_methods(all_methods)
     # 写入文件
@@ -263,8 +263,15 @@ def rag_init():
     #     for k, v in all_methods.items():
     #         f.write(f"{k}\n:{v}\n\n")
     RAG.batch_add_data(project_methods)
-    result = RAG.query('how to create an item')
-    print(result)
+    if test:
+        query = ""
+        while True:
+            query = input("please enter your question(quit to exit):")
+            if query != "quit":
+                score, key, result = RAG.enhanced_query(query)[0]
+                print(key)
+            else:
+                break
     print("end rag init:\n")
 
 

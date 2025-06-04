@@ -3,10 +3,11 @@
 from antlr4 import *
 from io import StringIO
 import sys
+
 if sys.version_info[1] > 5:
-	from typing import TextIO
+    from typing import TextIO
 else:
-	from typing.io import TextIO
+    from typing.io import TextIO
 
 
 def serializedATN():
@@ -913,66 +914,65 @@ def serializedATN():
         return buf.getvalue()
 
 
-class JavaParser ( Parser ):
-
+class JavaParser(Parser):
     grammarFileName = "JavaParser.g4"
 
     atn = ATNDeserializer().deserialize(serializedATN())
 
-    decisionsToDFA = [ DFA(ds, i) for i, ds in enumerate(atn.decisionToState) ]
+    decisionsToDFA = [DFA(ds, i) for i, ds in enumerate(atn.decisionToState)]
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ "<INVALID>", "'abstract'", "'assert'", "'boolean'", 
-                     "'break'", "'byte'", "'case'", "'catch'", "'char'", 
-                     "'class'", "'const'", "'continue'", "'default'", "'do'", 
-                     "'double'", "'else'", "'enum'", "'extends'", "'final'", 
-                     "'finally'", "'float'", "'for'", "'if'", "'goto'", 
-                     "'implements'", "'import'", "'instanceof'", "'int'", 
-                     "'interface'", "'long'", "'native'", "'new'", "'package'", 
-                     "'private'", "'protected'", "'public'", "'return'", 
-                     "'short'", "'static'", "'strictfp'", "'super'", "'switch'", 
-                     "'synchronized'", "'this'", "'throw'", "'throws'", 
-                     "'transient'", "'try'", "'void'", "'volatile'", "'while'", 
-                     "'module'", "'open'", "'requires'", "'exports'", "'opens'", 
-                     "'to'", "'uses'", "'provides'", "'with'", "'transitive'", 
-                     "'var'", "'yield'", "'record'", "'sealed'", "'permits'", 
-                     "'non-sealed'", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "'null'", "'('", 
-                     "')'", "'{'", "'}'", "'['", "']'", "';'", "','", "'.'", 
-                     "'='", "'>'", "'<'", "'!'", "'~'", "'?'", "':'", "'=='", 
-                     "'<='", "'>='", "'!='", "'&&'", "'||'", "'++'", "'--'", 
-                     "'+'", "'-'", "'*'", "'/'", "'&'", "'|'", "'^'", "'%'", 
-                     "'+='", "'-='", "'*='", "'/='", "'&='", "'|='", "'^='", 
-                     "'%='", "'<<='", "'>>='", "'>>>='", "'->'", "'::'", 
-                     "'@'", "'...'" ]
+    literalNames = ["<INVALID>", "'abstract'", "'assert'", "'boolean'",
+                    "'break'", "'byte'", "'case'", "'catch'", "'char'",
+                    "'class'", "'const'", "'continue'", "'default'", "'do'",
+                    "'double'", "'else'", "'enum'", "'extends'", "'final'",
+                    "'finally'", "'float'", "'for'", "'if'", "'goto'",
+                    "'implements'", "'import'", "'instanceof'", "'int'",
+                    "'interface'", "'long'", "'native'", "'new'", "'package'",
+                    "'private'", "'protected'", "'public'", "'return'",
+                    "'short'", "'static'", "'strictfp'", "'super'", "'switch'",
+                    "'synchronized'", "'this'", "'throw'", "'throws'",
+                    "'transient'", "'try'", "'void'", "'volatile'", "'while'",
+                    "'module'", "'open'", "'requires'", "'exports'", "'opens'",
+                    "'to'", "'uses'", "'provides'", "'with'", "'transitive'",
+                    "'var'", "'yield'", "'record'", "'sealed'", "'permits'",
+                    "'non-sealed'", "<INVALID>", "<INVALID>", "<INVALID>",
+                    "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>",
+                    "<INVALID>", "<INVALID>", "<INVALID>", "'null'", "'('",
+                    "')'", "'{'", "'}'", "'['", "']'", "';'", "','", "'.'",
+                    "'='", "'>'", "'<'", "'!'", "'~'", "'?'", "':'", "'=='",
+                    "'<='", "'>='", "'!='", "'&&'", "'||'", "'++'", "'--'",
+                    "'+'", "'-'", "'*'", "'/'", "'&'", "'|'", "'^'", "'%'",
+                    "'+='", "'-='", "'*='", "'/='", "'&='", "'|='", "'^='",
+                    "'%='", "'<<='", "'>>='", "'>>>='", "'->'", "'::'",
+                    "'@'", "'...'"]
 
-    symbolicNames = [ "<INVALID>", "ABSTRACT", "ASSERT", "BOOLEAN", "BREAK", 
-                      "BYTE", "CASE", "CATCH", "CHAR", "CLASS", "CONST", 
-                      "CONTINUE", "DEFAULT", "DO", "DOUBLE", "ELSE", "ENUM", 
-                      "EXTENDS", "FINAL", "FINALLY", "FLOAT", "FOR", "IF", 
-                      "GOTO", "IMPLEMENTS", "IMPORT", "INSTANCEOF", "INT", 
-                      "INTERFACE", "LONG", "NATIVE", "NEW", "PACKAGE", "PRIVATE", 
-                      "PROTECTED", "PUBLIC", "RETURN", "SHORT", "STATIC", 
-                      "STRICTFP", "SUPER", "SWITCH", "SYNCHRONIZED", "THIS", 
-                      "THROW", "THROWS", "TRANSIENT", "TRY", "VOID", "VOLATILE", 
-                      "WHILE", "MODULE", "OPEN", "REQUIRES", "EXPORTS", 
-                      "OPENS", "TO", "USES", "PROVIDES", "WITH", "TRANSITIVE", 
-                      "VAR", "YIELD", "RECORD", "SEALED", "PERMITS", "NON_SEALED", 
-                      "DECIMAL_LITERAL", "HEX_LITERAL", "OCT_LITERAL", "BINARY_LITERAL", 
-                      "FLOAT_LITERAL", "HEX_FLOAT_LITERAL", "BOOL_LITERAL", 
-                      "CHAR_LITERAL", "STRING_LITERAL", "TEXT_BLOCK", "NULL_LITERAL", 
-                      "LPAREN", "RPAREN", "LBRACE", "RBRACE", "LBRACK", 
-                      "RBRACK", "SEMI", "COMMA", "DOT", "ASSIGN", "GT", 
-                      "LT", "BANG", "TILDE", "QUESTION", "COLON", "EQUAL", 
-                      "LE", "GE", "NOTEQUAL", "AND", "OR", "INC", "DEC", 
-                      "ADD", "SUB", "MUL", "DIV", "BITAND", "BITOR", "CARET", 
-                      "MOD", "ADD_ASSIGN", "SUB_ASSIGN", "MUL_ASSIGN", "DIV_ASSIGN", 
-                      "AND_ASSIGN", "OR_ASSIGN", "XOR_ASSIGN", "MOD_ASSIGN", 
-                      "LSHIFT_ASSIGN", "RSHIFT_ASSIGN", "URSHIFT_ASSIGN", 
-                      "ARROW", "COLONCOLON", "AT", "ELLIPSIS", "WS", "COMMENT", 
-                      "LINE_COMMENT", "IDENTIFIER" ]
+    symbolicNames = ["<INVALID>", "ABSTRACT", "ASSERT", "BOOLEAN", "BREAK",
+                     "BYTE", "CASE", "CATCH", "CHAR", "CLASS", "CONST",
+                     "CONTINUE", "DEFAULT", "DO", "DOUBLE", "ELSE", "ENUM",
+                     "EXTENDS", "FINAL", "FINALLY", "FLOAT", "FOR", "IF",
+                     "GOTO", "IMPLEMENTS", "IMPORT", "INSTANCEOF", "INT",
+                     "INTERFACE", "LONG", "NATIVE", "NEW", "PACKAGE", "PRIVATE",
+                     "PROTECTED", "PUBLIC", "RETURN", "SHORT", "STATIC",
+                     "STRICTFP", "SUPER", "SWITCH", "SYNCHRONIZED", "THIS",
+                     "THROW", "THROWS", "TRANSIENT", "TRY", "VOID", "VOLATILE",
+                     "WHILE", "MODULE", "OPEN", "REQUIRES", "EXPORTS",
+                     "OPENS", "TO", "USES", "PROVIDES", "WITH", "TRANSITIVE",
+                     "VAR", "YIELD", "RECORD", "SEALED", "PERMITS", "NON_SEALED",
+                     "DECIMAL_LITERAL", "HEX_LITERAL", "OCT_LITERAL", "BINARY_LITERAL",
+                     "FLOAT_LITERAL", "HEX_FLOAT_LITERAL", "BOOL_LITERAL",
+                     "CHAR_LITERAL", "STRING_LITERAL", "TEXT_BLOCK", "NULL_LITERAL",
+                     "LPAREN", "RPAREN", "LBRACE", "RBRACE", "LBRACK",
+                     "RBRACK", "SEMI", "COMMA", "DOT", "ASSIGN", "GT",
+                     "LT", "BANG", "TILDE", "QUESTION", "COLON", "EQUAL",
+                     "LE", "GE", "NOTEQUAL", "AND", "OR", "INC", "DEC",
+                     "ADD", "SUB", "MUL", "DIV", "BITAND", "BITOR", "CARET",
+                     "MOD", "ADD_ASSIGN", "SUB_ASSIGN", "MUL_ASSIGN", "DIV_ASSIGN",
+                     "AND_ASSIGN", "OR_ASSIGN", "XOR_ASSIGN", "MOD_ASSIGN",
+                     "LSHIFT_ASSIGN", "RSHIFT_ASSIGN", "URSHIFT_ASSIGN",
+                     "ARROW", "COLONCOLON", "AT", "ELLIPSIS", "WS", "COMMENT",
+                     "LINE_COMMENT", "IDENTIFIER"]
 
     RULE_compilationUnit = 0
     RULE_packageDeclaration = 1
@@ -1101,191 +1101,188 @@ class JavaParser ( Parser ):
     RULE_explicitGenericInvocationSuffix = 124
     RULE_arguments = 125
 
-    ruleNames =  [ "compilationUnit", "packageDeclaration", "importDeclaration", 
-                   "typeDeclaration", "modifier", "classOrInterfaceModifier", 
-                   "variableModifier", "classDeclaration", "typeParameters", 
-                   "typeParameter", "typeBound", "enumDeclaration", "enumConstants", 
-                   "enumConstant", "enumBodyDeclarations", "interfaceDeclaration", 
-                   "classBody", "interfaceBody", "classBodyDeclaration", 
-                   "memberDeclaration", "methodDeclaration", "methodBody", 
-                   "typeTypeOrVoid", "genericMethodDeclaration", "genericConstructorDeclaration", 
-                   "constructorDeclaration", "compactConstructorDeclaration", 
-                   "fieldDeclaration", "interfaceBodyDeclaration", "interfaceMemberDeclaration", 
-                   "constDeclaration", "constantDeclarator", "interfaceMethodDeclaration", 
-                   "interfaceMethodModifier", "genericInterfaceMethodDeclaration", 
-                   "interfaceCommonBodyDeclaration", "variableDeclarators", 
-                   "variableDeclarator", "variableDeclaratorId", "variableInitializer", 
-                   "arrayInitializer", "classOrInterfaceType", "typeArgument", 
-                   "qualifiedNameList", "formalParameters", "receiverParameter", 
-                   "formalParameterList", "formalParameter", "lastFormalParameter", 
-                   "lambdaLVTIList", "lambdaLVTIParameter", "qualifiedName", 
-                   "literal", "integerLiteral", "floatLiteral", "altAnnotationQualifiedName", 
-                   "annotation", "elementValuePairs", "elementValuePair", 
-                   "elementValue", "elementValueArrayInitializer", "annotationTypeDeclaration", 
-                   "annotationTypeBody", "annotationTypeElementDeclaration", 
-                   "annotationTypeElementRest", "annotationMethodOrConstantRest", 
-                   "annotationMethodRest", "annotationConstantRest", "defaultValue", 
-                   "moduleDeclaration", "moduleBody", "moduleDirective", 
-                   "requiresModifier", "recordDeclaration", "recordHeader", 
-                   "recordComponentList", "recordComponent", "recordBody", 
-                   "block", "blockStatement", "localVariableDeclaration", 
-                   "identifier", "typeIdentifier", "localTypeDeclaration", 
-                   "statement", "catchClause", "catchType", "finallyBlock", 
-                   "resourceSpecification", "resources", "resource", "switchBlockStatementGroup", 
-                   "switchLabel", "forControl", "forInit", "enhancedForControl", 
-                   "parExpression", "expressionList", "methodCall", "expression", 
-                   "pattern", "lambdaExpression", "lambdaParameters", "lambdaBody", 
-                   "primary", "switchExpression", "switchLabeledRule", "guardedPattern", 
-                   "switchRuleOutcome", "classType", "creator", "createdName", 
-                   "innerCreator", "arrayCreatorRest", "classCreatorRest", 
-                   "explicitGenericInvocation", "typeArgumentsOrDiamond", 
-                   "nonWildcardTypeArgumentsOrDiamond", "nonWildcardTypeArguments", 
-                   "typeList", "typeType", "primitiveType", "typeArguments", 
-                   "superSuffix", "explicitGenericInvocationSuffix", "arguments" ]
+    ruleNames = ["compilationUnit", "packageDeclaration", "importDeclaration",
+                 "typeDeclaration", "modifier", "classOrInterfaceModifier",
+                 "variableModifier", "classDeclaration", "typeParameters",
+                 "typeParameter", "typeBound", "enumDeclaration", "enumConstants",
+                 "enumConstant", "enumBodyDeclarations", "interfaceDeclaration",
+                 "classBody", "interfaceBody", "classBodyDeclaration",
+                 "memberDeclaration", "methodDeclaration", "methodBody",
+                 "typeTypeOrVoid", "genericMethodDeclaration", "genericConstructorDeclaration",
+                 "constructorDeclaration", "compactConstructorDeclaration",
+                 "fieldDeclaration", "interfaceBodyDeclaration", "interfaceMemberDeclaration",
+                 "constDeclaration", "constantDeclarator", "interfaceMethodDeclaration",
+                 "interfaceMethodModifier", "genericInterfaceMethodDeclaration",
+                 "interfaceCommonBodyDeclaration", "variableDeclarators",
+                 "variableDeclarator", "variableDeclaratorId", "variableInitializer",
+                 "arrayInitializer", "classOrInterfaceType", "typeArgument",
+                 "qualifiedNameList", "formalParameters", "receiverParameter",
+                 "formalParameterList", "formalParameter", "lastFormalParameter",
+                 "lambdaLVTIList", "lambdaLVTIParameter", "qualifiedName",
+                 "literal", "integerLiteral", "floatLiteral", "altAnnotationQualifiedName",
+                 "annotation", "elementValuePairs", "elementValuePair",
+                 "elementValue", "elementValueArrayInitializer", "annotationTypeDeclaration",
+                 "annotationTypeBody", "annotationTypeElementDeclaration",
+                 "annotationTypeElementRest", "annotationMethodOrConstantRest",
+                 "annotationMethodRest", "annotationConstantRest", "defaultValue",
+                 "moduleDeclaration", "moduleBody", "moduleDirective",
+                 "requiresModifier", "recordDeclaration", "recordHeader",
+                 "recordComponentList", "recordComponent", "recordBody",
+                 "block", "blockStatement", "localVariableDeclaration",
+                 "identifier", "typeIdentifier", "localTypeDeclaration",
+                 "statement", "catchClause", "catchType", "finallyBlock",
+                 "resourceSpecification", "resources", "resource", "switchBlockStatementGroup",
+                 "switchLabel", "forControl", "forInit", "enhancedForControl",
+                 "parExpression", "expressionList", "methodCall", "expression",
+                 "pattern", "lambdaExpression", "lambdaParameters", "lambdaBody",
+                 "primary", "switchExpression", "switchLabeledRule", "guardedPattern",
+                 "switchRuleOutcome", "classType", "creator", "createdName",
+                 "innerCreator", "arrayCreatorRest", "classCreatorRest",
+                 "explicitGenericInvocation", "typeArgumentsOrDiamond",
+                 "nonWildcardTypeArgumentsOrDiamond", "nonWildcardTypeArguments",
+                 "typeList", "typeType", "primitiveType", "typeArguments",
+                 "superSuffix", "explicitGenericInvocationSuffix", "arguments"]
 
     EOF = Token.EOF
-    ABSTRACT=1
-    ASSERT=2
-    BOOLEAN=3
-    BREAK=4
-    BYTE=5
-    CASE=6
-    CATCH=7
-    CHAR=8
-    CLASS=9
-    CONST=10
-    CONTINUE=11
-    DEFAULT=12
-    DO=13
-    DOUBLE=14
-    ELSE=15
-    ENUM=16
-    EXTENDS=17
-    FINAL=18
-    FINALLY=19
-    FLOAT=20
-    FOR=21
-    IF=22
-    GOTO=23
-    IMPLEMENTS=24
-    IMPORT=25
-    INSTANCEOF=26
-    INT=27
-    INTERFACE=28
-    LONG=29
-    NATIVE=30
-    NEW=31
-    PACKAGE=32
-    PRIVATE=33
-    PROTECTED=34
-    PUBLIC=35
-    RETURN=36
-    SHORT=37
-    STATIC=38
-    STRICTFP=39
-    SUPER=40
-    SWITCH=41
-    SYNCHRONIZED=42
-    THIS=43
-    THROW=44
-    THROWS=45
-    TRANSIENT=46
-    TRY=47
-    VOID=48
-    VOLATILE=49
-    WHILE=50
-    MODULE=51
-    OPEN=52
-    REQUIRES=53
-    EXPORTS=54
-    OPENS=55
-    TO=56
-    USES=57
-    PROVIDES=58
-    WITH=59
-    TRANSITIVE=60
-    VAR=61
-    YIELD=62
-    RECORD=63
-    SEALED=64
-    PERMITS=65
-    NON_SEALED=66
-    DECIMAL_LITERAL=67
-    HEX_LITERAL=68
-    OCT_LITERAL=69
-    BINARY_LITERAL=70
-    FLOAT_LITERAL=71
-    HEX_FLOAT_LITERAL=72
-    BOOL_LITERAL=73
-    CHAR_LITERAL=74
-    STRING_LITERAL=75
-    TEXT_BLOCK=76
-    NULL_LITERAL=77
-    LPAREN=78
-    RPAREN=79
-    LBRACE=80
-    RBRACE=81
-    LBRACK=82
-    RBRACK=83
-    SEMI=84
-    COMMA=85
-    DOT=86
-    ASSIGN=87
-    GT=88
-    LT=89
-    BANG=90
-    TILDE=91
-    QUESTION=92
-    COLON=93
-    EQUAL=94
-    LE=95
-    GE=96
-    NOTEQUAL=97
-    AND=98
-    OR=99
-    INC=100
-    DEC=101
-    ADD=102
-    SUB=103
-    MUL=104
-    DIV=105
-    BITAND=106
-    BITOR=107
-    CARET=108
-    MOD=109
-    ADD_ASSIGN=110
-    SUB_ASSIGN=111
-    MUL_ASSIGN=112
-    DIV_ASSIGN=113
-    AND_ASSIGN=114
-    OR_ASSIGN=115
-    XOR_ASSIGN=116
-    MOD_ASSIGN=117
-    LSHIFT_ASSIGN=118
-    RSHIFT_ASSIGN=119
-    URSHIFT_ASSIGN=120
-    ARROW=121
-    COLONCOLON=122
-    AT=123
-    ELLIPSIS=124
-    WS=125
-    COMMENT=126
-    LINE_COMMENT=127
-    IDENTIFIER=128
+    ABSTRACT = 1
+    ASSERT = 2
+    BOOLEAN = 3
+    BREAK = 4
+    BYTE = 5
+    CASE = 6
+    CATCH = 7
+    CHAR = 8
+    CLASS = 9
+    CONST = 10
+    CONTINUE = 11
+    DEFAULT = 12
+    DO = 13
+    DOUBLE = 14
+    ELSE = 15
+    ENUM = 16
+    EXTENDS = 17
+    FINAL = 18
+    FINALLY = 19
+    FLOAT = 20
+    FOR = 21
+    IF = 22
+    GOTO = 23
+    IMPLEMENTS = 24
+    IMPORT = 25
+    INSTANCEOF = 26
+    INT = 27
+    INTERFACE = 28
+    LONG = 29
+    NATIVE = 30
+    NEW = 31
+    PACKAGE = 32
+    PRIVATE = 33
+    PROTECTED = 34
+    PUBLIC = 35
+    RETURN = 36
+    SHORT = 37
+    STATIC = 38
+    STRICTFP = 39
+    SUPER = 40
+    SWITCH = 41
+    SYNCHRONIZED = 42
+    THIS = 43
+    THROW = 44
+    THROWS = 45
+    TRANSIENT = 46
+    TRY = 47
+    VOID = 48
+    VOLATILE = 49
+    WHILE = 50
+    MODULE = 51
+    OPEN = 52
+    REQUIRES = 53
+    EXPORTS = 54
+    OPENS = 55
+    TO = 56
+    USES = 57
+    PROVIDES = 58
+    WITH = 59
+    TRANSITIVE = 60
+    VAR = 61
+    YIELD = 62
+    RECORD = 63
+    SEALED = 64
+    PERMITS = 65
+    NON_SEALED = 66
+    DECIMAL_LITERAL = 67
+    HEX_LITERAL = 68
+    OCT_LITERAL = 69
+    BINARY_LITERAL = 70
+    FLOAT_LITERAL = 71
+    HEX_FLOAT_LITERAL = 72
+    BOOL_LITERAL = 73
+    CHAR_LITERAL = 74
+    STRING_LITERAL = 75
+    TEXT_BLOCK = 76
+    NULL_LITERAL = 77
+    LPAREN = 78
+    RPAREN = 79
+    LBRACE = 80
+    RBRACE = 81
+    LBRACK = 82
+    RBRACK = 83
+    SEMI = 84
+    COMMA = 85
+    DOT = 86
+    ASSIGN = 87
+    GT = 88
+    LT = 89
+    BANG = 90
+    TILDE = 91
+    QUESTION = 92
+    COLON = 93
+    EQUAL = 94
+    LE = 95
+    GE = 96
+    NOTEQUAL = 97
+    AND = 98
+    OR = 99
+    INC = 100
+    DEC = 101
+    ADD = 102
+    SUB = 103
+    MUL = 104
+    DIV = 105
+    BITAND = 106
+    BITOR = 107
+    CARET = 108
+    MOD = 109
+    ADD_ASSIGN = 110
+    SUB_ASSIGN = 111
+    MUL_ASSIGN = 112
+    DIV_ASSIGN = 113
+    AND_ASSIGN = 114
+    OR_ASSIGN = 115
+    XOR_ASSIGN = 116
+    MOD_ASSIGN = 117
+    LSHIFT_ASSIGN = 118
+    RSHIFT_ASSIGN = 119
+    URSHIFT_ASSIGN = 120
+    ARROW = 121
+    COLONCOLON = 122
+    AT = 123
+    ELLIPSIS = 124
+    WS = 125
+    COMMENT = 126
+    LINE_COMMENT = 127
+    IDENTIFIER = 128
 
-    def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
+    def __init__(self, input: TokenStream, output: TextIO = sys.stdout):
         super().__init__(input, output)
         self.checkVersion("4.9.2")
         self._interp = ParserATNSimulator(self, self.atn, self.decisionsToDFA, self.sharedContextCache)
         self._predicates = None
 
-
-
-
     class CompilationUnitContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -1293,71 +1290,63 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.EOF, 0)
 
         def packageDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.PackageDeclarationContext,0)
+            return self.getTypedRuleContext(JavaParser.PackageDeclarationContext, 0)
 
-
-        def importDeclaration(self, i:int=None):
+        def importDeclaration(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.ImportDeclarationContext)
             else:
-                return self.getTypedRuleContext(JavaParser.ImportDeclarationContext,i)
+                return self.getTypedRuleContext(JavaParser.ImportDeclarationContext, i)
 
-
-        def SEMI(self, i:int=None):
+        def SEMI(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.SEMI)
             else:
                 return self.getToken(JavaParser.SEMI, i)
 
-        def typeDeclaration(self, i:int=None):
+        def typeDeclaration(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.TypeDeclarationContext)
             else:
-                return self.getTypedRuleContext(JavaParser.TypeDeclarationContext,i)
-
+                return self.getTypedRuleContext(JavaParser.TypeDeclarationContext, i)
 
         def moduleDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.ModuleDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ModuleDeclarationContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_compilationUnit
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterCompilationUnit" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterCompilationUnit"):
                 listener.enterCompilationUnit(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitCompilationUnit" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitCompilationUnit"):
                 listener.exitCompilationUnit(self)
-
-
-
 
     def compilationUnit(self):
 
         localctx = JavaParser.CompilationUnitContext(self, self._ctx, self.state)
         self.enterRule(localctx, 0, self.RULE_compilationUnit)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.state = 273
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,5,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 5, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 253
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,0,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input, 0, self._ctx)
                 if la_ == 1:
                     self.state = 252
                     self.packageDeclaration()
 
-
                 self.state = 259
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,2,self._ctx)
-                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                    if _alt==1:
+                _alt = self._interp.adaptivePredict(self._input, 2, self._ctx)
+                while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                    if _alt == 1:
                         self.state = 257
                         self._errHandler.sync(self)
                         token = self._input.LA(1)
@@ -1371,19 +1360,41 @@ class JavaParser ( Parser ):
                             pass
                         else:
                             raise NoViableAltException(self)
-                 
+
                     self.state = 261
                     self._errHandler.sync(self)
-                    _alt = self._interp.adaptivePredict(self._input,2,self._ctx)
+                    _alt = self._interp.adaptivePredict(self._input, 2, self._ctx)
 
                 self.state = 266
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                while ((((_la - 1)) & ~0x3f) == 0 and ((1 << (_la - 1)) & ((1 << (JavaParser.ABSTRACT - 1)) | (1 << (JavaParser.CLASS - 1)) | (1 << (JavaParser.ENUM - 1)) | (1 << (JavaParser.FINAL - 1)) | (1 << (JavaParser.INTERFACE - 1)) | (1 << (JavaParser.PRIVATE - 1)) | (1 << (JavaParser.PROTECTED - 1)) | (1 << (JavaParser.PUBLIC - 1)) | (1 << (JavaParser.STATIC - 1)) | (1 << (JavaParser.STRICTFP - 1)) | (1 << (JavaParser.MODULE - 1)) | (1 << (JavaParser.OPEN - 1)) | (1 << (JavaParser.REQUIRES - 1)) | (1 << (JavaParser.EXPORTS - 1)) | (1 << (JavaParser.OPENS - 1)) | (1 << (JavaParser.TO - 1)) | (1 << (JavaParser.USES - 1)) | (1 << (JavaParser.PROVIDES - 1)) | (1 << (JavaParser.WITH - 1)) | (1 << (JavaParser.TRANSITIVE - 1)) | (1 << (JavaParser.VAR - 1)) | (1 << (JavaParser.YIELD - 1)) | (1 << (JavaParser.RECORD - 1)) | (1 << (JavaParser.SEALED - 1)))) != 0) or ((((_la - 65)) & ~0x3f) == 0 and ((1 << (_la - 65)) & ((1 << (JavaParser.PERMITS - 65)) | (1 << (JavaParser.NON_SEALED - 65)) | (1 << (JavaParser.SEMI - 65)) | (1 << (JavaParser.AT - 65)) | (1 << (JavaParser.IDENTIFIER - 65)))) != 0):
+                while ((((_la - 1)) & ~0x3f) == 0 and ((1 << (_la - 1)) & (
+                        (1 << (JavaParser.ABSTRACT - 1)) | (1 << (JavaParser.CLASS - 1)) | (
+                        1 << (JavaParser.ENUM - 1)) | (1 << (JavaParser.FINAL - 1)) | (
+                                1 << (JavaParser.INTERFACE - 1)) | (1 << (JavaParser.PRIVATE - 1)) | (
+                                1 << (JavaParser.PROTECTED - 1)) | (1 << (JavaParser.PUBLIC - 1)) | (
+                                1 << (JavaParser.STATIC - 1)) | (1 << (JavaParser.STRICTFP - 1)) | (
+                                1 << (JavaParser.MODULE - 1)) | (1 << (JavaParser.OPEN - 1)) | (
+                                1 << (JavaParser.REQUIRES - 1)) | (1 << (JavaParser.EXPORTS - 1)) | (
+                                1 << (JavaParser.OPENS - 1)) | (1 << (JavaParser.TO - 1)) | (
+                                1 << (JavaParser.USES - 1)) | (1 << (JavaParser.PROVIDES - 1)) | (
+                                1 << (JavaParser.WITH - 1)) | (1 << (JavaParser.TRANSITIVE - 1)) | (
+                                1 << (JavaParser.VAR - 1)) | (1 << (JavaParser.YIELD - 1)) | (
+                                1 << (JavaParser.RECORD - 1)) | (1 << (JavaParser.SEALED - 1)))) != 0) or (
+                        (((_la - 65)) & ~0x3f) == 0 and ((1 << (_la - 65)) & (
+                        (1 << (JavaParser.PERMITS - 65)) | (1 << (JavaParser.NON_SEALED - 65)) | (
+                        1 << (JavaParser.SEMI - 65)) | (1 << (JavaParser.AT - 65)) | (
+                                1 << (JavaParser.IDENTIFIER - 65)))) != 0):
                     self.state = 264
                     self._errHandler.sync(self)
                     token = self._input.LA(1)
-                    if token in [JavaParser.ABSTRACT, JavaParser.CLASS, JavaParser.ENUM, JavaParser.FINAL, JavaParser.INTERFACE, JavaParser.PRIVATE, JavaParser.PROTECTED, JavaParser.PUBLIC, JavaParser.STATIC, JavaParser.STRICTFP, JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS, JavaParser.NON_SEALED, JavaParser.AT, JavaParser.IDENTIFIER]:
+                    if token in [JavaParser.ABSTRACT, JavaParser.CLASS, JavaParser.ENUM, JavaParser.FINAL,
+                                 JavaParser.INTERFACE, JavaParser.PRIVATE, JavaParser.PROTECTED, JavaParser.PUBLIC,
+                                 JavaParser.STATIC, JavaParser.STRICTFP, JavaParser.MODULE, JavaParser.OPEN,
+                                 JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO,
+                                 JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE,
+                                 JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED,
+                                 JavaParser.PERMITS, JavaParser.NON_SEALED, JavaParser.AT, JavaParser.IDENTIFIER]:
                         self.state = 262
                         self.typeDeclaration()
                         pass
@@ -1419,11 +1430,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class PackageDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -1431,44 +1441,47 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.PACKAGE, 0)
 
         def qualifiedName(self):
-            return self.getTypedRuleContext(JavaParser.QualifiedNameContext,0)
-
+            return self.getTypedRuleContext(JavaParser.QualifiedNameContext, 0)
 
         def SEMI(self):
             return self.getToken(JavaParser.SEMI, 0)
 
-        def annotation(self, i:int=None):
+        def annotation(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.AnnotationContext)
             else:
-                return self.getTypedRuleContext(JavaParser.AnnotationContext,i)
-
+                return self.getTypedRuleContext(JavaParser.AnnotationContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_packageDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterPackageDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterPackageDeclaration"):
                 listener.enterPackageDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitPackageDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitPackageDeclaration"):
                 listener.exitPackageDeclaration(self)
-
-
-
 
     def packageDeclaration(self):
 
         localctx = JavaParser.PackageDeclarationContext(self, self._ctx, self.state)
         self.enterRule(localctx, 2, self.RULE_packageDeclaration)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 278
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while ((((_la - 51)) & ~0x3f) == 0 and ((1 << (_la - 51)) & ((1 << (JavaParser.MODULE - 51)) | (1 << (JavaParser.OPEN - 51)) | (1 << (JavaParser.REQUIRES - 51)) | (1 << (JavaParser.EXPORTS - 51)) | (1 << (JavaParser.OPENS - 51)) | (1 << (JavaParser.TO - 51)) | (1 << (JavaParser.USES - 51)) | (1 << (JavaParser.PROVIDES - 51)) | (1 << (JavaParser.WITH - 51)) | (1 << (JavaParser.TRANSITIVE - 51)) | (1 << (JavaParser.VAR - 51)) | (1 << (JavaParser.YIELD - 51)) | (1 << (JavaParser.RECORD - 51)) | (1 << (JavaParser.SEALED - 51)) | (1 << (JavaParser.PERMITS - 51)))) != 0) or _la==JavaParser.AT or _la==JavaParser.IDENTIFIER:
+            while ((((_la - 51)) & ~0x3f) == 0 and ((1 << (_la - 51)) & (
+                    (1 << (JavaParser.MODULE - 51)) | (1 << (JavaParser.OPEN - 51)) | (
+                    1 << (JavaParser.REQUIRES - 51)) | (1 << (JavaParser.EXPORTS - 51)) | (
+                            1 << (JavaParser.OPENS - 51)) | (1 << (JavaParser.TO - 51)) | (
+                            1 << (JavaParser.USES - 51)) | (1 << (JavaParser.PROVIDES - 51)) | (
+                            1 << (JavaParser.WITH - 51)) | (1 << (JavaParser.TRANSITIVE - 51)) | (
+                            1 << (JavaParser.VAR - 51)) | (1 << (JavaParser.YIELD - 51)) | (
+                            1 << (JavaParser.RECORD - 51)) | (1 << (JavaParser.SEALED - 51)) | (1 << (
+                    JavaParser.PERMITS - 51)))) != 0) or _la == JavaParser.AT or _la == JavaParser.IDENTIFIER:
                 self.state = 275
                 self.annotation()
                 self.state = 280
@@ -1489,11 +1502,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ImportDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -1501,8 +1513,7 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.IMPORT, 0)
 
         def qualifiedName(self):
-            return self.getTypedRuleContext(JavaParser.QualifiedNameContext,0)
-
+            return self.getTypedRuleContext(JavaParser.QualifiedNameContext, 0)
 
         def SEMI(self):
             return self.getToken(JavaParser.SEMI, 0)
@@ -1519,22 +1530,19 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_importDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterImportDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterImportDeclaration"):
                 listener.enterImportDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitImportDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitImportDeclaration"):
                 listener.exitImportDeclaration(self)
-
-
-
 
     def importDeclaration(self):
 
         localctx = JavaParser.ImportDeclarationContext(self, self._ctx, self.state)
         self.enterRule(localctx, 4, self.RULE_importDeclaration)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 285
@@ -1542,22 +1550,20 @@ class JavaParser ( Parser ):
             self.state = 287
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.STATIC:
+            if _la == JavaParser.STATIC:
                 self.state = 286
                 self.match(JavaParser.STATIC)
-
 
             self.state = 289
             self.qualifiedName()
             self.state = 292
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.DOT:
+            if _la == JavaParser.DOT:
                 self.state = 290
                 self.match(JavaParser.DOT)
                 self.state = 291
                 self.match(JavaParser.MUL)
-
 
             self.state = 294
             self.match(JavaParser.SEMI)
@@ -1569,54 +1575,44 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class TypeDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def classDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.ClassDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ClassDeclarationContext, 0)
 
         def enumDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.EnumDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.EnumDeclarationContext, 0)
 
         def interfaceDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.InterfaceDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.InterfaceDeclarationContext, 0)
 
         def annotationTypeDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.AnnotationTypeDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.AnnotationTypeDeclarationContext, 0)
 
         def recordDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.RecordDeclarationContext,0)
+            return self.getTypedRuleContext(JavaParser.RecordDeclarationContext, 0)
 
-
-        def classOrInterfaceModifier(self, i:int=None):
+        def classOrInterfaceModifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.ClassOrInterfaceModifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.ClassOrInterfaceModifierContext,i)
-
+                return self.getTypedRuleContext(JavaParser.ClassOrInterfaceModifierContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_typeDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTypeDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterTypeDeclaration"):
                 listener.enterTypeDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTypeDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitTypeDeclaration"):
                 listener.exitTypeDeclaration(self)
-
-
-
 
     def typeDeclaration(self):
 
@@ -1626,14 +1622,14 @@ class JavaParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 299
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,9,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 9, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 296
-                    self.classOrInterfaceModifier() 
+                    self.classOrInterfaceModifier()
                 self.state = 301
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,9,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 9, self._ctx)
 
             self.state = 307
             self._errHandler.sync(self)
@@ -1669,17 +1665,15 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ModifierContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def classOrInterfaceModifier(self):
-            return self.getTypedRuleContext(JavaParser.ClassOrInterfaceModifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ClassOrInterfaceModifierContext, 0)
 
         def NATIVE(self):
             return self.getToken(JavaParser.NATIVE, 0)
@@ -1696,16 +1690,13 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_modifier
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterModifier" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterModifier"):
                 listener.enterModifier(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitModifier" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitModifier"):
                 listener.exitModifier(self)
-
-
-
 
     def modifier(self):
 
@@ -1715,7 +1706,12 @@ class JavaParser ( Parser ):
             self.state = 314
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [JavaParser.ABSTRACT, JavaParser.FINAL, JavaParser.PRIVATE, JavaParser.PROTECTED, JavaParser.PUBLIC, JavaParser.STATIC, JavaParser.STRICTFP, JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS, JavaParser.NON_SEALED, JavaParser.AT, JavaParser.IDENTIFIER]:
+            if token in [JavaParser.ABSTRACT, JavaParser.FINAL, JavaParser.PRIVATE, JavaParser.PROTECTED,
+                         JavaParser.PUBLIC, JavaParser.STATIC, JavaParser.STRICTFP, JavaParser.MODULE, JavaParser.OPEN,
+                         JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO, JavaParser.USES,
+                         JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD,
+                         JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS, JavaParser.NON_SEALED, JavaParser.AT,
+                         JavaParser.IDENTIFIER]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 309
                 self.classOrInterfaceModifier()
@@ -1751,17 +1747,15 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ClassOrInterfaceModifierContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def annotation(self):
-            return self.getTypedRuleContext(JavaParser.AnnotationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.AnnotationContext, 0)
 
         def PUBLIC(self):
             return self.getToken(JavaParser.PUBLIC, 0)
@@ -1793,16 +1787,13 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_classOrInterfaceModifier
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterClassOrInterfaceModifier" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterClassOrInterfaceModifier"):
                 listener.enterClassOrInterfaceModifier(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitClassOrInterfaceModifier" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitClassOrInterfaceModifier"):
                 listener.exitClassOrInterfaceModifier(self)
-
-
-
 
     def classOrInterfaceModifier(self):
 
@@ -1811,7 +1802,7 @@ class JavaParser ( Parser ):
         try:
             self.state = 326
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,12,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 12, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 316
@@ -1881,11 +1872,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class VariableModifierContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -1893,22 +1883,18 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.FINAL, 0)
 
         def annotation(self):
-            return self.getTypedRuleContext(JavaParser.AnnotationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.AnnotationContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_variableModifier
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterVariableModifier" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterVariableModifier"):
                 listener.enterVariableModifier(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitVariableModifier" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitVariableModifier"):
                 listener.exitVariableModifier(self)
-
-
-
 
     def variableModifier(self):
 
@@ -1923,7 +1909,10 @@ class JavaParser ( Parser ):
                 self.state = 328
                 self.match(JavaParser.FINAL)
                 pass
-            elif token in [JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS, JavaParser.AT, JavaParser.IDENTIFIER]:
+            elif token in [JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS,
+                           JavaParser.OPENS, JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH,
+                           JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD,
+                           JavaParser.SEALED, JavaParser.PERMITS, JavaParser.AT, JavaParser.IDENTIFIER]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 329
                 self.annotation()
@@ -1939,11 +1928,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ClassDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -1951,33 +1939,28 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.CLASS, 0)
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def classBody(self):
-            return self.getTypedRuleContext(JavaParser.ClassBodyContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ClassBodyContext, 0)
 
         def typeParameters(self):
-            return self.getTypedRuleContext(JavaParser.TypeParametersContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeParametersContext, 0)
 
         def EXTENDS(self):
             return self.getToken(JavaParser.EXTENDS, 0)
 
         def typeType(self):
-            return self.getTypedRuleContext(JavaParser.TypeTypeContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeTypeContext, 0)
 
         def IMPLEMENTS(self):
             return self.getToken(JavaParser.IMPLEMENTS, 0)
 
-        def typeList(self, i:int=None):
+        def typeList(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.TypeListContext)
             else:
-                return self.getTypedRuleContext(JavaParser.TypeListContext,i)
-
+                return self.getTypedRuleContext(JavaParser.TypeListContext, i)
 
         def PERMITS(self):
             return self.getToken(JavaParser.PERMITS, 0)
@@ -1985,22 +1968,19 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_classDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterClassDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterClassDeclaration"):
                 listener.enterClassDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitClassDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitClassDeclaration"):
                 listener.exitClassDeclaration(self)
-
-
-
 
     def classDeclaration(self):
 
         localctx = JavaParser.ClassDeclarationContext(self, self._ctx, self.state)
         self.enterRule(localctx, 14, self.RULE_classDeclaration)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 332
@@ -2010,40 +1990,36 @@ class JavaParser ( Parser ):
             self.state = 335
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.LT:
+            if _la == JavaParser.LT:
                 self.state = 334
                 self.typeParameters()
-
 
             self.state = 339
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.EXTENDS:
+            if _la == JavaParser.EXTENDS:
                 self.state = 337
                 self.match(JavaParser.EXTENDS)
                 self.state = 338
                 self.typeType()
 
-
             self.state = 343
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.IMPLEMENTS:
+            if _la == JavaParser.IMPLEMENTS:
                 self.state = 341
                 self.match(JavaParser.IMPLEMENTS)
                 self.state = 342
                 self.typeList()
 
-
             self.state = 347
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.PERMITS:
+            if _la == JavaParser.PERMITS:
                 self.state = 345
                 self.match(JavaParser.PERMITS)
                 self.state = 346
                 self.typeList()
-
 
             self.state = 349
             self.classBody()
@@ -2055,28 +2031,26 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class TypeParametersContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def LT(self):
             return self.getToken(JavaParser.LT, 0)
 
-        def typeParameter(self, i:int=None):
+        def typeParameter(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.TypeParameterContext)
             else:
-                return self.getTypedRuleContext(JavaParser.TypeParameterContext,i)
-
+                return self.getTypedRuleContext(JavaParser.TypeParameterContext, i)
 
         def GT(self):
             return self.getToken(JavaParser.GT, 0)
 
-        def COMMA(self, i:int=None):
+        def COMMA(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.COMMA)
             else:
@@ -2085,22 +2059,19 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_typeParameters
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTypeParameters" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterTypeParameters"):
                 listener.enterTypeParameters(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTypeParameters" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitTypeParameters"):
                 listener.exitTypeParameters(self)
-
-
-
 
     def typeParameters(self):
 
         localctx = JavaParser.TypeParametersContext(self, self._ctx, self.state)
         self.enterRule(localctx, 16, self.RULE_typeParameters)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 351
@@ -2110,7 +2081,7 @@ class JavaParser ( Parser ):
             self.state = 357
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==JavaParser.COMMA:
+            while _la == JavaParser.COMMA:
                 self.state = 353
                 self.match(JavaParser.COMMA)
                 self.state = 354
@@ -2129,82 +2100,75 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class TypeParameterContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
-
-        def annotation(self, i:int=None):
+        def annotation(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.AnnotationContext)
             else:
-                return self.getTypedRuleContext(JavaParser.AnnotationContext,i)
-
+                return self.getTypedRuleContext(JavaParser.AnnotationContext, i)
 
         def EXTENDS(self):
             return self.getToken(JavaParser.EXTENDS, 0)
 
         def typeBound(self):
-            return self.getTypedRuleContext(JavaParser.TypeBoundContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeBoundContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_typeParameter
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTypeParameter" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterTypeParameter"):
                 listener.enterTypeParameter(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTypeParameter" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitTypeParameter"):
                 listener.exitTypeParameter(self)
-
-
-
 
     def typeParameter(self):
 
         localctx = JavaParser.TypeParameterContext(self, self._ctx, self.state)
         self.enterRule(localctx, 18, self.RULE_typeParameter)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 365
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,19,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 19, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 362
-                    self.annotation() 
+                    self.annotation()
                 self.state = 367
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,19,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 19, self._ctx)
 
             self.state = 368
             self.identifier()
             self.state = 377
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.EXTENDS:
+            if _la == JavaParser.EXTENDS:
                 self.state = 369
                 self.match(JavaParser.EXTENDS)
                 self.state = 373
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,20,self._ctx)
-                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                    if _alt==1:
+                _alt = self._interp.adaptivePredict(self._input, 20, self._ctx)
+                while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                    if _alt == 1:
                         self.state = 370
-                        self.annotation() 
+                        self.annotation()
                     self.state = 375
                     self._errHandler.sync(self)
-                    _alt = self._interp.adaptivePredict(self._input,20,self._ctx)
+                    _alt = self._interp.adaptivePredict(self._input, 20, self._ctx)
 
                 self.state = 376
                 self.typeBound()
@@ -2218,22 +2182,20 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class TypeBoundContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def typeType(self, i:int=None):
+        def typeType(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.TypeTypeContext)
             else:
-                return self.getTypedRuleContext(JavaParser.TypeTypeContext,i)
+                return self.getTypedRuleContext(JavaParser.TypeTypeContext, i)
 
-
-        def BITAND(self, i:int=None):
+        def BITAND(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.BITAND)
             else:
@@ -2242,22 +2204,19 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_typeBound
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTypeBound" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterTypeBound"):
                 listener.enterTypeBound(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTypeBound" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitTypeBound"):
                 listener.exitTypeBound(self)
-
-
-
 
     def typeBound(self):
 
         localctx = JavaParser.TypeBoundContext(self, self._ctx, self.state)
         self.enterRule(localctx, 20, self.RULE_typeBound)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 379
@@ -2265,7 +2224,7 @@ class JavaParser ( Parser ):
             self.state = 384
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==JavaParser.BITAND:
+            while _la == JavaParser.BITAND:
                 self.state = 380
                 self.match(JavaParser.BITAND)
                 self.state = 381
@@ -2282,11 +2241,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class EnumDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -2294,8 +2252,7 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.ENUM, 0)
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def LBRACE(self):
             return self.getToken(JavaParser.LBRACE, 0)
@@ -2307,39 +2264,33 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.IMPLEMENTS, 0)
 
         def typeList(self):
-            return self.getTypedRuleContext(JavaParser.TypeListContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeListContext, 0)
 
         def enumConstants(self):
-            return self.getTypedRuleContext(JavaParser.EnumConstantsContext,0)
-
+            return self.getTypedRuleContext(JavaParser.EnumConstantsContext, 0)
 
         def COMMA(self):
             return self.getToken(JavaParser.COMMA, 0)
 
         def enumBodyDeclarations(self):
-            return self.getTypedRuleContext(JavaParser.EnumBodyDeclarationsContext,0)
-
+            return self.getTypedRuleContext(JavaParser.EnumBodyDeclarationsContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_enumDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterEnumDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterEnumDeclaration"):
                 listener.enterEnumDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitEnumDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitEnumDeclaration"):
                 listener.exitEnumDeclaration(self)
-
-
-
 
     def enumDeclaration(self):
 
         localctx = JavaParser.EnumDeclarationContext(self, self._ctx, self.state)
         self.enterRule(localctx, 22, self.RULE_enumDeclaration)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 387
@@ -2349,38 +2300,42 @@ class JavaParser ( Parser ):
             self.state = 391
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.IMPLEMENTS:
+            if _la == JavaParser.IMPLEMENTS:
                 self.state = 389
                 self.match(JavaParser.IMPLEMENTS)
                 self.state = 390
                 self.typeList()
-
 
             self.state = 393
             self.match(JavaParser.LBRACE)
             self.state = 395
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if ((((_la - 51)) & ~0x3f) == 0 and ((1 << (_la - 51)) & ((1 << (JavaParser.MODULE - 51)) | (1 << (JavaParser.OPEN - 51)) | (1 << (JavaParser.REQUIRES - 51)) | (1 << (JavaParser.EXPORTS - 51)) | (1 << (JavaParser.OPENS - 51)) | (1 << (JavaParser.TO - 51)) | (1 << (JavaParser.USES - 51)) | (1 << (JavaParser.PROVIDES - 51)) | (1 << (JavaParser.WITH - 51)) | (1 << (JavaParser.TRANSITIVE - 51)) | (1 << (JavaParser.VAR - 51)) | (1 << (JavaParser.YIELD - 51)) | (1 << (JavaParser.RECORD - 51)) | (1 << (JavaParser.SEALED - 51)) | (1 << (JavaParser.PERMITS - 51)))) != 0) or _la==JavaParser.AT or _la==JavaParser.IDENTIFIER:
+            if ((((_la - 51)) & ~0x3f) == 0 and ((1 << (_la - 51)) & (
+                    (1 << (JavaParser.MODULE - 51)) | (1 << (JavaParser.OPEN - 51)) | (
+                    1 << (JavaParser.REQUIRES - 51)) | (1 << (JavaParser.EXPORTS - 51)) | (
+                            1 << (JavaParser.OPENS - 51)) | (1 << (JavaParser.TO - 51)) | (
+                            1 << (JavaParser.USES - 51)) | (1 << (JavaParser.PROVIDES - 51)) | (
+                            1 << (JavaParser.WITH - 51)) | (1 << (JavaParser.TRANSITIVE - 51)) | (
+                            1 << (JavaParser.VAR - 51)) | (1 << (JavaParser.YIELD - 51)) | (
+                            1 << (JavaParser.RECORD - 51)) | (1 << (JavaParser.SEALED - 51)) | (1 << (
+                    JavaParser.PERMITS - 51)))) != 0) or _la == JavaParser.AT or _la == JavaParser.IDENTIFIER:
                 self.state = 394
                 self.enumConstants()
-
 
             self.state = 398
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.COMMA:
+            if _la == JavaParser.COMMA:
                 self.state = 397
                 self.match(JavaParser.COMMA)
-
 
             self.state = 401
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.SEMI:
+            if _la == JavaParser.SEMI:
                 self.state = 400
                 self.enumBodyDeclarations()
-
 
             self.state = 403
             self.match(JavaParser.RBRACE)
@@ -2392,22 +2347,20 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class EnumConstantsContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def enumConstant(self, i:int=None):
+        def enumConstant(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.EnumConstantContext)
             else:
-                return self.getTypedRuleContext(JavaParser.EnumConstantContext,i)
+                return self.getTypedRuleContext(JavaParser.EnumConstantContext, i)
 
-
-        def COMMA(self, i:int=None):
+        def COMMA(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.COMMA)
             else:
@@ -2416,16 +2369,13 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_enumConstants
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterEnumConstants" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterEnumConstants"):
                 listener.enterEnumConstants(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitEnumConstants" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitEnumConstants"):
                 listener.exitEnumConstants(self)
-
-
-
 
     def enumConstants(self):
 
@@ -2437,16 +2387,16 @@ class JavaParser ( Parser ):
             self.enumConstant()
             self.state = 410
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,27,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 27, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 406
                     self.match(JavaParser.COMMA)
                     self.state = 407
-                    self.enumConstant() 
+                    self.enumConstant()
                 self.state = 412
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,27,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 27, self._ctx)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -2456,79 +2406,70 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class EnumConstantContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
-
-        def annotation(self, i:int=None):
+        def annotation(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.AnnotationContext)
             else:
-                return self.getTypedRuleContext(JavaParser.AnnotationContext,i)
-
+                return self.getTypedRuleContext(JavaParser.AnnotationContext, i)
 
         def arguments(self):
-            return self.getTypedRuleContext(JavaParser.ArgumentsContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ArgumentsContext, 0)
 
         def classBody(self):
-            return self.getTypedRuleContext(JavaParser.ClassBodyContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ClassBodyContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_enumConstant
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterEnumConstant" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterEnumConstant"):
                 listener.enterEnumConstant(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitEnumConstant" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitEnumConstant"):
                 listener.exitEnumConstant(self)
-
-
-
 
     def enumConstant(self):
 
         localctx = JavaParser.EnumConstantContext(self, self._ctx, self.state)
         self.enterRule(localctx, 26, self.RULE_enumConstant)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 416
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,28,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 28, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 413
-                    self.annotation() 
+                    self.annotation()
                 self.state = 418
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,28,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 28, self._ctx)
 
             self.state = 419
             self.identifier()
             self.state = 421
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.LPAREN:
+            if _la == JavaParser.LPAREN:
                 self.state = 420
                 self.arguments()
-
 
             self.state = 424
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.LBRACE:
+            if _la == JavaParser.LBRACE:
                 self.state = 423
                 self.classBody()
 
@@ -2541,43 +2482,38 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class EnumBodyDeclarationsContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def SEMI(self):
             return self.getToken(JavaParser.SEMI, 0)
 
-        def classBodyDeclaration(self, i:int=None):
+        def classBodyDeclaration(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.ClassBodyDeclarationContext)
             else:
-                return self.getTypedRuleContext(JavaParser.ClassBodyDeclarationContext,i)
-
+                return self.getTypedRuleContext(JavaParser.ClassBodyDeclarationContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_enumBodyDeclarations
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterEnumBodyDeclarations" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterEnumBodyDeclarations"):
                 listener.enterEnumBodyDeclarations(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitEnumBodyDeclarations" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitEnumBodyDeclarations"):
                 listener.exitEnumBodyDeclarations(self)
-
-
-
 
     def enumBodyDeclarations(self):
 
         localctx = JavaParser.EnumBodyDeclarationsContext(self, self._ctx, self.state)
         self.enterRule(localctx, 28, self.RULE_enumBodyDeclarations)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 426
@@ -2585,7 +2521,29 @@ class JavaParser ( Parser ):
             self.state = 430
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while ((((_la - 1)) & ~0x3f) == 0 and ((1 << (_la - 1)) & ((1 << (JavaParser.ABSTRACT - 1)) | (1 << (JavaParser.BOOLEAN - 1)) | (1 << (JavaParser.BYTE - 1)) | (1 << (JavaParser.CHAR - 1)) | (1 << (JavaParser.CLASS - 1)) | (1 << (JavaParser.DOUBLE - 1)) | (1 << (JavaParser.ENUM - 1)) | (1 << (JavaParser.FINAL - 1)) | (1 << (JavaParser.FLOAT - 1)) | (1 << (JavaParser.INT - 1)) | (1 << (JavaParser.INTERFACE - 1)) | (1 << (JavaParser.LONG - 1)) | (1 << (JavaParser.NATIVE - 1)) | (1 << (JavaParser.PRIVATE - 1)) | (1 << (JavaParser.PROTECTED - 1)) | (1 << (JavaParser.PUBLIC - 1)) | (1 << (JavaParser.SHORT - 1)) | (1 << (JavaParser.STATIC - 1)) | (1 << (JavaParser.STRICTFP - 1)) | (1 << (JavaParser.SYNCHRONIZED - 1)) | (1 << (JavaParser.TRANSIENT - 1)) | (1 << (JavaParser.VOID - 1)) | (1 << (JavaParser.VOLATILE - 1)) | (1 << (JavaParser.MODULE - 1)) | (1 << (JavaParser.OPEN - 1)) | (1 << (JavaParser.REQUIRES - 1)) | (1 << (JavaParser.EXPORTS - 1)) | (1 << (JavaParser.OPENS - 1)) | (1 << (JavaParser.TO - 1)) | (1 << (JavaParser.USES - 1)) | (1 << (JavaParser.PROVIDES - 1)) | (1 << (JavaParser.WITH - 1)) | (1 << (JavaParser.TRANSITIVE - 1)) | (1 << (JavaParser.VAR - 1)) | (1 << (JavaParser.YIELD - 1)) | (1 << (JavaParser.RECORD - 1)) | (1 << (JavaParser.SEALED - 1)))) != 0) or ((((_la - 65)) & ~0x3f) == 0 and ((1 << (_la - 65)) & ((1 << (JavaParser.PERMITS - 65)) | (1 << (JavaParser.NON_SEALED - 65)) | (1 << (JavaParser.LBRACE - 65)) | (1 << (JavaParser.SEMI - 65)) | (1 << (JavaParser.LT - 65)) | (1 << (JavaParser.AT - 65)) | (1 << (JavaParser.IDENTIFIER - 65)))) != 0):
+            while ((((_la - 1)) & ~0x3f) == 0 and ((1 << (_la - 1)) & (
+                    (1 << (JavaParser.ABSTRACT - 1)) | (1 << (JavaParser.BOOLEAN - 1)) | (
+                    1 << (JavaParser.BYTE - 1)) | (1 << (JavaParser.CHAR - 1)) | (1 << (JavaParser.CLASS - 1)) | (
+                            1 << (JavaParser.DOUBLE - 1)) | (1 << (JavaParser.ENUM - 1)) | (
+                            1 << (JavaParser.FINAL - 1)) | (1 << (JavaParser.FLOAT - 1)) | (
+                            1 << (JavaParser.INT - 1)) | (1 << (JavaParser.INTERFACE - 1)) | (
+                            1 << (JavaParser.LONG - 1)) | (1 << (JavaParser.NATIVE - 1)) | (
+                            1 << (JavaParser.PRIVATE - 1)) | (1 << (JavaParser.PROTECTED - 1)) | (
+                            1 << (JavaParser.PUBLIC - 1)) | (1 << (JavaParser.SHORT - 1)) | (
+                            1 << (JavaParser.STATIC - 1)) | (1 << (JavaParser.STRICTFP - 1)) | (
+                            1 << (JavaParser.SYNCHRONIZED - 1)) | (1 << (JavaParser.TRANSIENT - 1)) | (
+                            1 << (JavaParser.VOID - 1)) | (1 << (JavaParser.VOLATILE - 1)) | (
+                            1 << (JavaParser.MODULE - 1)) | (1 << (JavaParser.OPEN - 1)) | (
+                            1 << (JavaParser.REQUIRES - 1)) | (1 << (JavaParser.EXPORTS - 1)) | (
+                            1 << (JavaParser.OPENS - 1)) | (1 << (JavaParser.TO - 1)) | (1 << (JavaParser.USES - 1)) | (
+                            1 << (JavaParser.PROVIDES - 1)) | (1 << (JavaParser.WITH - 1)) | (
+                            1 << (JavaParser.TRANSITIVE - 1)) | (1 << (JavaParser.VAR - 1)) | (
+                            1 << (JavaParser.YIELD - 1)) | (1 << (JavaParser.RECORD - 1)) | (
+                            1 << (JavaParser.SEALED - 1)))) != 0) or ((((_la - 65)) & ~0x3f) == 0 and (
+                    (1 << (_la - 65)) & ((1 << (JavaParser.PERMITS - 65)) | (1 << (JavaParser.NON_SEALED - 65)) | (
+                    1 << (JavaParser.LBRACE - 65)) | (1 << (JavaParser.SEMI - 65)) | (1 << (JavaParser.LT - 65)) | (
+                                                 1 << (JavaParser.AT - 65)) | (
+                                                 1 << (JavaParser.IDENTIFIER - 65)))) != 0):
                 self.state = 427
                 self.classBodyDeclaration()
                 self.state = 432
@@ -2600,11 +2558,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class InterfaceDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -2612,26 +2569,22 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.INTERFACE, 0)
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def interfaceBody(self):
-            return self.getTypedRuleContext(JavaParser.InterfaceBodyContext,0)
-
+            return self.getTypedRuleContext(JavaParser.InterfaceBodyContext, 0)
 
         def typeParameters(self):
-            return self.getTypedRuleContext(JavaParser.TypeParametersContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeParametersContext, 0)
 
         def EXTENDS(self):
             return self.getToken(JavaParser.EXTENDS, 0)
 
-        def typeList(self, i:int=None):
+        def typeList(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.TypeListContext)
             else:
-                return self.getTypedRuleContext(JavaParser.TypeListContext,i)
-
+                return self.getTypedRuleContext(JavaParser.TypeListContext, i)
 
         def PERMITS(self):
             return self.getToken(JavaParser.PERMITS, 0)
@@ -2639,22 +2592,19 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_interfaceDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterInterfaceDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterInterfaceDeclaration"):
                 listener.enterInterfaceDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitInterfaceDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitInterfaceDeclaration"):
                 listener.exitInterfaceDeclaration(self)
-
-
-
 
     def interfaceDeclaration(self):
 
         localctx = JavaParser.InterfaceDeclarationContext(self, self._ctx, self.state)
         self.enterRule(localctx, 30, self.RULE_interfaceDeclaration)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 433
@@ -2664,30 +2614,27 @@ class JavaParser ( Parser ):
             self.state = 436
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.LT:
+            if _la == JavaParser.LT:
                 self.state = 435
                 self.typeParameters()
-
 
             self.state = 440
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.EXTENDS:
+            if _la == JavaParser.EXTENDS:
                 self.state = 438
                 self.match(JavaParser.EXTENDS)
                 self.state = 439
                 self.typeList()
 
-
             self.state = 444
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.PERMITS:
+            if _la == JavaParser.PERMITS:
                 self.state = 442
                 self.match(JavaParser.PERMITS)
                 self.state = 443
                 self.typeList()
-
 
             self.state = 446
             self.interfaceBody()
@@ -2699,11 +2646,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ClassBodyContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -2713,32 +2659,28 @@ class JavaParser ( Parser ):
         def RBRACE(self):
             return self.getToken(JavaParser.RBRACE, 0)
 
-        def classBodyDeclaration(self, i:int=None):
+        def classBodyDeclaration(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.ClassBodyDeclarationContext)
             else:
-                return self.getTypedRuleContext(JavaParser.ClassBodyDeclarationContext,i)
-
+                return self.getTypedRuleContext(JavaParser.ClassBodyDeclarationContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_classBody
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterClassBody" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterClassBody"):
                 listener.enterClassBody(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitClassBody" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitClassBody"):
                 listener.exitClassBody(self)
-
-
-
 
     def classBody(self):
 
         localctx = JavaParser.ClassBodyContext(self, self._ctx, self.state)
         self.enterRule(localctx, 32, self.RULE_classBody)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 448
@@ -2746,7 +2688,29 @@ class JavaParser ( Parser ):
             self.state = 452
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while ((((_la - 1)) & ~0x3f) == 0 and ((1 << (_la - 1)) & ((1 << (JavaParser.ABSTRACT - 1)) | (1 << (JavaParser.BOOLEAN - 1)) | (1 << (JavaParser.BYTE - 1)) | (1 << (JavaParser.CHAR - 1)) | (1 << (JavaParser.CLASS - 1)) | (1 << (JavaParser.DOUBLE - 1)) | (1 << (JavaParser.ENUM - 1)) | (1 << (JavaParser.FINAL - 1)) | (1 << (JavaParser.FLOAT - 1)) | (1 << (JavaParser.INT - 1)) | (1 << (JavaParser.INTERFACE - 1)) | (1 << (JavaParser.LONG - 1)) | (1 << (JavaParser.NATIVE - 1)) | (1 << (JavaParser.PRIVATE - 1)) | (1 << (JavaParser.PROTECTED - 1)) | (1 << (JavaParser.PUBLIC - 1)) | (1 << (JavaParser.SHORT - 1)) | (1 << (JavaParser.STATIC - 1)) | (1 << (JavaParser.STRICTFP - 1)) | (1 << (JavaParser.SYNCHRONIZED - 1)) | (1 << (JavaParser.TRANSIENT - 1)) | (1 << (JavaParser.VOID - 1)) | (1 << (JavaParser.VOLATILE - 1)) | (1 << (JavaParser.MODULE - 1)) | (1 << (JavaParser.OPEN - 1)) | (1 << (JavaParser.REQUIRES - 1)) | (1 << (JavaParser.EXPORTS - 1)) | (1 << (JavaParser.OPENS - 1)) | (1 << (JavaParser.TO - 1)) | (1 << (JavaParser.USES - 1)) | (1 << (JavaParser.PROVIDES - 1)) | (1 << (JavaParser.WITH - 1)) | (1 << (JavaParser.TRANSITIVE - 1)) | (1 << (JavaParser.VAR - 1)) | (1 << (JavaParser.YIELD - 1)) | (1 << (JavaParser.RECORD - 1)) | (1 << (JavaParser.SEALED - 1)))) != 0) or ((((_la - 65)) & ~0x3f) == 0 and ((1 << (_la - 65)) & ((1 << (JavaParser.PERMITS - 65)) | (1 << (JavaParser.NON_SEALED - 65)) | (1 << (JavaParser.LBRACE - 65)) | (1 << (JavaParser.SEMI - 65)) | (1 << (JavaParser.LT - 65)) | (1 << (JavaParser.AT - 65)) | (1 << (JavaParser.IDENTIFIER - 65)))) != 0):
+            while ((((_la - 1)) & ~0x3f) == 0 and ((1 << (_la - 1)) & (
+                    (1 << (JavaParser.ABSTRACT - 1)) | (1 << (JavaParser.BOOLEAN - 1)) | (
+                    1 << (JavaParser.BYTE - 1)) | (1 << (JavaParser.CHAR - 1)) | (1 << (JavaParser.CLASS - 1)) | (
+                            1 << (JavaParser.DOUBLE - 1)) | (1 << (JavaParser.ENUM - 1)) | (
+                            1 << (JavaParser.FINAL - 1)) | (1 << (JavaParser.FLOAT - 1)) | (
+                            1 << (JavaParser.INT - 1)) | (1 << (JavaParser.INTERFACE - 1)) | (
+                            1 << (JavaParser.LONG - 1)) | (1 << (JavaParser.NATIVE - 1)) | (
+                            1 << (JavaParser.PRIVATE - 1)) | (1 << (JavaParser.PROTECTED - 1)) | (
+                            1 << (JavaParser.PUBLIC - 1)) | (1 << (JavaParser.SHORT - 1)) | (
+                            1 << (JavaParser.STATIC - 1)) | (1 << (JavaParser.STRICTFP - 1)) | (
+                            1 << (JavaParser.SYNCHRONIZED - 1)) | (1 << (JavaParser.TRANSIENT - 1)) | (
+                            1 << (JavaParser.VOID - 1)) | (1 << (JavaParser.VOLATILE - 1)) | (
+                            1 << (JavaParser.MODULE - 1)) | (1 << (JavaParser.OPEN - 1)) | (
+                            1 << (JavaParser.REQUIRES - 1)) | (1 << (JavaParser.EXPORTS - 1)) | (
+                            1 << (JavaParser.OPENS - 1)) | (1 << (JavaParser.TO - 1)) | (1 << (JavaParser.USES - 1)) | (
+                            1 << (JavaParser.PROVIDES - 1)) | (1 << (JavaParser.WITH - 1)) | (
+                            1 << (JavaParser.TRANSITIVE - 1)) | (1 << (JavaParser.VAR - 1)) | (
+                            1 << (JavaParser.YIELD - 1)) | (1 << (JavaParser.RECORD - 1)) | (
+                            1 << (JavaParser.SEALED - 1)))) != 0) or ((((_la - 65)) & ~0x3f) == 0 and (
+                    (1 << (_la - 65)) & ((1 << (JavaParser.PERMITS - 65)) | (1 << (JavaParser.NON_SEALED - 65)) | (
+                    1 << (JavaParser.LBRACE - 65)) | (1 << (JavaParser.SEMI - 65)) | (1 << (JavaParser.LT - 65)) | (
+                                                 1 << (JavaParser.AT - 65)) | (
+                                                 1 << (JavaParser.IDENTIFIER - 65)))) != 0):
                 self.state = 449
                 self.classBodyDeclaration()
                 self.state = 454
@@ -2763,11 +2727,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class InterfaceBodyContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -2777,32 +2740,28 @@ class JavaParser ( Parser ):
         def RBRACE(self):
             return self.getToken(JavaParser.RBRACE, 0)
 
-        def interfaceBodyDeclaration(self, i:int=None):
+        def interfaceBodyDeclaration(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.InterfaceBodyDeclarationContext)
             else:
-                return self.getTypedRuleContext(JavaParser.InterfaceBodyDeclarationContext,i)
-
+                return self.getTypedRuleContext(JavaParser.InterfaceBodyDeclarationContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_interfaceBody
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterInterfaceBody" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterInterfaceBody"):
                 listener.enterInterfaceBody(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitInterfaceBody" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitInterfaceBody"):
                 listener.exitInterfaceBody(self)
-
-
-
 
     def interfaceBody(self):
 
         localctx = JavaParser.InterfaceBodyContext(self, self._ctx, self.state)
         self.enterRule(localctx, 34, self.RULE_interfaceBody)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 457
@@ -2810,7 +2769,29 @@ class JavaParser ( Parser ):
             self.state = 461
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while ((((_la - 1)) & ~0x3f) == 0 and ((1 << (_la - 1)) & ((1 << (JavaParser.ABSTRACT - 1)) | (1 << (JavaParser.BOOLEAN - 1)) | (1 << (JavaParser.BYTE - 1)) | (1 << (JavaParser.CHAR - 1)) | (1 << (JavaParser.CLASS - 1)) | (1 << (JavaParser.DEFAULT - 1)) | (1 << (JavaParser.DOUBLE - 1)) | (1 << (JavaParser.ENUM - 1)) | (1 << (JavaParser.FINAL - 1)) | (1 << (JavaParser.FLOAT - 1)) | (1 << (JavaParser.INT - 1)) | (1 << (JavaParser.INTERFACE - 1)) | (1 << (JavaParser.LONG - 1)) | (1 << (JavaParser.NATIVE - 1)) | (1 << (JavaParser.PRIVATE - 1)) | (1 << (JavaParser.PROTECTED - 1)) | (1 << (JavaParser.PUBLIC - 1)) | (1 << (JavaParser.SHORT - 1)) | (1 << (JavaParser.STATIC - 1)) | (1 << (JavaParser.STRICTFP - 1)) | (1 << (JavaParser.SYNCHRONIZED - 1)) | (1 << (JavaParser.TRANSIENT - 1)) | (1 << (JavaParser.VOID - 1)) | (1 << (JavaParser.VOLATILE - 1)) | (1 << (JavaParser.MODULE - 1)) | (1 << (JavaParser.OPEN - 1)) | (1 << (JavaParser.REQUIRES - 1)) | (1 << (JavaParser.EXPORTS - 1)) | (1 << (JavaParser.OPENS - 1)) | (1 << (JavaParser.TO - 1)) | (1 << (JavaParser.USES - 1)) | (1 << (JavaParser.PROVIDES - 1)) | (1 << (JavaParser.WITH - 1)) | (1 << (JavaParser.TRANSITIVE - 1)) | (1 << (JavaParser.VAR - 1)) | (1 << (JavaParser.YIELD - 1)) | (1 << (JavaParser.RECORD - 1)) | (1 << (JavaParser.SEALED - 1)))) != 0) or ((((_la - 65)) & ~0x3f) == 0 and ((1 << (_la - 65)) & ((1 << (JavaParser.PERMITS - 65)) | (1 << (JavaParser.NON_SEALED - 65)) | (1 << (JavaParser.SEMI - 65)) | (1 << (JavaParser.LT - 65)) | (1 << (JavaParser.AT - 65)) | (1 << (JavaParser.IDENTIFIER - 65)))) != 0):
+            while ((((_la - 1)) & ~0x3f) == 0 and ((1 << (_la - 1)) & (
+                    (1 << (JavaParser.ABSTRACT - 1)) | (1 << (JavaParser.BOOLEAN - 1)) | (
+                    1 << (JavaParser.BYTE - 1)) | (1 << (JavaParser.CHAR - 1)) | (1 << (JavaParser.CLASS - 1)) | (
+                            1 << (JavaParser.DEFAULT - 1)) | (1 << (JavaParser.DOUBLE - 1)) | (
+                            1 << (JavaParser.ENUM - 1)) | (1 << (JavaParser.FINAL - 1)) | (
+                            1 << (JavaParser.FLOAT - 1)) | (1 << (JavaParser.INT - 1)) | (
+                            1 << (JavaParser.INTERFACE - 1)) | (1 << (JavaParser.LONG - 1)) | (
+                            1 << (JavaParser.NATIVE - 1)) | (1 << (JavaParser.PRIVATE - 1)) | (
+                            1 << (JavaParser.PROTECTED - 1)) | (1 << (JavaParser.PUBLIC - 1)) | (
+                            1 << (JavaParser.SHORT - 1)) | (1 << (JavaParser.STATIC - 1)) | (
+                            1 << (JavaParser.STRICTFP - 1)) | (1 << (JavaParser.SYNCHRONIZED - 1)) | (
+                            1 << (JavaParser.TRANSIENT - 1)) | (1 << (JavaParser.VOID - 1)) | (
+                            1 << (JavaParser.VOLATILE - 1)) | (1 << (JavaParser.MODULE - 1)) | (
+                            1 << (JavaParser.OPEN - 1)) | (1 << (JavaParser.REQUIRES - 1)) | (
+                            1 << (JavaParser.EXPORTS - 1)) | (1 << (JavaParser.OPENS - 1)) | (
+                            1 << (JavaParser.TO - 1)) | (1 << (JavaParser.USES - 1)) | (
+                            1 << (JavaParser.PROVIDES - 1)) | (1 << (JavaParser.WITH - 1)) | (
+                            1 << (JavaParser.TRANSITIVE - 1)) | (1 << (JavaParser.VAR - 1)) | (
+                            1 << (JavaParser.YIELD - 1)) | (1 << (JavaParser.RECORD - 1)) | (
+                            1 << (JavaParser.SEALED - 1)))) != 0) or ((((_la - 65)) & ~0x3f) == 0 and (
+                    (1 << (_la - 65)) & ((1 << (JavaParser.PERMITS - 65)) | (1 << (JavaParser.NON_SEALED - 65)) | (
+                    1 << (JavaParser.SEMI - 65)) | (1 << (JavaParser.LT - 65)) | (1 << (JavaParser.AT - 65)) | (
+                                                 1 << (JavaParser.IDENTIFIER - 65)))) != 0):
                 self.state = 458
                 self.interfaceBodyDeclaration()
                 self.state = 463
@@ -2827,11 +2808,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ClassBodyDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -2839,46 +2819,40 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.SEMI, 0)
 
         def block(self):
-            return self.getTypedRuleContext(JavaParser.BlockContext,0)
-
+            return self.getTypedRuleContext(JavaParser.BlockContext, 0)
 
         def STATIC(self):
             return self.getToken(JavaParser.STATIC, 0)
 
         def memberDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.MemberDeclarationContext,0)
+            return self.getTypedRuleContext(JavaParser.MemberDeclarationContext, 0)
 
-
-        def modifier(self, i:int=None):
+        def modifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.ModifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.ModifierContext,i)
-
+                return self.getTypedRuleContext(JavaParser.ModifierContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_classBodyDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterClassBodyDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterClassBodyDeclaration"):
                 listener.enterClassBodyDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitClassBodyDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitClassBodyDeclaration"):
                 listener.exitClassBodyDeclaration(self)
-
-
-
 
     def classBodyDeclaration(self):
 
         localctx = JavaParser.ClassBodyDeclarationContext(self, self._ctx, self.state)
         self.enterRule(localctx, 36, self.RULE_classBodyDeclaration)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.state = 478
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,39,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 39, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 466
@@ -2890,10 +2864,9 @@ class JavaParser ( Parser ):
                 self.state = 468
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==JavaParser.STATIC:
+                if _la == JavaParser.STATIC:
                     self.state = 467
                     self.match(JavaParser.STATIC)
-
 
                 self.state = 470
                 self.block()
@@ -2903,14 +2876,14 @@ class JavaParser ( Parser ):
                 self.enterOuterAlt(localctx, 3)
                 self.state = 474
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,38,self._ctx)
-                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                    if _alt==1:
+                _alt = self._interp.adaptivePredict(self._input, 38, self._ctx)
+                while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                    if _alt == 1:
                         self.state = 471
-                        self.modifier() 
+                        self.modifier()
                     self.state = 476
                     self._errHandler.sync(self)
-                    _alt = self._interp.adaptivePredict(self._input,38,self._ctx)
+                    _alt = self._interp.adaptivePredict(self._input, 38, self._ctx)
 
                 self.state = 477
                 self.memberDeclaration()
@@ -2925,67 +2898,53 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class MemberDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def recordDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.RecordDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.RecordDeclarationContext, 0)
 
         def methodDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.MethodDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.MethodDeclarationContext, 0)
 
         def genericMethodDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.GenericMethodDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.GenericMethodDeclarationContext, 0)
 
         def fieldDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.FieldDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.FieldDeclarationContext, 0)
 
         def constructorDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.ConstructorDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ConstructorDeclarationContext, 0)
 
         def genericConstructorDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.GenericConstructorDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.GenericConstructorDeclarationContext, 0)
 
         def interfaceDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.InterfaceDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.InterfaceDeclarationContext, 0)
 
         def annotationTypeDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.AnnotationTypeDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.AnnotationTypeDeclarationContext, 0)
 
         def classDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.ClassDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ClassDeclarationContext, 0)
 
         def enumDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.EnumDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.EnumDeclarationContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_memberDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterMemberDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterMemberDeclaration"):
                 listener.enterMemberDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitMemberDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitMemberDeclaration"):
                 listener.exitMemberDeclaration(self)
-
-
-
 
     def memberDeclaration(self):
 
@@ -2994,7 +2953,7 @@ class JavaParser ( Parser ):
         try:
             self.state = 490
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,40,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 40, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 480
@@ -3064,37 +3023,32 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class MethodDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def typeTypeOrVoid(self):
-            return self.getTypedRuleContext(JavaParser.TypeTypeOrVoidContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeTypeOrVoidContext, 0)
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def formalParameters(self):
-            return self.getTypedRuleContext(JavaParser.FormalParametersContext,0)
-
+            return self.getTypedRuleContext(JavaParser.FormalParametersContext, 0)
 
         def methodBody(self):
-            return self.getTypedRuleContext(JavaParser.MethodBodyContext,0)
+            return self.getTypedRuleContext(JavaParser.MethodBodyContext, 0)
 
-
-        def LBRACK(self, i:int=None):
+        def LBRACK(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.LBRACK)
             else:
                 return self.getToken(JavaParser.LBRACK, i)
 
-        def RBRACK(self, i:int=None):
+        def RBRACK(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.RBRACK)
             else:
@@ -3104,28 +3058,24 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.THROWS, 0)
 
         def qualifiedNameList(self):
-            return self.getTypedRuleContext(JavaParser.QualifiedNameListContext,0)
-
+            return self.getTypedRuleContext(JavaParser.QualifiedNameListContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_methodDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterMethodDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterMethodDeclaration"):
                 listener.enterMethodDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitMethodDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitMethodDeclaration"):
                 listener.exitMethodDeclaration(self)
-
-
-
 
     def methodDeclaration(self):
 
         localctx = JavaParser.MethodDeclarationContext(self, self._ctx, self.state)
         self.enterRule(localctx, 40, self.RULE_methodDeclaration)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 492
@@ -3137,7 +3087,7 @@ class JavaParser ( Parser ):
             self.state = 499
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==JavaParser.LBRACK:
+            while _la == JavaParser.LBRACK:
                 self.state = 495
                 self.match(JavaParser.LBRACK)
                 self.state = 496
@@ -3149,12 +3099,11 @@ class JavaParser ( Parser ):
             self.state = 504
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.THROWS:
+            if _la == JavaParser.THROWS:
                 self.state = 502
                 self.match(JavaParser.THROWS)
                 self.state = 503
                 self.qualifiedNameList()
-
 
             self.state = 506
             self.methodBody()
@@ -3166,17 +3115,15 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class MethodBodyContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def block(self):
-            return self.getTypedRuleContext(JavaParser.BlockContext,0)
-
+            return self.getTypedRuleContext(JavaParser.BlockContext, 0)
 
         def SEMI(self):
             return self.getToken(JavaParser.SEMI, 0)
@@ -3184,16 +3131,13 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_methodBody
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterMethodBody" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterMethodBody"):
                 listener.enterMethodBody(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitMethodBody" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitMethodBody"):
                 listener.exitMethodBody(self)
-
-
-
 
     def methodBody(self):
 
@@ -3224,17 +3168,15 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class TypeTypeOrVoidContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def typeType(self):
-            return self.getTypedRuleContext(JavaParser.TypeTypeContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeTypeContext, 0)
 
         def VOID(self):
             return self.getToken(JavaParser.VOID, 0)
@@ -3242,16 +3184,13 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_typeTypeOrVoid
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTypeTypeOrVoid" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterTypeTypeOrVoid"):
                 listener.enterTypeTypeOrVoid(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTypeTypeOrVoid" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitTypeTypeOrVoid"):
                 listener.exitTypeTypeOrVoid(self)
-
-
-
 
     def typeTypeOrVoid(self):
 
@@ -3261,7 +3200,12 @@ class JavaParser ( Parser ):
             self.state = 514
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [JavaParser.BOOLEAN, JavaParser.BYTE, JavaParser.CHAR, JavaParser.DOUBLE, JavaParser.FLOAT, JavaParser.INT, JavaParser.LONG, JavaParser.SHORT, JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS, JavaParser.AT, JavaParser.IDENTIFIER]:
+            if token in [JavaParser.BOOLEAN, JavaParser.BYTE, JavaParser.CHAR, JavaParser.DOUBLE, JavaParser.FLOAT,
+                         JavaParser.INT, JavaParser.LONG, JavaParser.SHORT, JavaParser.MODULE, JavaParser.OPEN,
+                         JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO, JavaParser.USES,
+                         JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD,
+                         JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS, JavaParser.AT,
+                         JavaParser.IDENTIFIER]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 512
                 self.typeType()
@@ -3282,35 +3226,29 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class GenericMethodDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def typeParameters(self):
-            return self.getTypedRuleContext(JavaParser.TypeParametersContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeParametersContext, 0)
 
         def methodDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.MethodDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.MethodDeclarationContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_genericMethodDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterGenericMethodDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterGenericMethodDeclaration"):
                 listener.enterGenericMethodDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitGenericMethodDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitGenericMethodDeclaration"):
                 listener.exitGenericMethodDeclaration(self)
-
-
-
 
     def genericMethodDeclaration(self):
 
@@ -3330,35 +3268,29 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class GenericConstructorDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def typeParameters(self):
-            return self.getTypedRuleContext(JavaParser.TypeParametersContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeParametersContext, 0)
 
         def constructorDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.ConstructorDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ConstructorDeclarationContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_genericConstructorDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterGenericConstructorDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterGenericConstructorDeclaration"):
                 listener.enterGenericConstructorDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitGenericConstructorDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitGenericConstructorDeclaration"):
                 listener.exitGenericConstructorDeclaration(self)
-
-
-
 
     def genericConstructorDeclaration(self):
 
@@ -3378,53 +3310,45 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ConstructorDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
-            self.constructorBody = None # BlockContext
+            self.constructorBody = None  # BlockContext
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def formalParameters(self):
-            return self.getTypedRuleContext(JavaParser.FormalParametersContext,0)
-
+            return self.getTypedRuleContext(JavaParser.FormalParametersContext, 0)
 
         def block(self):
-            return self.getTypedRuleContext(JavaParser.BlockContext,0)
-
+            return self.getTypedRuleContext(JavaParser.BlockContext, 0)
 
         def THROWS(self):
             return self.getToken(JavaParser.THROWS, 0)
 
         def qualifiedNameList(self):
-            return self.getTypedRuleContext(JavaParser.QualifiedNameListContext,0)
-
+            return self.getTypedRuleContext(JavaParser.QualifiedNameListContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_constructorDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterConstructorDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterConstructorDeclaration"):
                 listener.enterConstructorDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitConstructorDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitConstructorDeclaration"):
                 listener.exitConstructorDeclaration(self)
-
-
-
 
     def constructorDeclaration(self):
 
         localctx = JavaParser.ConstructorDeclarationContext(self, self._ctx, self.state)
         self.enterRule(localctx, 50, self.RULE_constructorDeclaration)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 522
@@ -3434,12 +3358,11 @@ class JavaParser ( Parser ):
             self.state = 526
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.THROWS:
+            if _la == JavaParser.THROWS:
                 self.state = 524
                 self.match(JavaParser.THROWS)
                 self.state = 525
                 self.qualifiedNameList()
-
 
             self.state = 528
             localctx.constructorBody = self.block()
@@ -3451,43 +3374,36 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class CompactConstructorDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
-            self.constructorBody = None # BlockContext
+            self.constructorBody = None  # BlockContext
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def block(self):
-            return self.getTypedRuleContext(JavaParser.BlockContext,0)
+            return self.getTypedRuleContext(JavaParser.BlockContext, 0)
 
-
-        def modifier(self, i:int=None):
+        def modifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.ModifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.ModifierContext,i)
-
+                return self.getTypedRuleContext(JavaParser.ModifierContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_compactConstructorDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterCompactConstructorDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterCompactConstructorDeclaration"):
                 listener.enterCompactConstructorDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitCompactConstructorDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitCompactConstructorDeclaration"):
                 listener.exitCompactConstructorDeclaration(self)
-
-
-
 
     def compactConstructorDeclaration(self):
 
@@ -3497,14 +3413,14 @@ class JavaParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 533
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,46,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 46, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 530
-                    self.modifier() 
+                    self.modifier()
                 self.state = 535
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,46,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 46, self._ctx)
 
             self.state = 536
             self.identifier()
@@ -3518,21 +3434,18 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class FieldDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def typeType(self):
-            return self.getTypedRuleContext(JavaParser.TypeTypeContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeTypeContext, 0)
 
         def variableDeclarators(self):
-            return self.getTypedRuleContext(JavaParser.VariableDeclaratorsContext,0)
-
+            return self.getTypedRuleContext(JavaParser.VariableDeclaratorsContext, 0)
 
         def SEMI(self):
             return self.getToken(JavaParser.SEMI, 0)
@@ -3540,16 +3453,13 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_fieldDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterFieldDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterFieldDeclaration"):
                 listener.enterFieldDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitFieldDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitFieldDeclaration"):
                 listener.exitFieldDeclaration(self)
-
-
-
 
     def fieldDeclaration(self):
 
@@ -3571,24 +3481,21 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class InterfaceBodyDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def interfaceMemberDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.InterfaceMemberDeclarationContext,0)
+            return self.getTypedRuleContext(JavaParser.InterfaceMemberDeclarationContext, 0)
 
-
-        def modifier(self, i:int=None):
+        def modifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.ModifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.ModifierContext,i)
-
+                return self.getTypedRuleContext(JavaParser.ModifierContext, i)
 
         def SEMI(self):
             return self.getToken(JavaParser.SEMI, 0)
@@ -3596,16 +3503,13 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_interfaceBodyDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterInterfaceBodyDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterInterfaceBodyDeclaration"):
                 listener.enterInterfaceBodyDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitInterfaceBodyDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitInterfaceBodyDeclaration"):
                 listener.exitInterfaceBodyDeclaration(self)
-
-
-
 
     def interfaceBodyDeclaration(self):
 
@@ -3615,18 +3519,27 @@ class JavaParser ( Parser ):
             self.state = 551
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [JavaParser.ABSTRACT, JavaParser.BOOLEAN, JavaParser.BYTE, JavaParser.CHAR, JavaParser.CLASS, JavaParser.DEFAULT, JavaParser.DOUBLE, JavaParser.ENUM, JavaParser.FINAL, JavaParser.FLOAT, JavaParser.INT, JavaParser.INTERFACE, JavaParser.LONG, JavaParser.NATIVE, JavaParser.PRIVATE, JavaParser.PROTECTED, JavaParser.PUBLIC, JavaParser.SHORT, JavaParser.STATIC, JavaParser.STRICTFP, JavaParser.SYNCHRONIZED, JavaParser.TRANSIENT, JavaParser.VOID, JavaParser.VOLATILE, JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS, JavaParser.NON_SEALED, JavaParser.LT, JavaParser.AT, JavaParser.IDENTIFIER]:
+            if token in [JavaParser.ABSTRACT, JavaParser.BOOLEAN, JavaParser.BYTE, JavaParser.CHAR, JavaParser.CLASS,
+                         JavaParser.DEFAULT, JavaParser.DOUBLE, JavaParser.ENUM, JavaParser.FINAL, JavaParser.FLOAT,
+                         JavaParser.INT, JavaParser.INTERFACE, JavaParser.LONG, JavaParser.NATIVE, JavaParser.PRIVATE,
+                         JavaParser.PROTECTED, JavaParser.PUBLIC, JavaParser.SHORT, JavaParser.STATIC,
+                         JavaParser.STRICTFP, JavaParser.SYNCHRONIZED, JavaParser.TRANSIENT, JavaParser.VOID,
+                         JavaParser.VOLATILE, JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES,
+                         JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES,
+                         JavaParser.WITH, JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD,
+                         JavaParser.SEALED, JavaParser.PERMITS, JavaParser.NON_SEALED, JavaParser.LT, JavaParser.AT,
+                         JavaParser.IDENTIFIER]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 546
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,47,self._ctx)
-                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                    if _alt==1:
+                _alt = self._interp.adaptivePredict(self._input, 47, self._ctx)
+                while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                    if _alt == 1:
                         self.state = 543
-                        self.modifier() 
+                        self.modifier()
                     self.state = 548
                     self._errHandler.sync(self)
-                    _alt = self._interp.adaptivePredict(self._input,47,self._ctx)
+                    _alt = self._interp.adaptivePredict(self._input, 47, self._ctx)
 
                 self.state = 549
                 self.interfaceMemberDeclaration()
@@ -3647,59 +3560,47 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class InterfaceMemberDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def recordDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.RecordDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.RecordDeclarationContext, 0)
 
         def constDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.ConstDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ConstDeclarationContext, 0)
 
         def interfaceMethodDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.InterfaceMethodDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.InterfaceMethodDeclarationContext, 0)
 
         def genericInterfaceMethodDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.GenericInterfaceMethodDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.GenericInterfaceMethodDeclarationContext, 0)
 
         def interfaceDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.InterfaceDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.InterfaceDeclarationContext, 0)
 
         def annotationTypeDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.AnnotationTypeDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.AnnotationTypeDeclarationContext, 0)
 
         def classDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.ClassDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ClassDeclarationContext, 0)
 
         def enumDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.EnumDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.EnumDeclarationContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_interfaceMemberDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterInterfaceMemberDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterInterfaceMemberDeclaration"):
                 listener.enterInterfaceMemberDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitInterfaceMemberDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitInterfaceMemberDeclaration"):
                 listener.exitInterfaceMemberDeclaration(self)
-
-
-
 
     def interfaceMemberDeclaration(self):
 
@@ -3708,7 +3609,7 @@ class JavaParser ( Parser ):
         try:
             self.state = 561
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,49,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 49, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 553
@@ -3766,29 +3667,26 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ConstDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def typeType(self):
-            return self.getTypedRuleContext(JavaParser.TypeTypeContext,0)
+            return self.getTypedRuleContext(JavaParser.TypeTypeContext, 0)
 
-
-        def constantDeclarator(self, i:int=None):
+        def constantDeclarator(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.ConstantDeclaratorContext)
             else:
-                return self.getTypedRuleContext(JavaParser.ConstantDeclaratorContext,i)
-
+                return self.getTypedRuleContext(JavaParser.ConstantDeclaratorContext, i)
 
         def SEMI(self):
             return self.getToken(JavaParser.SEMI, 0)
 
-        def COMMA(self, i:int=None):
+        def COMMA(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.COMMA)
             else:
@@ -3797,22 +3695,19 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_constDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterConstDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterConstDeclaration"):
                 listener.enterConstDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitConstDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitConstDeclaration"):
                 listener.exitConstDeclaration(self)
-
-
-
 
     def constDeclaration(self):
 
         localctx = JavaParser.ConstDeclarationContext(self, self._ctx, self.state)
         self.enterRule(localctx, 60, self.RULE_constDeclaration)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 563
@@ -3822,7 +3717,7 @@ class JavaParser ( Parser ):
             self.state = 569
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==JavaParser.COMMA:
+            while _la == JavaParser.COMMA:
                 self.state = 565
                 self.match(JavaParser.COMMA)
                 self.state = 566
@@ -3841,32 +3736,29 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ConstantDeclaratorContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def ASSIGN(self):
             return self.getToken(JavaParser.ASSIGN, 0)
 
         def variableInitializer(self):
-            return self.getTypedRuleContext(JavaParser.VariableInitializerContext,0)
+            return self.getTypedRuleContext(JavaParser.VariableInitializerContext, 0)
 
-
-        def LBRACK(self, i:int=None):
+        def LBRACK(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.LBRACK)
             else:
                 return self.getToken(JavaParser.LBRACK, i)
 
-        def RBRACK(self, i:int=None):
+        def RBRACK(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.RBRACK)
             else:
@@ -3875,22 +3767,19 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_constantDeclarator
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterConstantDeclarator" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterConstantDeclarator"):
                 listener.enterConstantDeclarator(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitConstantDeclarator" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitConstantDeclarator"):
                 listener.exitConstantDeclarator(self)
-
-
-
 
     def constantDeclarator(self):
 
         localctx = JavaParser.ConstantDeclaratorContext(self, self._ctx, self.state)
         self.enterRule(localctx, 62, self.RULE_constantDeclarator)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 574
@@ -3898,7 +3787,7 @@ class JavaParser ( Parser ):
             self.state = 579
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==JavaParser.LBRACK:
+            while _la == JavaParser.LBRACK:
                 self.state = 575
                 self.match(JavaParser.LBRACK)
                 self.state = 576
@@ -3919,38 +3808,32 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class InterfaceMethodDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def interfaceCommonBodyDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.InterfaceCommonBodyDeclarationContext,0)
+            return self.getTypedRuleContext(JavaParser.InterfaceCommonBodyDeclarationContext, 0)
 
-
-        def interfaceMethodModifier(self, i:int=None):
+        def interfaceMethodModifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.InterfaceMethodModifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.InterfaceMethodModifierContext,i)
-
+                return self.getTypedRuleContext(JavaParser.InterfaceMethodModifierContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_interfaceMethodDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterInterfaceMethodDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterInterfaceMethodDeclaration"):
                 listener.enterInterfaceMethodDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitInterfaceMethodDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitInterfaceMethodDeclaration"):
                 listener.exitInterfaceMethodDeclaration(self)
-
-
-
 
     def interfaceMethodDeclaration(self):
 
@@ -3960,14 +3843,14 @@ class JavaParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 588
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,52,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 52, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 585
-                    self.interfaceMethodModifier() 
+                    self.interfaceMethodModifier()
                 self.state = 590
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,52,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 52, self._ctx)
 
             self.state = 591
             self.interfaceCommonBodyDeclaration()
@@ -3979,17 +3862,15 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class InterfaceMethodModifierContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def annotation(self):
-            return self.getTypedRuleContext(JavaParser.AnnotationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.AnnotationContext, 0)
 
         def PUBLIC(self):
             return self.getToken(JavaParser.PUBLIC, 0)
@@ -4009,16 +3890,13 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_interfaceMethodModifier
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterInterfaceMethodModifier" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterInterfaceMethodModifier"):
                 listener.enterInterfaceMethodModifier(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitInterfaceMethodModifier" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitInterfaceMethodModifier"):
                 listener.exitInterfaceMethodModifier(self)
-
-
-
 
     def interfaceMethodModifier(self):
 
@@ -4028,7 +3906,10 @@ class JavaParser ( Parser ):
             self.state = 599
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS, JavaParser.AT, JavaParser.IDENTIFIER]:
+            if token in [JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS,
+                         JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE,
+                         JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS,
+                         JavaParser.AT, JavaParser.IDENTIFIER]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 593
                 self.annotation()
@@ -4069,54 +3950,59 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class GenericInterfaceMethodDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def typeParameters(self):
-            return self.getTypedRuleContext(JavaParser.TypeParametersContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeParametersContext, 0)
 
         def interfaceCommonBodyDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.InterfaceCommonBodyDeclarationContext,0)
+            return self.getTypedRuleContext(JavaParser.InterfaceCommonBodyDeclarationContext, 0)
 
-
-        def interfaceMethodModifier(self, i:int=None):
+        def interfaceMethodModifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.InterfaceMethodModifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.InterfaceMethodModifierContext,i)
-
+                return self.getTypedRuleContext(JavaParser.InterfaceMethodModifierContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_genericInterfaceMethodDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterGenericInterfaceMethodDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterGenericInterfaceMethodDeclaration"):
                 listener.enterGenericInterfaceMethodDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitGenericInterfaceMethodDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitGenericInterfaceMethodDeclaration"):
                 listener.exitGenericInterfaceMethodDeclaration(self)
-
-
-
 
     def genericInterfaceMethodDeclaration(self):
 
         localctx = JavaParser.GenericInterfaceMethodDeclarationContext(self, self._ctx, self.state)
         self.enterRule(localctx, 68, self.RULE_genericInterfaceMethodDeclaration)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 604
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while ((((_la - 1)) & ~0x3f) == 0 and ((1 << (_la - 1)) & ((1 << (JavaParser.ABSTRACT - 1)) | (1 << (JavaParser.DEFAULT - 1)) | (1 << (JavaParser.PUBLIC - 1)) | (1 << (JavaParser.STATIC - 1)) | (1 << (JavaParser.STRICTFP - 1)) | (1 << (JavaParser.MODULE - 1)) | (1 << (JavaParser.OPEN - 1)) | (1 << (JavaParser.REQUIRES - 1)) | (1 << (JavaParser.EXPORTS - 1)) | (1 << (JavaParser.OPENS - 1)) | (1 << (JavaParser.TO - 1)) | (1 << (JavaParser.USES - 1)) | (1 << (JavaParser.PROVIDES - 1)) | (1 << (JavaParser.WITH - 1)) | (1 << (JavaParser.TRANSITIVE - 1)) | (1 << (JavaParser.VAR - 1)) | (1 << (JavaParser.YIELD - 1)) | (1 << (JavaParser.RECORD - 1)) | (1 << (JavaParser.SEALED - 1)))) != 0) or ((((_la - 65)) & ~0x3f) == 0 and ((1 << (_la - 65)) & ((1 << (JavaParser.PERMITS - 65)) | (1 << (JavaParser.AT - 65)) | (1 << (JavaParser.IDENTIFIER - 65)))) != 0):
+            while ((((_la - 1)) & ~0x3f) == 0 and ((1 << (_la - 1)) & (
+                    (1 << (JavaParser.ABSTRACT - 1)) | (1 << (JavaParser.DEFAULT - 1)) | (
+                    1 << (JavaParser.PUBLIC - 1)) | (1 << (JavaParser.STATIC - 1)) | (
+                            1 << (JavaParser.STRICTFP - 1)) | (1 << (JavaParser.MODULE - 1)) | (
+                            1 << (JavaParser.OPEN - 1)) | (1 << (JavaParser.REQUIRES - 1)) | (
+                            1 << (JavaParser.EXPORTS - 1)) | (1 << (JavaParser.OPENS - 1)) | (
+                            1 << (JavaParser.TO - 1)) | (1 << (JavaParser.USES - 1)) | (
+                            1 << (JavaParser.PROVIDES - 1)) | (1 << (JavaParser.WITH - 1)) | (
+                            1 << (JavaParser.TRANSITIVE - 1)) | (1 << (JavaParser.VAR - 1)) | (
+                            1 << (JavaParser.YIELD - 1)) | (1 << (JavaParser.RECORD - 1)) | (
+                            1 << (JavaParser.SEALED - 1)))) != 0) or ((((_la - 65)) & ~0x3f) == 0 and (
+                    (1 << (_la - 65)) & ((1 << (JavaParser.PERMITS - 65)) | (1 << (JavaParser.AT - 65)) | (
+                    1 << (JavaParser.IDENTIFIER - 65)))) != 0):
                 self.state = 601
                 self.interfaceMethodModifier()
                 self.state = 606
@@ -4135,44 +4021,38 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class InterfaceCommonBodyDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def typeTypeOrVoid(self):
-            return self.getTypedRuleContext(JavaParser.TypeTypeOrVoidContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeTypeOrVoidContext, 0)
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def formalParameters(self):
-            return self.getTypedRuleContext(JavaParser.FormalParametersContext,0)
-
+            return self.getTypedRuleContext(JavaParser.FormalParametersContext, 0)
 
         def methodBody(self):
-            return self.getTypedRuleContext(JavaParser.MethodBodyContext,0)
+            return self.getTypedRuleContext(JavaParser.MethodBodyContext, 0)
 
-
-        def annotation(self, i:int=None):
+        def annotation(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.AnnotationContext)
             else:
-                return self.getTypedRuleContext(JavaParser.AnnotationContext,i)
+                return self.getTypedRuleContext(JavaParser.AnnotationContext, i)
 
-
-        def LBRACK(self, i:int=None):
+        def LBRACK(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.LBRACK)
             else:
                 return self.getToken(JavaParser.LBRACK, i)
 
-        def RBRACK(self, i:int=None):
+        def RBRACK(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.RBRACK)
             else:
@@ -4182,40 +4062,36 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.THROWS, 0)
 
         def qualifiedNameList(self):
-            return self.getTypedRuleContext(JavaParser.QualifiedNameListContext,0)
-
+            return self.getTypedRuleContext(JavaParser.QualifiedNameListContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_interfaceCommonBodyDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterInterfaceCommonBodyDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterInterfaceCommonBodyDeclaration"):
                 listener.enterInterfaceCommonBodyDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitInterfaceCommonBodyDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitInterfaceCommonBodyDeclaration"):
                 listener.exitInterfaceCommonBodyDeclaration(self)
-
-
-
 
     def interfaceCommonBodyDeclaration(self):
 
         localctx = JavaParser.InterfaceCommonBodyDeclarationContext(self, self._ctx, self.state)
         self.enterRule(localctx, 70, self.RULE_interfaceCommonBodyDeclaration)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 613
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,55,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 55, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 610
-                    self.annotation() 
+                    self.annotation()
                 self.state = 615
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,55,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 55, self._ctx)
 
             self.state = 616
             self.typeTypeOrVoid()
@@ -4226,7 +4102,7 @@ class JavaParser ( Parser ):
             self.state = 623
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==JavaParser.LBRACK:
+            while _la == JavaParser.LBRACK:
                 self.state = 619
                 self.match(JavaParser.LBRACK)
                 self.state = 620
@@ -4238,12 +4114,11 @@ class JavaParser ( Parser ):
             self.state = 628
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.THROWS:
+            if _la == JavaParser.THROWS:
                 self.state = 626
                 self.match(JavaParser.THROWS)
                 self.state = 627
                 self.qualifiedNameList()
-
 
             self.state = 630
             self.methodBody()
@@ -4255,22 +4130,20 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class VariableDeclaratorsContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def variableDeclarator(self, i:int=None):
+        def variableDeclarator(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.VariableDeclaratorContext)
             else:
-                return self.getTypedRuleContext(JavaParser.VariableDeclaratorContext,i)
+                return self.getTypedRuleContext(JavaParser.VariableDeclaratorContext, i)
 
-
-        def COMMA(self, i:int=None):
+        def COMMA(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.COMMA)
             else:
@@ -4279,22 +4152,19 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_variableDeclarators
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterVariableDeclarators" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterVariableDeclarators"):
                 listener.enterVariableDeclarators(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitVariableDeclarators" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitVariableDeclarators"):
                 listener.exitVariableDeclarators(self)
-
-
-
 
     def variableDeclarators(self):
 
         localctx = JavaParser.VariableDeclaratorsContext(self, self._ctx, self.state)
         self.enterRule(localctx, 72, self.RULE_variableDeclarators)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 632
@@ -4302,7 +4172,7 @@ class JavaParser ( Parser ):
             self.state = 637
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==JavaParser.COMMA:
+            while _la == JavaParser.COMMA:
                 self.state = 633
                 self.match(JavaParser.COMMA)
                 self.state = 634
@@ -4319,44 +4189,38 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class VariableDeclaratorContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def variableDeclaratorId(self):
-            return self.getTypedRuleContext(JavaParser.VariableDeclaratorIdContext,0)
-
+            return self.getTypedRuleContext(JavaParser.VariableDeclaratorIdContext, 0)
 
         def ASSIGN(self):
             return self.getToken(JavaParser.ASSIGN, 0)
 
         def variableInitializer(self):
-            return self.getTypedRuleContext(JavaParser.VariableInitializerContext,0)
-
+            return self.getTypedRuleContext(JavaParser.VariableInitializerContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_variableDeclarator
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterVariableDeclarator" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterVariableDeclarator"):
                 listener.enterVariableDeclarator(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitVariableDeclarator" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitVariableDeclarator"):
                 listener.exitVariableDeclarator(self)
-
-
-
 
     def variableDeclarator(self):
 
         localctx = JavaParser.VariableDeclaratorContext(self, self._ctx, self.state)
         self.enterRule(localctx, 74, self.RULE_variableDeclarator)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 640
@@ -4364,7 +4228,7 @@ class JavaParser ( Parser ):
             self.state = 643
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.ASSIGN:
+            if _la == JavaParser.ASSIGN:
                 self.state = 641
                 self.match(JavaParser.ASSIGN)
                 self.state = 642
@@ -4379,25 +4243,23 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class VariableDeclaratorIdContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
-
-        def LBRACK(self, i:int=None):
+        def LBRACK(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.LBRACK)
             else:
                 return self.getToken(JavaParser.LBRACK, i)
 
-        def RBRACK(self, i:int=None):
+        def RBRACK(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.RBRACK)
             else:
@@ -4406,22 +4268,19 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_variableDeclaratorId
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterVariableDeclaratorId" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterVariableDeclaratorId"):
                 listener.enterVariableDeclaratorId(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitVariableDeclaratorId" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitVariableDeclaratorId"):
                 listener.exitVariableDeclaratorId(self)
-
-
-
 
     def variableDeclaratorId(self):
 
         localctx = JavaParser.VariableDeclaratorIdContext(self, self._ctx, self.state)
         self.enterRule(localctx, 76, self.RULE_variableDeclaratorId)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 645
@@ -4429,7 +4288,7 @@ class JavaParser ( Parser ):
             self.state = 650
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==JavaParser.LBRACK:
+            while _la == JavaParser.LBRACK:
                 self.state = 646
                 self.match(JavaParser.LBRACK)
                 self.state = 647
@@ -4446,35 +4305,29 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class VariableInitializerContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def arrayInitializer(self):
-            return self.getTypedRuleContext(JavaParser.ArrayInitializerContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ArrayInitializerContext, 0)
 
         def expression(self):
-            return self.getTypedRuleContext(JavaParser.ExpressionContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ExpressionContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_variableInitializer
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterVariableInitializer" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterVariableInitializer"):
                 listener.enterVariableInitializer(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitVariableInitializer" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitVariableInitializer"):
                 listener.exitVariableInitializer(self)
-
-
-
 
     def variableInitializer(self):
 
@@ -4489,7 +4342,18 @@ class JavaParser ( Parser ):
                 self.state = 653
                 self.arrayInitializer()
                 pass
-            elif token in [JavaParser.BOOLEAN, JavaParser.BYTE, JavaParser.CHAR, JavaParser.DOUBLE, JavaParser.FLOAT, JavaParser.INT, JavaParser.LONG, JavaParser.NEW, JavaParser.SHORT, JavaParser.SUPER, JavaParser.SWITCH, JavaParser.THIS, JavaParser.VOID, JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS, JavaParser.DECIMAL_LITERAL, JavaParser.HEX_LITERAL, JavaParser.OCT_LITERAL, JavaParser.BINARY_LITERAL, JavaParser.FLOAT_LITERAL, JavaParser.HEX_FLOAT_LITERAL, JavaParser.BOOL_LITERAL, JavaParser.CHAR_LITERAL, JavaParser.STRING_LITERAL, JavaParser.TEXT_BLOCK, JavaParser.NULL_LITERAL, JavaParser.LPAREN, JavaParser.LT, JavaParser.BANG, JavaParser.TILDE, JavaParser.INC, JavaParser.DEC, JavaParser.ADD, JavaParser.SUB, JavaParser.AT, JavaParser.IDENTIFIER]:
+            elif token in [JavaParser.BOOLEAN, JavaParser.BYTE, JavaParser.CHAR, JavaParser.DOUBLE, JavaParser.FLOAT,
+                           JavaParser.INT, JavaParser.LONG, JavaParser.NEW, JavaParser.SHORT, JavaParser.SUPER,
+                           JavaParser.SWITCH, JavaParser.THIS, JavaParser.VOID, JavaParser.MODULE, JavaParser.OPEN,
+                           JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO, JavaParser.USES,
+                           JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE, JavaParser.VAR,
+                           JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS,
+                           JavaParser.DECIMAL_LITERAL, JavaParser.HEX_LITERAL, JavaParser.OCT_LITERAL,
+                           JavaParser.BINARY_LITERAL, JavaParser.FLOAT_LITERAL, JavaParser.HEX_FLOAT_LITERAL,
+                           JavaParser.BOOL_LITERAL, JavaParser.CHAR_LITERAL, JavaParser.STRING_LITERAL,
+                           JavaParser.TEXT_BLOCK, JavaParser.NULL_LITERAL, JavaParser.LPAREN, JavaParser.LT,
+                           JavaParser.BANG, JavaParser.TILDE, JavaParser.INC, JavaParser.DEC, JavaParser.ADD,
+                           JavaParser.SUB, JavaParser.AT, JavaParser.IDENTIFIER]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 654
                 self.expression(0)
@@ -4505,11 +4369,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ArrayInitializerContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -4519,14 +4382,13 @@ class JavaParser ( Parser ):
         def RBRACE(self):
             return self.getToken(JavaParser.RBRACE, 0)
 
-        def variableInitializer(self, i:int=None):
+        def variableInitializer(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.VariableInitializerContext)
             else:
-                return self.getTypedRuleContext(JavaParser.VariableInitializerContext,i)
+                return self.getTypedRuleContext(JavaParser.VariableInitializerContext, i)
 
-
-        def COMMA(self, i:int=None):
+        def COMMA(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.COMMA)
             else:
@@ -4535,22 +4397,19 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_arrayInitializer
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterArrayInitializer" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterArrayInitializer"):
                 listener.enterArrayInitializer(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitArrayInitializer" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitArrayInitializer"):
                 listener.exitArrayInitializer(self)
-
-
-
 
     def arrayInitializer(self):
 
         localctx = JavaParser.ArrayInitializerContext(self, self._ctx, self.state)
         self.enterRule(localctx, 80, self.RULE_arrayInitializer)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 657
@@ -4558,31 +4417,53 @@ class JavaParser ( Parser ):
             self.state = 669
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if ((((_la - 3)) & ~0x3f) == 0 and ((1 << (_la - 3)) & ((1 << (JavaParser.BOOLEAN - 3)) | (1 << (JavaParser.BYTE - 3)) | (1 << (JavaParser.CHAR - 3)) | (1 << (JavaParser.DOUBLE - 3)) | (1 << (JavaParser.FLOAT - 3)) | (1 << (JavaParser.INT - 3)) | (1 << (JavaParser.LONG - 3)) | (1 << (JavaParser.NEW - 3)) | (1 << (JavaParser.SHORT - 3)) | (1 << (JavaParser.SUPER - 3)) | (1 << (JavaParser.SWITCH - 3)) | (1 << (JavaParser.THIS - 3)) | (1 << (JavaParser.VOID - 3)) | (1 << (JavaParser.MODULE - 3)) | (1 << (JavaParser.OPEN - 3)) | (1 << (JavaParser.REQUIRES - 3)) | (1 << (JavaParser.EXPORTS - 3)) | (1 << (JavaParser.OPENS - 3)) | (1 << (JavaParser.TO - 3)) | (1 << (JavaParser.USES - 3)) | (1 << (JavaParser.PROVIDES - 3)) | (1 << (JavaParser.WITH - 3)) | (1 << (JavaParser.TRANSITIVE - 3)) | (1 << (JavaParser.VAR - 3)) | (1 << (JavaParser.YIELD - 3)) | (1 << (JavaParser.RECORD - 3)) | (1 << (JavaParser.SEALED - 3)) | (1 << (JavaParser.PERMITS - 3)))) != 0) or ((((_la - 67)) & ~0x3f) == 0 and ((1 << (_la - 67)) & ((1 << (JavaParser.DECIMAL_LITERAL - 67)) | (1 << (JavaParser.HEX_LITERAL - 67)) | (1 << (JavaParser.OCT_LITERAL - 67)) | (1 << (JavaParser.BINARY_LITERAL - 67)) | (1 << (JavaParser.FLOAT_LITERAL - 67)) | (1 << (JavaParser.HEX_FLOAT_LITERAL - 67)) | (1 << (JavaParser.BOOL_LITERAL - 67)) | (1 << (JavaParser.CHAR_LITERAL - 67)) | (1 << (JavaParser.STRING_LITERAL - 67)) | (1 << (JavaParser.TEXT_BLOCK - 67)) | (1 << (JavaParser.NULL_LITERAL - 67)) | (1 << (JavaParser.LPAREN - 67)) | (1 << (JavaParser.LBRACE - 67)) | (1 << (JavaParser.LT - 67)) | (1 << (JavaParser.BANG - 67)) | (1 << (JavaParser.TILDE - 67)) | (1 << (JavaParser.INC - 67)) | (1 << (JavaParser.DEC - 67)) | (1 << (JavaParser.ADD - 67)) | (1 << (JavaParser.SUB - 67)) | (1 << (JavaParser.AT - 67)) | (1 << (JavaParser.IDENTIFIER - 67)))) != 0):
+            if ((((_la - 3)) & ~0x3f) == 0 and ((1 << (_la - 3)) & (
+                    (1 << (JavaParser.BOOLEAN - 3)) | (1 << (JavaParser.BYTE - 3)) | (1 << (JavaParser.CHAR - 3)) | (
+                    1 << (JavaParser.DOUBLE - 3)) | (1 << (JavaParser.FLOAT - 3)) | (1 << (JavaParser.INT - 3)) | (
+                            1 << (JavaParser.LONG - 3)) | (1 << (JavaParser.NEW - 3)) | (
+                            1 << (JavaParser.SHORT - 3)) | (1 << (JavaParser.SUPER - 3)) | (
+                            1 << (JavaParser.SWITCH - 3)) | (1 << (JavaParser.THIS - 3)) | (
+                            1 << (JavaParser.VOID - 3)) | (1 << (JavaParser.MODULE - 3)) | (
+                            1 << (JavaParser.OPEN - 3)) | (1 << (JavaParser.REQUIRES - 3)) | (
+                            1 << (JavaParser.EXPORTS - 3)) | (1 << (JavaParser.OPENS - 3)) | (
+                            1 << (JavaParser.TO - 3)) | (1 << (JavaParser.USES - 3)) | (
+                            1 << (JavaParser.PROVIDES - 3)) | (1 << (JavaParser.WITH - 3)) | (
+                            1 << (JavaParser.TRANSITIVE - 3)) | (1 << (JavaParser.VAR - 3)) | (
+                            1 << (JavaParser.YIELD - 3)) | (1 << (JavaParser.RECORD - 3)) | (
+                            1 << (JavaParser.SEALED - 3)) | (1 << (JavaParser.PERMITS - 3)))) != 0) or (
+                    (((_la - 67)) & ~0x3f) == 0 and ((1 << (_la - 67)) & (
+                    (1 << (JavaParser.DECIMAL_LITERAL - 67)) | (1 << (JavaParser.HEX_LITERAL - 67)) | (
+                    1 << (JavaParser.OCT_LITERAL - 67)) | (1 << (JavaParser.BINARY_LITERAL - 67)) | (
+                            1 << (JavaParser.FLOAT_LITERAL - 67)) | (1 << (JavaParser.HEX_FLOAT_LITERAL - 67)) | (
+                            1 << (JavaParser.BOOL_LITERAL - 67)) | (1 << (JavaParser.CHAR_LITERAL - 67)) | (
+                            1 << (JavaParser.STRING_LITERAL - 67)) | (1 << (JavaParser.TEXT_BLOCK - 67)) | (
+                            1 << (JavaParser.NULL_LITERAL - 67)) | (1 << (JavaParser.LPAREN - 67)) | (
+                            1 << (JavaParser.LBRACE - 67)) | (1 << (JavaParser.LT - 67)) | (
+                            1 << (JavaParser.BANG - 67)) | (1 << (JavaParser.TILDE - 67)) | (
+                            1 << (JavaParser.INC - 67)) | (1 << (JavaParser.DEC - 67)) | (
+                            1 << (JavaParser.ADD - 67)) | (1 << (JavaParser.SUB - 67)) | (1 << (JavaParser.AT - 67)) | (
+                            1 << (JavaParser.IDENTIFIER - 67)))) != 0):
                 self.state = 658
                 self.variableInitializer()
                 self.state = 663
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,62,self._ctx)
-                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                    if _alt==1:
+                _alt = self._interp.adaptivePredict(self._input, 62, self._ctx)
+                while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                    if _alt == 1:
                         self.state = 659
                         self.match(JavaParser.COMMA)
                         self.state = 660
-                        self.variableInitializer() 
+                        self.variableInitializer()
                     self.state = 665
                     self._errHandler.sync(self)
-                    _alt = self._interp.adaptivePredict(self._input,62,self._ctx)
+                    _alt = self._interp.adaptivePredict(self._input, 62, self._ctx)
 
                 self.state = 667
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==JavaParser.COMMA:
+                if _la == JavaParser.COMMA:
                     self.state = 666
                     self.match(JavaParser.COMMA)
-
-
-
 
             self.state = 671
             self.match(JavaParser.RBRACE)
@@ -4594,85 +4475,77 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ClassOrInterfaceTypeContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def typeIdentifier(self):
-            return self.getTypedRuleContext(JavaParser.TypeIdentifierContext,0)
+            return self.getTypedRuleContext(JavaParser.TypeIdentifierContext, 0)
 
-
-        def identifier(self, i:int=None):
+        def identifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.IdentifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.IdentifierContext,i)
+                return self.getTypedRuleContext(JavaParser.IdentifierContext, i)
 
-
-        def DOT(self, i:int=None):
+        def DOT(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.DOT)
             else:
                 return self.getToken(JavaParser.DOT, i)
 
-        def typeArguments(self, i:int=None):
+        def typeArguments(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.TypeArgumentsContext)
             else:
-                return self.getTypedRuleContext(JavaParser.TypeArgumentsContext,i)
-
+                return self.getTypedRuleContext(JavaParser.TypeArgumentsContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_classOrInterfaceType
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterClassOrInterfaceType" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterClassOrInterfaceType"):
                 listener.enterClassOrInterfaceType(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitClassOrInterfaceType" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitClassOrInterfaceType"):
                 listener.exitClassOrInterfaceType(self)
-
-
-
 
     def classOrInterfaceType(self):
 
         localctx = JavaParser.ClassOrInterfaceTypeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 82, self.RULE_classOrInterfaceType)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 681
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,66,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 66, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 673
                     self.identifier()
                     self.state = 675
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
-                    if _la==JavaParser.LT:
+                    if _la == JavaParser.LT:
                         self.state = 674
                         self.typeArguments()
 
-
                     self.state = 677
-                    self.match(JavaParser.DOT) 
+                    self.match(JavaParser.DOT)
                 self.state = 683
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,66,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 66, self._ctx)
 
             self.state = 684
             self.typeIdentifier()
             self.state = 686
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,67,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 67, self._ctx)
             if la_ == 1:
                 self.state = 685
                 self.typeArguments()
@@ -4686,27 +4559,24 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class TypeArgumentContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def typeType(self):
-            return self.getTypedRuleContext(JavaParser.TypeTypeContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeTypeContext, 0)
 
         def QUESTION(self):
             return self.getToken(JavaParser.QUESTION, 0)
 
-        def annotation(self, i:int=None):
+        def annotation(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.AnnotationContext)
             else:
-                return self.getTypedRuleContext(JavaParser.AnnotationContext,i)
-
+                return self.getTypedRuleContext(JavaParser.AnnotationContext, i)
 
         def EXTENDS(self):
             return self.getToken(JavaParser.EXTENDS, 0)
@@ -4717,26 +4587,23 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_typeArgument
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTypeArgument" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterTypeArgument"):
                 listener.enterTypeArgument(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTypeArgument" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitTypeArgument"):
                 listener.exitTypeArgument(self)
-
-
-
 
     def typeArgument(self):
 
         localctx = JavaParser.TypeArgumentContext(self, self._ctx, self.state)
         self.enterRule(localctx, 84, self.RULE_typeArgument)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.state = 700
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,70,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 70, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 688
@@ -4748,7 +4615,15 @@ class JavaParser ( Parser ):
                 self.state = 692
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                while ((((_la - 51)) & ~0x3f) == 0 and ((1 << (_la - 51)) & ((1 << (JavaParser.MODULE - 51)) | (1 << (JavaParser.OPEN - 51)) | (1 << (JavaParser.REQUIRES - 51)) | (1 << (JavaParser.EXPORTS - 51)) | (1 << (JavaParser.OPENS - 51)) | (1 << (JavaParser.TO - 51)) | (1 << (JavaParser.USES - 51)) | (1 << (JavaParser.PROVIDES - 51)) | (1 << (JavaParser.WITH - 51)) | (1 << (JavaParser.TRANSITIVE - 51)) | (1 << (JavaParser.VAR - 51)) | (1 << (JavaParser.YIELD - 51)) | (1 << (JavaParser.RECORD - 51)) | (1 << (JavaParser.SEALED - 51)) | (1 << (JavaParser.PERMITS - 51)))) != 0) or _la==JavaParser.AT or _la==JavaParser.IDENTIFIER:
+                while ((((_la - 51)) & ~0x3f) == 0 and ((1 << (_la - 51)) & (
+                        (1 << (JavaParser.MODULE - 51)) | (1 << (JavaParser.OPEN - 51)) | (
+                        1 << (JavaParser.REQUIRES - 51)) | (1 << (JavaParser.EXPORTS - 51)) | (
+                                1 << (JavaParser.OPENS - 51)) | (1 << (JavaParser.TO - 51)) | (
+                                1 << (JavaParser.USES - 51)) | (1 << (JavaParser.PROVIDES - 51)) | (
+                                1 << (JavaParser.WITH - 51)) | (1 << (JavaParser.TRANSITIVE - 51)) | (
+                                1 << (JavaParser.VAR - 51)) | (1 << (JavaParser.YIELD - 51)) | (
+                                1 << (JavaParser.RECORD - 51)) | (1 << (JavaParser.SEALED - 51)) | (1 << (
+                        JavaParser.PERMITS - 51)))) != 0) or _la == JavaParser.AT or _la == JavaParser.IDENTIFIER:
                     self.state = 689
                     self.annotation()
                     self.state = 694
@@ -4760,17 +4635,16 @@ class JavaParser ( Parser ):
                 self.state = 698
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==JavaParser.EXTENDS or _la==JavaParser.SUPER:
+                if _la == JavaParser.EXTENDS or _la == JavaParser.SUPER:
                     self.state = 696
                     _la = self._input.LA(1)
-                    if not(_la==JavaParser.EXTENDS or _la==JavaParser.SUPER):
+                    if not (_la == JavaParser.EXTENDS or _la == JavaParser.SUPER):
                         self._errHandler.recoverInline(self)
                     else:
                         self._errHandler.reportMatch(self)
                         self.consume()
                     self.state = 697
                     self.typeType()
-
 
                 pass
 
@@ -4783,22 +4657,20 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class QualifiedNameListContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def qualifiedName(self, i:int=None):
+        def qualifiedName(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.QualifiedNameContext)
             else:
-                return self.getTypedRuleContext(JavaParser.QualifiedNameContext,i)
+                return self.getTypedRuleContext(JavaParser.QualifiedNameContext, i)
 
-
-        def COMMA(self, i:int=None):
+        def COMMA(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.COMMA)
             else:
@@ -4807,22 +4679,19 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_qualifiedNameList
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterQualifiedNameList" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterQualifiedNameList"):
                 listener.enterQualifiedNameList(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitQualifiedNameList" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitQualifiedNameList"):
                 listener.exitQualifiedNameList(self)
-
-
-
 
     def qualifiedNameList(self):
 
         localctx = JavaParser.QualifiedNameListContext(self, self._ctx, self.state)
         self.enterRule(localctx, 86, self.RULE_qualifiedNameList)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 702
@@ -4830,7 +4699,7 @@ class JavaParser ( Parser ):
             self.state = 707
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==JavaParser.COMMA:
+            while _la == JavaParser.COMMA:
                 self.state = 703
                 self.match(JavaParser.COMMA)
                 self.state = 704
@@ -4847,11 +4716,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class FormalParametersContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -4862,50 +4730,56 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.RPAREN, 0)
 
         def receiverParameter(self):
-            return self.getTypedRuleContext(JavaParser.ReceiverParameterContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ReceiverParameterContext, 0)
 
         def COMMA(self):
             return self.getToken(JavaParser.COMMA, 0)
 
         def formalParameterList(self):
-            return self.getTypedRuleContext(JavaParser.FormalParameterListContext,0)
-
+            return self.getTypedRuleContext(JavaParser.FormalParameterListContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_formalParameters
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterFormalParameters" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterFormalParameters"):
                 listener.enterFormalParameters(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitFormalParameters" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitFormalParameters"):
                 listener.exitFormalParameters(self)
-
-
-
 
     def formalParameters(self):
 
         localctx = JavaParser.FormalParametersContext(self, self._ctx, self.state)
         self.enterRule(localctx, 88, self.RULE_formalParameters)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 710
             self.match(JavaParser.LPAREN)
             self.state = 722
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,75,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 75, self._ctx)
             if la_ == 1:
                 self.state = 712
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if ((((_la - 3)) & ~0x3f) == 0 and ((1 << (_la - 3)) & ((1 << (JavaParser.BOOLEAN - 3)) | (1 << (JavaParser.BYTE - 3)) | (1 << (JavaParser.CHAR - 3)) | (1 << (JavaParser.DOUBLE - 3)) | (1 << (JavaParser.FLOAT - 3)) | (1 << (JavaParser.INT - 3)) | (1 << (JavaParser.LONG - 3)) | (1 << (JavaParser.SHORT - 3)) | (1 << (JavaParser.MODULE - 3)) | (1 << (JavaParser.OPEN - 3)) | (1 << (JavaParser.REQUIRES - 3)) | (1 << (JavaParser.EXPORTS - 3)) | (1 << (JavaParser.OPENS - 3)) | (1 << (JavaParser.TO - 3)) | (1 << (JavaParser.USES - 3)) | (1 << (JavaParser.PROVIDES - 3)) | (1 << (JavaParser.WITH - 3)) | (1 << (JavaParser.TRANSITIVE - 3)) | (1 << (JavaParser.VAR - 3)) | (1 << (JavaParser.YIELD - 3)) | (1 << (JavaParser.RECORD - 3)) | (1 << (JavaParser.SEALED - 3)) | (1 << (JavaParser.PERMITS - 3)))) != 0) or _la==JavaParser.AT or _la==JavaParser.IDENTIFIER:
+                if ((((_la - 3)) & ~0x3f) == 0 and ((1 << (_la - 3)) & (
+                        (1 << (JavaParser.BOOLEAN - 3)) | (1 << (JavaParser.BYTE - 3)) | (
+                        1 << (JavaParser.CHAR - 3)) | (1 << (JavaParser.DOUBLE - 3)) | (1 << (JavaParser.FLOAT - 3)) | (
+                                1 << (JavaParser.INT - 3)) | (1 << (JavaParser.LONG - 3)) | (
+                                1 << (JavaParser.SHORT - 3)) | (1 << (JavaParser.MODULE - 3)) | (
+                                1 << (JavaParser.OPEN - 3)) | (1 << (JavaParser.REQUIRES - 3)) | (
+                                1 << (JavaParser.EXPORTS - 3)) | (1 << (JavaParser.OPENS - 3)) | (
+                                1 << (JavaParser.TO - 3)) | (1 << (JavaParser.USES - 3)) | (
+                                1 << (JavaParser.PROVIDES - 3)) | (1 << (JavaParser.WITH - 3)) | (
+                                1 << (JavaParser.TRANSITIVE - 3)) | (1 << (JavaParser.VAR - 3)) | (
+                                1 << (JavaParser.YIELD - 3)) | (1 << (JavaParser.RECORD - 3)) | (
+                                1 << (JavaParser.SEALED - 3)) | (1 << (
+                        JavaParser.PERMITS - 3)))) != 0) or _la == JavaParser.AT or _la == JavaParser.IDENTIFIER:
                     self.state = 711
                     self.receiverParameter()
-
 
                 pass
 
@@ -4915,12 +4789,11 @@ class JavaParser ( Parser ):
                 self.state = 717
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==JavaParser.COMMA:
+                if _la == JavaParser.COMMA:
                     self.state = 715
                     self.match(JavaParser.COMMA)
                     self.state = 716
                     self.formalParameterList()
-
 
                 pass
 
@@ -4928,13 +4801,23 @@ class JavaParser ( Parser ):
                 self.state = 720
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if ((((_la - 3)) & ~0x3f) == 0 and ((1 << (_la - 3)) & ((1 << (JavaParser.BOOLEAN - 3)) | (1 << (JavaParser.BYTE - 3)) | (1 << (JavaParser.CHAR - 3)) | (1 << (JavaParser.DOUBLE - 3)) | (1 << (JavaParser.FINAL - 3)) | (1 << (JavaParser.FLOAT - 3)) | (1 << (JavaParser.INT - 3)) | (1 << (JavaParser.LONG - 3)) | (1 << (JavaParser.SHORT - 3)) | (1 << (JavaParser.MODULE - 3)) | (1 << (JavaParser.OPEN - 3)) | (1 << (JavaParser.REQUIRES - 3)) | (1 << (JavaParser.EXPORTS - 3)) | (1 << (JavaParser.OPENS - 3)) | (1 << (JavaParser.TO - 3)) | (1 << (JavaParser.USES - 3)) | (1 << (JavaParser.PROVIDES - 3)) | (1 << (JavaParser.WITH - 3)) | (1 << (JavaParser.TRANSITIVE - 3)) | (1 << (JavaParser.VAR - 3)) | (1 << (JavaParser.YIELD - 3)) | (1 << (JavaParser.RECORD - 3)) | (1 << (JavaParser.SEALED - 3)) | (1 << (JavaParser.PERMITS - 3)))) != 0) or _la==JavaParser.AT or _la==JavaParser.IDENTIFIER:
+                if ((((_la - 3)) & ~0x3f) == 0 and ((1 << (_la - 3)) & (
+                        (1 << (JavaParser.BOOLEAN - 3)) | (1 << (JavaParser.BYTE - 3)) | (
+                        1 << (JavaParser.CHAR - 3)) | (1 << (JavaParser.DOUBLE - 3)) | (1 << (JavaParser.FINAL - 3)) | (
+                                1 << (JavaParser.FLOAT - 3)) | (1 << (JavaParser.INT - 3)) | (
+                                1 << (JavaParser.LONG - 3)) | (1 << (JavaParser.SHORT - 3)) | (
+                                1 << (JavaParser.MODULE - 3)) | (1 << (JavaParser.OPEN - 3)) | (
+                                1 << (JavaParser.REQUIRES - 3)) | (1 << (JavaParser.EXPORTS - 3)) | (
+                                1 << (JavaParser.OPENS - 3)) | (1 << (JavaParser.TO - 3)) | (
+                                1 << (JavaParser.USES - 3)) | (1 << (JavaParser.PROVIDES - 3)) | (
+                                1 << (JavaParser.WITH - 3)) | (1 << (JavaParser.TRANSITIVE - 3)) | (
+                                1 << (JavaParser.VAR - 3)) | (1 << (JavaParser.YIELD - 3)) | (
+                                1 << (JavaParser.RECORD - 3)) | (1 << (JavaParser.SEALED - 3)) | (1 << (
+                        JavaParser.PERMITS - 3)))) != 0) or _la == JavaParser.AT or _la == JavaParser.IDENTIFIER:
                     self.state = 719
                     self.formalParameterList()
 
-
                 pass
-
 
             self.state = 724
             self.match(JavaParser.RPAREN)
@@ -4946,29 +4829,26 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ReceiverParameterContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def typeType(self):
-            return self.getTypedRuleContext(JavaParser.TypeTypeContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeTypeContext, 0)
 
         def THIS(self):
             return self.getToken(JavaParser.THIS, 0)
 
-        def identifier(self, i:int=None):
+        def identifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.IdentifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.IdentifierContext,i)
+                return self.getTypedRuleContext(JavaParser.IdentifierContext, i)
 
-
-        def DOT(self, i:int=None):
+        def DOT(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.DOT)
             else:
@@ -4977,22 +4857,19 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_receiverParameter
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterReceiverParameter" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterReceiverParameter"):
                 listener.enterReceiverParameter(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitReceiverParameter" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitReceiverParameter"):
                 listener.exitReceiverParameter(self)
-
-
-
 
     def receiverParameter(self):
 
         localctx = JavaParser.ReceiverParameterContext(self, self._ctx, self.state)
         self.enterRule(localctx, 90, self.RULE_receiverParameter)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 726
@@ -5000,7 +4877,15 @@ class JavaParser ( Parser ):
             self.state = 732
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while ((((_la - 51)) & ~0x3f) == 0 and ((1 << (_la - 51)) & ((1 << (JavaParser.MODULE - 51)) | (1 << (JavaParser.OPEN - 51)) | (1 << (JavaParser.REQUIRES - 51)) | (1 << (JavaParser.EXPORTS - 51)) | (1 << (JavaParser.OPENS - 51)) | (1 << (JavaParser.TO - 51)) | (1 << (JavaParser.USES - 51)) | (1 << (JavaParser.PROVIDES - 51)) | (1 << (JavaParser.WITH - 51)) | (1 << (JavaParser.TRANSITIVE - 51)) | (1 << (JavaParser.VAR - 51)) | (1 << (JavaParser.YIELD - 51)) | (1 << (JavaParser.RECORD - 51)) | (1 << (JavaParser.SEALED - 51)) | (1 << (JavaParser.PERMITS - 51)))) != 0) or _la==JavaParser.IDENTIFIER:
+            while ((((_la - 51)) & ~0x3f) == 0 and ((1 << (_la - 51)) & (
+                    (1 << (JavaParser.MODULE - 51)) | (1 << (JavaParser.OPEN - 51)) | (
+                    1 << (JavaParser.REQUIRES - 51)) | (1 << (JavaParser.EXPORTS - 51)) | (
+                            1 << (JavaParser.OPENS - 51)) | (1 << (JavaParser.TO - 51)) | (
+                            1 << (JavaParser.USES - 51)) | (1 << (JavaParser.PROVIDES - 51)) | (
+                            1 << (JavaParser.WITH - 51)) | (1 << (JavaParser.TRANSITIVE - 51)) | (
+                            1 << (JavaParser.VAR - 51)) | (1 << (JavaParser.YIELD - 51)) | (
+                            1 << (JavaParser.RECORD - 51)) | (1 << (JavaParser.SEALED - 51)) | (
+                            1 << (JavaParser.PERMITS - 51)))) != 0) or _la == JavaParser.IDENTIFIER:
                 self.state = 727
                 self.identifier()
                 self.state = 728
@@ -5019,80 +4904,73 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class FormalParameterListContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def formalParameter(self, i:int=None):
+        def formalParameter(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.FormalParameterContext)
             else:
-                return self.getTypedRuleContext(JavaParser.FormalParameterContext,i)
+                return self.getTypedRuleContext(JavaParser.FormalParameterContext, i)
 
-
-        def COMMA(self, i:int=None):
+        def COMMA(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.COMMA)
             else:
                 return self.getToken(JavaParser.COMMA, i)
 
         def lastFormalParameter(self):
-            return self.getTypedRuleContext(JavaParser.LastFormalParameterContext,0)
-
+            return self.getTypedRuleContext(JavaParser.LastFormalParameterContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_formalParameterList
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterFormalParameterList" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterFormalParameterList"):
                 listener.enterFormalParameterList(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitFormalParameterList" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitFormalParameterList"):
                 listener.exitFormalParameterList(self)
-
-
-
 
     def formalParameterList(self):
 
         localctx = JavaParser.FormalParameterListContext(self, self._ctx, self.state)
         self.enterRule(localctx, 92, self.RULE_formalParameterList)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.state = 750
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,79,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 79, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 737
                 self.formalParameter()
                 self.state = 742
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,77,self._ctx)
-                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                    if _alt==1:
+                _alt = self._interp.adaptivePredict(self._input, 77, self._ctx)
+                while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                    if _alt == 1:
                         self.state = 738
                         self.match(JavaParser.COMMA)
                         self.state = 739
-                        self.formalParameter() 
+                        self.formalParameter()
                     self.state = 744
                     self._errHandler.sync(self)
-                    _alt = self._interp.adaptivePredict(self._input,77,self._ctx)
+                    _alt = self._interp.adaptivePredict(self._input, 77, self._ctx)
 
                 self.state = 747
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==JavaParser.COMMA:
+                if _la == JavaParser.COMMA:
                     self.state = 745
                     self.match(JavaParser.COMMA)
                     self.state = 746
                     self.lastFormalParameter()
-
 
                 pass
 
@@ -5111,42 +4989,35 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class FormalParameterContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def typeType(self):
-            return self.getTypedRuleContext(JavaParser.TypeTypeContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeTypeContext, 0)
 
         def variableDeclaratorId(self):
-            return self.getTypedRuleContext(JavaParser.VariableDeclaratorIdContext,0)
+            return self.getTypedRuleContext(JavaParser.VariableDeclaratorIdContext, 0)
 
-
-        def variableModifier(self, i:int=None):
+        def variableModifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.VariableModifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.VariableModifierContext,i)
-
+                return self.getTypedRuleContext(JavaParser.VariableModifierContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_formalParameter
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterFormalParameter" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterFormalParameter"):
                 listener.enterFormalParameter(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitFormalParameter" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitFormalParameter"):
                 listener.exitFormalParameter(self)
-
-
-
 
     def formalParameter(self):
 
@@ -5156,14 +5027,14 @@ class JavaParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 755
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,80,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 80, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 752
-                    self.variableModifier() 
+                    self.variableModifier()
                 self.state = 757
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,80,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 80, self._ctx)
 
             self.state = 758
             self.typeType()
@@ -5177,77 +5048,77 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class LastFormalParameterContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def typeType(self):
-            return self.getTypedRuleContext(JavaParser.TypeTypeContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeTypeContext, 0)
 
         def ELLIPSIS(self):
             return self.getToken(JavaParser.ELLIPSIS, 0)
 
         def variableDeclaratorId(self):
-            return self.getTypedRuleContext(JavaParser.VariableDeclaratorIdContext,0)
+            return self.getTypedRuleContext(JavaParser.VariableDeclaratorIdContext, 0)
 
-
-        def variableModifier(self, i:int=None):
+        def variableModifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.VariableModifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.VariableModifierContext,i)
+                return self.getTypedRuleContext(JavaParser.VariableModifierContext, i)
 
-
-        def annotation(self, i:int=None):
+        def annotation(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.AnnotationContext)
             else:
-                return self.getTypedRuleContext(JavaParser.AnnotationContext,i)
-
+                return self.getTypedRuleContext(JavaParser.AnnotationContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_lastFormalParameter
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterLastFormalParameter" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterLastFormalParameter"):
                 listener.enterLastFormalParameter(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitLastFormalParameter" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitLastFormalParameter"):
                 listener.exitLastFormalParameter(self)
-
-
-
 
     def lastFormalParameter(self):
 
         localctx = JavaParser.LastFormalParameterContext(self, self._ctx, self.state)
         self.enterRule(localctx, 96, self.RULE_lastFormalParameter)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 764
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,81,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 81, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 761
-                    self.variableModifier() 
+                    self.variableModifier()
                 self.state = 766
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,81,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 81, self._ctx)
 
             self.state = 767
             self.typeType()
             self.state = 771
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while ((((_la - 51)) & ~0x3f) == 0 and ((1 << (_la - 51)) & ((1 << (JavaParser.MODULE - 51)) | (1 << (JavaParser.OPEN - 51)) | (1 << (JavaParser.REQUIRES - 51)) | (1 << (JavaParser.EXPORTS - 51)) | (1 << (JavaParser.OPENS - 51)) | (1 << (JavaParser.TO - 51)) | (1 << (JavaParser.USES - 51)) | (1 << (JavaParser.PROVIDES - 51)) | (1 << (JavaParser.WITH - 51)) | (1 << (JavaParser.TRANSITIVE - 51)) | (1 << (JavaParser.VAR - 51)) | (1 << (JavaParser.YIELD - 51)) | (1 << (JavaParser.RECORD - 51)) | (1 << (JavaParser.SEALED - 51)) | (1 << (JavaParser.PERMITS - 51)))) != 0) or _la==JavaParser.AT or _la==JavaParser.IDENTIFIER:
+            while ((((_la - 51)) & ~0x3f) == 0 and ((1 << (_la - 51)) & (
+                    (1 << (JavaParser.MODULE - 51)) | (1 << (JavaParser.OPEN - 51)) | (
+                    1 << (JavaParser.REQUIRES - 51)) | (1 << (JavaParser.EXPORTS - 51)) | (
+                            1 << (JavaParser.OPENS - 51)) | (1 << (JavaParser.TO - 51)) | (
+                            1 << (JavaParser.USES - 51)) | (1 << (JavaParser.PROVIDES - 51)) | (
+                            1 << (JavaParser.WITH - 51)) | (1 << (JavaParser.TRANSITIVE - 51)) | (
+                            1 << (JavaParser.VAR - 51)) | (1 << (JavaParser.YIELD - 51)) | (
+                            1 << (JavaParser.RECORD - 51)) | (1 << (JavaParser.SEALED - 51)) | (1 << (
+                    JavaParser.PERMITS - 51)))) != 0) or _la == JavaParser.AT or _la == JavaParser.IDENTIFIER:
                 self.state = 768
                 self.annotation()
                 self.state = 773
@@ -5266,22 +5137,20 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class LambdaLVTIListContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def lambdaLVTIParameter(self, i:int=None):
+        def lambdaLVTIParameter(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.LambdaLVTIParameterContext)
             else:
-                return self.getTypedRuleContext(JavaParser.LambdaLVTIParameterContext,i)
+                return self.getTypedRuleContext(JavaParser.LambdaLVTIParameterContext, i)
 
-
-        def COMMA(self, i:int=None):
+        def COMMA(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.COMMA)
             else:
@@ -5290,22 +5159,19 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_lambdaLVTIList
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterLambdaLVTIList" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterLambdaLVTIList"):
                 listener.enterLambdaLVTIList(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitLambdaLVTIList" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitLambdaLVTIList"):
                 listener.exitLambdaLVTIList(self)
-
-
-
 
     def lambdaLVTIList(self):
 
         localctx = JavaParser.LambdaLVTIListContext(self, self._ctx, self.state)
         self.enterRule(localctx, 98, self.RULE_lambdaLVTIList)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 777
@@ -5313,7 +5179,7 @@ class JavaParser ( Parser ):
             self.state = 782
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==JavaParser.COMMA:
+            while _la == JavaParser.COMMA:
                 self.state = 778
                 self.match(JavaParser.COMMA)
                 self.state = 779
@@ -5330,11 +5196,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class LambdaLVTIParameterContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -5342,29 +5207,24 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.VAR, 0)
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
-
-        def variableModifier(self, i:int=None):
+        def variableModifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.VariableModifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.VariableModifierContext,i)
-
+                return self.getTypedRuleContext(JavaParser.VariableModifierContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_lambdaLVTIParameter
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterLambdaLVTIParameter" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterLambdaLVTIParameter"):
                 listener.enterLambdaLVTIParameter(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitLambdaLVTIParameter" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitLambdaLVTIParameter"):
                 listener.exitLambdaLVTIParameter(self)
-
-
-
 
     def lambdaLVTIParameter(self):
 
@@ -5374,14 +5234,14 @@ class JavaParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 788
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,84,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 84, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 785
-                    self.variableModifier() 
+                    self.variableModifier()
                 self.state = 790
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,84,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 84, self._ctx)
 
             self.state = 791
             self.match(JavaParser.VAR)
@@ -5395,22 +5255,20 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class QualifiedNameContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def identifier(self, i:int=None):
+        def identifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.IdentifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.IdentifierContext,i)
+                return self.getTypedRuleContext(JavaParser.IdentifierContext, i)
 
-
-        def DOT(self, i:int=None):
+        def DOT(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.DOT)
             else:
@@ -5419,16 +5277,13 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_qualifiedName
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterQualifiedName" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterQualifiedName"):
                 listener.enterQualifiedName(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitQualifiedName" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitQualifiedName"):
                 listener.exitQualifiedName(self)
-
-
-
 
     def qualifiedName(self):
 
@@ -5440,16 +5295,16 @@ class JavaParser ( Parser ):
             self.identifier()
             self.state = 799
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,85,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 85, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 795
                     self.match(JavaParser.DOT)
                     self.state = 796
-                    self.identifier() 
+                    self.identifier()
                 self.state = 801
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,85,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 85, self._ctx)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -5459,21 +5314,18 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class LiteralContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def integerLiteral(self):
-            return self.getTypedRuleContext(JavaParser.IntegerLiteralContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IntegerLiteralContext, 0)
 
         def floatLiteral(self):
-            return self.getTypedRuleContext(JavaParser.FloatLiteralContext,0)
-
+            return self.getTypedRuleContext(JavaParser.FloatLiteralContext, 0)
 
         def CHAR_LITERAL(self):
             return self.getToken(JavaParser.CHAR_LITERAL, 0)
@@ -5493,16 +5345,13 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_literal
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterLiteral" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterLiteral"):
                 listener.enterLiteral(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitLiteral" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitLiteral"):
                 listener.exitLiteral(self)
-
-
-
 
     def literal(self):
 
@@ -5512,7 +5361,8 @@ class JavaParser ( Parser ):
             self.state = 809
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [JavaParser.DECIMAL_LITERAL, JavaParser.HEX_LITERAL, JavaParser.OCT_LITERAL, JavaParser.BINARY_LITERAL]:
+            if token in [JavaParser.DECIMAL_LITERAL, JavaParser.HEX_LITERAL, JavaParser.OCT_LITERAL,
+                         JavaParser.BINARY_LITERAL]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 802
                 self.integerLiteral()
@@ -5558,11 +5408,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class IntegerLiteralContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -5581,27 +5430,26 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_integerLiteral
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterIntegerLiteral" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterIntegerLiteral"):
                 listener.enterIntegerLiteral(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitIntegerLiteral" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitIntegerLiteral"):
                 listener.exitIntegerLiteral(self)
-
-
-
 
     def integerLiteral(self):
 
         localctx = JavaParser.IntegerLiteralContext(self, self._ctx, self.state)
         self.enterRule(localctx, 106, self.RULE_integerLiteral)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 811
             _la = self._input.LA(1)
-            if not(((((_la - 67)) & ~0x3f) == 0 and ((1 << (_la - 67)) & ((1 << (JavaParser.DECIMAL_LITERAL - 67)) | (1 << (JavaParser.HEX_LITERAL - 67)) | (1 << (JavaParser.OCT_LITERAL - 67)) | (1 << (JavaParser.BINARY_LITERAL - 67)))) != 0)):
+            if not (((((_la - 67)) & ~0x3f) == 0 and ((1 << (_la - 67)) & (
+                    (1 << (JavaParser.DECIMAL_LITERAL - 67)) | (1 << (JavaParser.HEX_LITERAL - 67)) | (
+                    1 << (JavaParser.OCT_LITERAL - 67)) | (1 << (JavaParser.BINARY_LITERAL - 67)))) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -5614,11 +5462,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class FloatLiteralContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -5631,27 +5478,24 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_floatLiteral
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterFloatLiteral" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterFloatLiteral"):
                 listener.enterFloatLiteral(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitFloatLiteral" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitFloatLiteral"):
                 listener.exitFloatLiteral(self)
-
-
-
 
     def floatLiteral(self):
 
         localctx = JavaParser.FloatLiteralContext(self, self._ctx, self.state)
         self.enterRule(localctx, 108, self.RULE_floatLiteral)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 813
             _la = self._input.LA(1)
-            if not(_la==JavaParser.FLOAT_LITERAL or _la==JavaParser.HEX_FLOAT_LITERAL):
+            if not (_la == JavaParser.FLOAT_LITERAL or _la == JavaParser.HEX_FLOAT_LITERAL):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -5664,25 +5508,23 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class AltAnnotationQualifiedNameContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def AT(self):
             return self.getToken(JavaParser.AT, 0)
 
-        def identifier(self, i:int=None):
+        def identifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.IdentifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.IdentifierContext,i)
+                return self.getTypedRuleContext(JavaParser.IdentifierContext, i)
 
-
-        def DOT(self, i:int=None):
+        def DOT(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.DOT)
             else:
@@ -5691,28 +5533,33 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_altAnnotationQualifiedName
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAltAnnotationQualifiedName" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterAltAnnotationQualifiedName"):
                 listener.enterAltAnnotationQualifiedName(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAltAnnotationQualifiedName" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitAltAnnotationQualifiedName"):
                 listener.exitAltAnnotationQualifiedName(self)
-
-
-
 
     def altAnnotationQualifiedName(self):
 
         localctx = JavaParser.AltAnnotationQualifiedNameContext(self, self._ctx, self.state)
         self.enterRule(localctx, 110, self.RULE_altAnnotationQualifiedName)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 820
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while ((((_la - 51)) & ~0x3f) == 0 and ((1 << (_la - 51)) & ((1 << (JavaParser.MODULE - 51)) | (1 << (JavaParser.OPEN - 51)) | (1 << (JavaParser.REQUIRES - 51)) | (1 << (JavaParser.EXPORTS - 51)) | (1 << (JavaParser.OPENS - 51)) | (1 << (JavaParser.TO - 51)) | (1 << (JavaParser.USES - 51)) | (1 << (JavaParser.PROVIDES - 51)) | (1 << (JavaParser.WITH - 51)) | (1 << (JavaParser.TRANSITIVE - 51)) | (1 << (JavaParser.VAR - 51)) | (1 << (JavaParser.YIELD - 51)) | (1 << (JavaParser.RECORD - 51)) | (1 << (JavaParser.SEALED - 51)) | (1 << (JavaParser.PERMITS - 51)))) != 0) or _la==JavaParser.IDENTIFIER:
+            while ((((_la - 51)) & ~0x3f) == 0 and ((1 << (_la - 51)) & (
+                    (1 << (JavaParser.MODULE - 51)) | (1 << (JavaParser.OPEN - 51)) | (
+                    1 << (JavaParser.REQUIRES - 51)) | (1 << (JavaParser.EXPORTS - 51)) | (
+                            1 << (JavaParser.OPENS - 51)) | (1 << (JavaParser.TO - 51)) | (
+                            1 << (JavaParser.USES - 51)) | (1 << (JavaParser.PROVIDES - 51)) | (
+                            1 << (JavaParser.WITH - 51)) | (1 << (JavaParser.TRANSITIVE - 51)) | (
+                            1 << (JavaParser.VAR - 51)) | (1 << (JavaParser.YIELD - 51)) | (
+                            1 << (JavaParser.RECORD - 51)) | (1 << (JavaParser.SEALED - 51)) | (
+                            1 << (JavaParser.PERMITS - 51)))) != 0) or _la == JavaParser.IDENTIFIER:
                 self.state = 815
                 self.identifier()
                 self.state = 816
@@ -5733,11 +5580,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class AnnotationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -5745,12 +5591,10 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.AT, 0)
 
         def qualifiedName(self):
-            return self.getTypedRuleContext(JavaParser.QualifiedNameContext,0)
-
+            return self.getTypedRuleContext(JavaParser.QualifiedNameContext, 0)
 
         def altAnnotationQualifiedName(self):
-            return self.getTypedRuleContext(JavaParser.AltAnnotationQualifiedNameContext,0)
-
+            return self.getTypedRuleContext(JavaParser.AltAnnotationQualifiedNameContext, 0)
 
         def LPAREN(self):
             return self.getToken(JavaParser.LPAREN, 0)
@@ -5759,37 +5603,32 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.RPAREN, 0)
 
         def elementValuePairs(self):
-            return self.getTypedRuleContext(JavaParser.ElementValuePairsContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ElementValuePairsContext, 0)
 
         def elementValue(self):
-            return self.getTypedRuleContext(JavaParser.ElementValueContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ElementValueContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_annotation
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAnnotation" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterAnnotation"):
                 listener.enterAnnotation(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAnnotation" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitAnnotation"):
                 listener.exitAnnotation(self)
-
-
-
 
     def annotation(self):
 
         localctx = JavaParser.AnnotationContext(self, self._ctx, self.state)
         self.enterRule(localctx, 112, self.RULE_annotation)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 829
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,88,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 88, self._ctx)
             if la_ == 1:
                 self.state = 826
                 self.match(JavaParser.AT)
@@ -5802,16 +5641,15 @@ class JavaParser ( Parser ):
                 self.altAnnotationQualifiedName()
                 pass
 
-
             self.state = 837
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.LPAREN:
+            if _la == JavaParser.LPAREN:
                 self.state = 831
                 self.match(JavaParser.LPAREN)
                 self.state = 834
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,89,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input, 89, self._ctx)
                 if la_ == 1:
                     self.state = 832
                     self.elementValuePairs()
@@ -5819,7 +5657,6 @@ class JavaParser ( Parser ):
                 elif la_ == 2:
                     self.state = 833
                     self.elementValue()
-
 
                 self.state = 836
                 self.match(JavaParser.RPAREN)
@@ -5833,22 +5670,20 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ElementValuePairsContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def elementValuePair(self, i:int=None):
+        def elementValuePair(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.ElementValuePairContext)
             else:
-                return self.getTypedRuleContext(JavaParser.ElementValuePairContext,i)
+                return self.getTypedRuleContext(JavaParser.ElementValuePairContext, i)
 
-
-        def COMMA(self, i:int=None):
+        def COMMA(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.COMMA)
             else:
@@ -5857,22 +5692,19 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_elementValuePairs
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterElementValuePairs" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterElementValuePairs"):
                 listener.enterElementValuePairs(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitElementValuePairs" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitElementValuePairs"):
                 listener.exitElementValuePairs(self)
-
-
-
 
     def elementValuePairs(self):
 
         localctx = JavaParser.ElementValuePairsContext(self, self._ctx, self.state)
         self.enterRule(localctx, 114, self.RULE_elementValuePairs)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 839
@@ -5880,7 +5712,7 @@ class JavaParser ( Parser ):
             self.state = 844
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==JavaParser.COMMA:
+            while _la == JavaParser.COMMA:
                 self.state = 840
                 self.match(JavaParser.COMMA)
                 self.state = 841
@@ -5897,38 +5729,32 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ElementValuePairContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def ASSIGN(self):
             return self.getToken(JavaParser.ASSIGN, 0)
 
         def elementValue(self):
-            return self.getTypedRuleContext(JavaParser.ElementValueContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ElementValueContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_elementValuePair
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterElementValuePair" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterElementValuePair"):
                 listener.enterElementValuePair(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitElementValuePair" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitElementValuePair"):
                 listener.exitElementValuePair(self)
-
-
-
 
     def elementValuePair(self):
 
@@ -5950,39 +5776,32 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ElementValueContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def expression(self):
-            return self.getTypedRuleContext(JavaParser.ExpressionContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ExpressionContext, 0)
 
         def annotation(self):
-            return self.getTypedRuleContext(JavaParser.AnnotationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.AnnotationContext, 0)
 
         def elementValueArrayInitializer(self):
-            return self.getTypedRuleContext(JavaParser.ElementValueArrayInitializerContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ElementValueArrayInitializerContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_elementValue
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterElementValue" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterElementValue"):
                 listener.enterElementValue(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitElementValue" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitElementValue"):
                 listener.exitElementValue(self)
-
-
-
 
     def elementValue(self):
 
@@ -5991,7 +5810,7 @@ class JavaParser ( Parser ):
         try:
             self.state = 854
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,92,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 92, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 851
@@ -6019,11 +5838,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ElementValueArrayInitializerContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -6033,14 +5851,13 @@ class JavaParser ( Parser ):
         def RBRACE(self):
             return self.getToken(JavaParser.RBRACE, 0)
 
-        def elementValue(self, i:int=None):
+        def elementValue(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.ElementValueContext)
             else:
-                return self.getTypedRuleContext(JavaParser.ElementValueContext,i)
+                return self.getTypedRuleContext(JavaParser.ElementValueContext, i)
 
-
-        def COMMA(self, i:int=None):
+        def COMMA(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.COMMA)
             else:
@@ -6049,22 +5866,19 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_elementValueArrayInitializer
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterElementValueArrayInitializer" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterElementValueArrayInitializer"):
                 listener.enterElementValueArrayInitializer(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitElementValueArrayInitializer" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitElementValueArrayInitializer"):
                 listener.exitElementValueArrayInitializer(self)
-
-
-
 
     def elementValueArrayInitializer(self):
 
         localctx = JavaParser.ElementValueArrayInitializerContext(self, self._ctx, self.state)
         self.enterRule(localctx, 120, self.RULE_elementValueArrayInitializer)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 856
@@ -6072,31 +5886,53 @@ class JavaParser ( Parser ):
             self.state = 865
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if ((((_la - 3)) & ~0x3f) == 0 and ((1 << (_la - 3)) & ((1 << (JavaParser.BOOLEAN - 3)) | (1 << (JavaParser.BYTE - 3)) | (1 << (JavaParser.CHAR - 3)) | (1 << (JavaParser.DOUBLE - 3)) | (1 << (JavaParser.FLOAT - 3)) | (1 << (JavaParser.INT - 3)) | (1 << (JavaParser.LONG - 3)) | (1 << (JavaParser.NEW - 3)) | (1 << (JavaParser.SHORT - 3)) | (1 << (JavaParser.SUPER - 3)) | (1 << (JavaParser.SWITCH - 3)) | (1 << (JavaParser.THIS - 3)) | (1 << (JavaParser.VOID - 3)) | (1 << (JavaParser.MODULE - 3)) | (1 << (JavaParser.OPEN - 3)) | (1 << (JavaParser.REQUIRES - 3)) | (1 << (JavaParser.EXPORTS - 3)) | (1 << (JavaParser.OPENS - 3)) | (1 << (JavaParser.TO - 3)) | (1 << (JavaParser.USES - 3)) | (1 << (JavaParser.PROVIDES - 3)) | (1 << (JavaParser.WITH - 3)) | (1 << (JavaParser.TRANSITIVE - 3)) | (1 << (JavaParser.VAR - 3)) | (1 << (JavaParser.YIELD - 3)) | (1 << (JavaParser.RECORD - 3)) | (1 << (JavaParser.SEALED - 3)) | (1 << (JavaParser.PERMITS - 3)))) != 0) or ((((_la - 67)) & ~0x3f) == 0 and ((1 << (_la - 67)) & ((1 << (JavaParser.DECIMAL_LITERAL - 67)) | (1 << (JavaParser.HEX_LITERAL - 67)) | (1 << (JavaParser.OCT_LITERAL - 67)) | (1 << (JavaParser.BINARY_LITERAL - 67)) | (1 << (JavaParser.FLOAT_LITERAL - 67)) | (1 << (JavaParser.HEX_FLOAT_LITERAL - 67)) | (1 << (JavaParser.BOOL_LITERAL - 67)) | (1 << (JavaParser.CHAR_LITERAL - 67)) | (1 << (JavaParser.STRING_LITERAL - 67)) | (1 << (JavaParser.TEXT_BLOCK - 67)) | (1 << (JavaParser.NULL_LITERAL - 67)) | (1 << (JavaParser.LPAREN - 67)) | (1 << (JavaParser.LBRACE - 67)) | (1 << (JavaParser.LT - 67)) | (1 << (JavaParser.BANG - 67)) | (1 << (JavaParser.TILDE - 67)) | (1 << (JavaParser.INC - 67)) | (1 << (JavaParser.DEC - 67)) | (1 << (JavaParser.ADD - 67)) | (1 << (JavaParser.SUB - 67)) | (1 << (JavaParser.AT - 67)) | (1 << (JavaParser.IDENTIFIER - 67)))) != 0):
+            if ((((_la - 3)) & ~0x3f) == 0 and ((1 << (_la - 3)) & (
+                    (1 << (JavaParser.BOOLEAN - 3)) | (1 << (JavaParser.BYTE - 3)) | (1 << (JavaParser.CHAR - 3)) | (
+                    1 << (JavaParser.DOUBLE - 3)) | (1 << (JavaParser.FLOAT - 3)) | (1 << (JavaParser.INT - 3)) | (
+                            1 << (JavaParser.LONG - 3)) | (1 << (JavaParser.NEW - 3)) | (
+                            1 << (JavaParser.SHORT - 3)) | (1 << (JavaParser.SUPER - 3)) | (
+                            1 << (JavaParser.SWITCH - 3)) | (1 << (JavaParser.THIS - 3)) | (
+                            1 << (JavaParser.VOID - 3)) | (1 << (JavaParser.MODULE - 3)) | (
+                            1 << (JavaParser.OPEN - 3)) | (1 << (JavaParser.REQUIRES - 3)) | (
+                            1 << (JavaParser.EXPORTS - 3)) | (1 << (JavaParser.OPENS - 3)) | (
+                            1 << (JavaParser.TO - 3)) | (1 << (JavaParser.USES - 3)) | (
+                            1 << (JavaParser.PROVIDES - 3)) | (1 << (JavaParser.WITH - 3)) | (
+                            1 << (JavaParser.TRANSITIVE - 3)) | (1 << (JavaParser.VAR - 3)) | (
+                            1 << (JavaParser.YIELD - 3)) | (1 << (JavaParser.RECORD - 3)) | (
+                            1 << (JavaParser.SEALED - 3)) | (1 << (JavaParser.PERMITS - 3)))) != 0) or (
+                    (((_la - 67)) & ~0x3f) == 0 and ((1 << (_la - 67)) & (
+                    (1 << (JavaParser.DECIMAL_LITERAL - 67)) | (1 << (JavaParser.HEX_LITERAL - 67)) | (
+                    1 << (JavaParser.OCT_LITERAL - 67)) | (1 << (JavaParser.BINARY_LITERAL - 67)) | (
+                            1 << (JavaParser.FLOAT_LITERAL - 67)) | (1 << (JavaParser.HEX_FLOAT_LITERAL - 67)) | (
+                            1 << (JavaParser.BOOL_LITERAL - 67)) | (1 << (JavaParser.CHAR_LITERAL - 67)) | (
+                            1 << (JavaParser.STRING_LITERAL - 67)) | (1 << (JavaParser.TEXT_BLOCK - 67)) | (
+                            1 << (JavaParser.NULL_LITERAL - 67)) | (1 << (JavaParser.LPAREN - 67)) | (
+                            1 << (JavaParser.LBRACE - 67)) | (1 << (JavaParser.LT - 67)) | (
+                            1 << (JavaParser.BANG - 67)) | (1 << (JavaParser.TILDE - 67)) | (
+                            1 << (JavaParser.INC - 67)) | (1 << (JavaParser.DEC - 67)) | (
+                            1 << (JavaParser.ADD - 67)) | (1 << (JavaParser.SUB - 67)) | (1 << (JavaParser.AT - 67)) | (
+                            1 << (JavaParser.IDENTIFIER - 67)))) != 0):
                 self.state = 857
                 self.elementValue()
                 self.state = 862
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,93,self._ctx)
-                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                    if _alt==1:
+                _alt = self._interp.adaptivePredict(self._input, 93, self._ctx)
+                while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                    if _alt == 1:
                         self.state = 858
                         self.match(JavaParser.COMMA)
                         self.state = 859
-                        self.elementValue() 
+                        self.elementValue()
                     self.state = 864
                     self._errHandler.sync(self)
-                    _alt = self._interp.adaptivePredict(self._input,93,self._ctx)
-
-
+                    _alt = self._interp.adaptivePredict(self._input, 93, self._ctx)
 
             self.state = 868
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.COMMA:
+            if _la == JavaParser.COMMA:
                 self.state = 867
                 self.match(JavaParser.COMMA)
-
 
             self.state = 870
             self.match(JavaParser.RBRACE)
@@ -6108,11 +5944,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class AnnotationTypeDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -6123,26 +5958,21 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.INTERFACE, 0)
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def annotationTypeBody(self):
-            return self.getTypedRuleContext(JavaParser.AnnotationTypeBodyContext,0)
-
+            return self.getTypedRuleContext(JavaParser.AnnotationTypeBodyContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_annotationTypeDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAnnotationTypeDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterAnnotationTypeDeclaration"):
                 listener.enterAnnotationTypeDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAnnotationTypeDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitAnnotationTypeDeclaration"):
                 listener.exitAnnotationTypeDeclaration(self)
-
-
-
 
     def annotationTypeDeclaration(self):
 
@@ -6166,11 +5996,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class AnnotationTypeBodyContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -6180,32 +6009,28 @@ class JavaParser ( Parser ):
         def RBRACE(self):
             return self.getToken(JavaParser.RBRACE, 0)
 
-        def annotationTypeElementDeclaration(self, i:int=None):
+        def annotationTypeElementDeclaration(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.AnnotationTypeElementDeclarationContext)
             else:
-                return self.getTypedRuleContext(JavaParser.AnnotationTypeElementDeclarationContext,i)
-
+                return self.getTypedRuleContext(JavaParser.AnnotationTypeElementDeclarationContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_annotationTypeBody
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAnnotationTypeBody" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterAnnotationTypeBody"):
                 listener.enterAnnotationTypeBody(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAnnotationTypeBody" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitAnnotationTypeBody"):
                 listener.exitAnnotationTypeBody(self)
-
-
-
 
     def annotationTypeBody(self):
 
         localctx = JavaParser.AnnotationTypeBodyContext(self, self._ctx, self.state)
         self.enterRule(localctx, 124, self.RULE_annotationTypeBody)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 877
@@ -6213,7 +6038,28 @@ class JavaParser ( Parser ):
             self.state = 881
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while ((((_la - 1)) & ~0x3f) == 0 and ((1 << (_la - 1)) & ((1 << (JavaParser.ABSTRACT - 1)) | (1 << (JavaParser.BOOLEAN - 1)) | (1 << (JavaParser.BYTE - 1)) | (1 << (JavaParser.CHAR - 1)) | (1 << (JavaParser.CLASS - 1)) | (1 << (JavaParser.DOUBLE - 1)) | (1 << (JavaParser.ENUM - 1)) | (1 << (JavaParser.FINAL - 1)) | (1 << (JavaParser.FLOAT - 1)) | (1 << (JavaParser.INT - 1)) | (1 << (JavaParser.INTERFACE - 1)) | (1 << (JavaParser.LONG - 1)) | (1 << (JavaParser.NATIVE - 1)) | (1 << (JavaParser.PRIVATE - 1)) | (1 << (JavaParser.PROTECTED - 1)) | (1 << (JavaParser.PUBLIC - 1)) | (1 << (JavaParser.SHORT - 1)) | (1 << (JavaParser.STATIC - 1)) | (1 << (JavaParser.STRICTFP - 1)) | (1 << (JavaParser.SYNCHRONIZED - 1)) | (1 << (JavaParser.TRANSIENT - 1)) | (1 << (JavaParser.VOLATILE - 1)) | (1 << (JavaParser.MODULE - 1)) | (1 << (JavaParser.OPEN - 1)) | (1 << (JavaParser.REQUIRES - 1)) | (1 << (JavaParser.EXPORTS - 1)) | (1 << (JavaParser.OPENS - 1)) | (1 << (JavaParser.TO - 1)) | (1 << (JavaParser.USES - 1)) | (1 << (JavaParser.PROVIDES - 1)) | (1 << (JavaParser.WITH - 1)) | (1 << (JavaParser.TRANSITIVE - 1)) | (1 << (JavaParser.VAR - 1)) | (1 << (JavaParser.YIELD - 1)) | (1 << (JavaParser.RECORD - 1)) | (1 << (JavaParser.SEALED - 1)))) != 0) or ((((_la - 65)) & ~0x3f) == 0 and ((1 << (_la - 65)) & ((1 << (JavaParser.PERMITS - 65)) | (1 << (JavaParser.NON_SEALED - 65)) | (1 << (JavaParser.SEMI - 65)) | (1 << (JavaParser.AT - 65)) | (1 << (JavaParser.IDENTIFIER - 65)))) != 0):
+            while ((((_la - 1)) & ~0x3f) == 0 and ((1 << (_la - 1)) & (
+                    (1 << (JavaParser.ABSTRACT - 1)) | (1 << (JavaParser.BOOLEAN - 1)) | (
+                    1 << (JavaParser.BYTE - 1)) | (1 << (JavaParser.CHAR - 1)) | (1 << (JavaParser.CLASS - 1)) | (
+                            1 << (JavaParser.DOUBLE - 1)) | (1 << (JavaParser.ENUM - 1)) | (
+                            1 << (JavaParser.FINAL - 1)) | (1 << (JavaParser.FLOAT - 1)) | (
+                            1 << (JavaParser.INT - 1)) | (1 << (JavaParser.INTERFACE - 1)) | (
+                            1 << (JavaParser.LONG - 1)) | (1 << (JavaParser.NATIVE - 1)) | (
+                            1 << (JavaParser.PRIVATE - 1)) | (1 << (JavaParser.PROTECTED - 1)) | (
+                            1 << (JavaParser.PUBLIC - 1)) | (1 << (JavaParser.SHORT - 1)) | (
+                            1 << (JavaParser.STATIC - 1)) | (1 << (JavaParser.STRICTFP - 1)) | (
+                            1 << (JavaParser.SYNCHRONIZED - 1)) | (1 << (JavaParser.TRANSIENT - 1)) | (
+                            1 << (JavaParser.VOLATILE - 1)) | (1 << (JavaParser.MODULE - 1)) | (
+                            1 << (JavaParser.OPEN - 1)) | (1 << (JavaParser.REQUIRES - 1)) | (
+                            1 << (JavaParser.EXPORTS - 1)) | (1 << (JavaParser.OPENS - 1)) | (
+                            1 << (JavaParser.TO - 1)) | (1 << (JavaParser.USES - 1)) | (
+                            1 << (JavaParser.PROVIDES - 1)) | (1 << (JavaParser.WITH - 1)) | (
+                            1 << (JavaParser.TRANSITIVE - 1)) | (1 << (JavaParser.VAR - 1)) | (
+                            1 << (JavaParser.YIELD - 1)) | (1 << (JavaParser.RECORD - 1)) | (
+                            1 << (JavaParser.SEALED - 1)))) != 0) or ((((_la - 65)) & ~0x3f) == 0 and (
+                    (1 << (_la - 65)) & ((1 << (JavaParser.PERMITS - 65)) | (1 << (JavaParser.NON_SEALED - 65)) | (
+                    1 << (JavaParser.SEMI - 65)) | (1 << (JavaParser.AT - 65)) | (
+                                                 1 << (JavaParser.IDENTIFIER - 65)))) != 0):
                 self.state = 878
                 self.annotationTypeElementDeclaration()
                 self.state = 883
@@ -6230,24 +6076,21 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class AnnotationTypeElementDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def annotationTypeElementRest(self):
-            return self.getTypedRuleContext(JavaParser.AnnotationTypeElementRestContext,0)
+            return self.getTypedRuleContext(JavaParser.AnnotationTypeElementRestContext, 0)
 
-
-        def modifier(self, i:int=None):
+        def modifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.ModifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.ModifierContext,i)
-
+                return self.getTypedRuleContext(JavaParser.ModifierContext, i)
 
         def SEMI(self):
             return self.getToken(JavaParser.SEMI, 0)
@@ -6255,16 +6098,13 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_annotationTypeElementDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAnnotationTypeElementDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterAnnotationTypeElementDeclaration"):
                 listener.enterAnnotationTypeElementDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAnnotationTypeElementDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitAnnotationTypeElementDeclaration"):
                 listener.exitAnnotationTypeElementDeclaration(self)
-
-
-
 
     def annotationTypeElementDeclaration(self):
 
@@ -6274,18 +6114,26 @@ class JavaParser ( Parser ):
             self.state = 894
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [JavaParser.ABSTRACT, JavaParser.BOOLEAN, JavaParser.BYTE, JavaParser.CHAR, JavaParser.CLASS, JavaParser.DOUBLE, JavaParser.ENUM, JavaParser.FINAL, JavaParser.FLOAT, JavaParser.INT, JavaParser.INTERFACE, JavaParser.LONG, JavaParser.NATIVE, JavaParser.PRIVATE, JavaParser.PROTECTED, JavaParser.PUBLIC, JavaParser.SHORT, JavaParser.STATIC, JavaParser.STRICTFP, JavaParser.SYNCHRONIZED, JavaParser.TRANSIENT, JavaParser.VOLATILE, JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS, JavaParser.NON_SEALED, JavaParser.AT, JavaParser.IDENTIFIER]:
+            if token in [JavaParser.ABSTRACT, JavaParser.BOOLEAN, JavaParser.BYTE, JavaParser.CHAR, JavaParser.CLASS,
+                         JavaParser.DOUBLE, JavaParser.ENUM, JavaParser.FINAL, JavaParser.FLOAT, JavaParser.INT,
+                         JavaParser.INTERFACE, JavaParser.LONG, JavaParser.NATIVE, JavaParser.PRIVATE,
+                         JavaParser.PROTECTED, JavaParser.PUBLIC, JavaParser.SHORT, JavaParser.STATIC,
+                         JavaParser.STRICTFP, JavaParser.SYNCHRONIZED, JavaParser.TRANSIENT, JavaParser.VOLATILE,
+                         JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS,
+                         JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE,
+                         JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS,
+                         JavaParser.NON_SEALED, JavaParser.AT, JavaParser.IDENTIFIER]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 889
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,97,self._ctx)
-                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                    if _alt==1:
+                _alt = self._interp.adaptivePredict(self._input, 97, self._ctx)
+                while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                    if _alt == 1:
                         self.state = 886
-                        self.modifier() 
+                        self.modifier()
                     self.state = 891
                     self._errHandler.sync(self)
-                    _alt = self._interp.adaptivePredict(self._input,97,self._ctx)
+                    _alt = self._interp.adaptivePredict(self._input, 97, self._ctx)
 
                 self.state = 892
                 self.annotationTypeElementRest()
@@ -6306,58 +6154,47 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class AnnotationTypeElementRestContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def typeType(self):
-            return self.getTypedRuleContext(JavaParser.TypeTypeContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeTypeContext, 0)
 
         def annotationMethodOrConstantRest(self):
-            return self.getTypedRuleContext(JavaParser.AnnotationMethodOrConstantRestContext,0)
-
+            return self.getTypedRuleContext(JavaParser.AnnotationMethodOrConstantRestContext, 0)
 
         def SEMI(self):
             return self.getToken(JavaParser.SEMI, 0)
 
         def classDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.ClassDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ClassDeclarationContext, 0)
 
         def interfaceDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.InterfaceDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.InterfaceDeclarationContext, 0)
 
         def enumDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.EnumDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.EnumDeclarationContext, 0)
 
         def annotationTypeDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.AnnotationTypeDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.AnnotationTypeDeclarationContext, 0)
 
         def recordDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.RecordDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.RecordDeclarationContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_annotationTypeElementRest
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAnnotationTypeElementRest" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterAnnotationTypeElementRest"):
                 listener.enterAnnotationTypeElementRest(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAnnotationTypeElementRest" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitAnnotationTypeElementRest"):
                 listener.exitAnnotationTypeElementRest(self)
-
-
-
 
     def annotationTypeElementRest(self):
 
@@ -6366,7 +6203,7 @@ class JavaParser ( Parser ):
         try:
             self.state = 920
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,104,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 104, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 896
@@ -6383,11 +6220,10 @@ class JavaParser ( Parser ):
                 self.classDeclaration()
                 self.state = 902
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,99,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input, 99, self._ctx)
                 if la_ == 1:
                     self.state = 901
                     self.match(JavaParser.SEMI)
-
 
                 pass
 
@@ -6397,11 +6233,10 @@ class JavaParser ( Parser ):
                 self.interfaceDeclaration()
                 self.state = 906
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,100,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input, 100, self._ctx)
                 if la_ == 1:
                     self.state = 905
                     self.match(JavaParser.SEMI)
-
 
                 pass
 
@@ -6411,11 +6246,10 @@ class JavaParser ( Parser ):
                 self.enumDeclaration()
                 self.state = 910
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,101,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input, 101, self._ctx)
                 if la_ == 1:
                     self.state = 909
                     self.match(JavaParser.SEMI)
-
 
                 pass
 
@@ -6425,11 +6259,10 @@ class JavaParser ( Parser ):
                 self.annotationTypeDeclaration()
                 self.state = 914
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,102,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input, 102, self._ctx)
                 if la_ == 1:
                     self.state = 913
                     self.match(JavaParser.SEMI)
-
 
                 pass
 
@@ -6439,11 +6272,10 @@ class JavaParser ( Parser ):
                 self.recordDeclaration()
                 self.state = 918
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,103,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input, 103, self._ctx)
                 if la_ == 1:
                     self.state = 917
                     self.match(JavaParser.SEMI)
-
 
                 pass
 
@@ -6456,35 +6288,29 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class AnnotationMethodOrConstantRestContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def annotationMethodRest(self):
-            return self.getTypedRuleContext(JavaParser.AnnotationMethodRestContext,0)
-
+            return self.getTypedRuleContext(JavaParser.AnnotationMethodRestContext, 0)
 
         def annotationConstantRest(self):
-            return self.getTypedRuleContext(JavaParser.AnnotationConstantRestContext,0)
-
+            return self.getTypedRuleContext(JavaParser.AnnotationConstantRestContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_annotationMethodOrConstantRest
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAnnotationMethodOrConstantRest" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterAnnotationMethodOrConstantRest"):
                 listener.enterAnnotationMethodOrConstantRest(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAnnotationMethodOrConstantRest" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitAnnotationMethodOrConstantRest"):
                 listener.exitAnnotationMethodOrConstantRest(self)
-
-
-
 
     def annotationMethodOrConstantRest(self):
 
@@ -6493,7 +6319,7 @@ class JavaParser ( Parser ):
         try:
             self.state = 924
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,105,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 105, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 922
@@ -6515,17 +6341,15 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class AnnotationMethodRestContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def LPAREN(self):
             return self.getToken(JavaParser.LPAREN, 0)
@@ -6534,28 +6358,24 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.RPAREN, 0)
 
         def defaultValue(self):
-            return self.getTypedRuleContext(JavaParser.DefaultValueContext,0)
-
+            return self.getTypedRuleContext(JavaParser.DefaultValueContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_annotationMethodRest
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAnnotationMethodRest" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterAnnotationMethodRest"):
                 listener.enterAnnotationMethodRest(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAnnotationMethodRest" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitAnnotationMethodRest"):
                 listener.exitAnnotationMethodRest(self)
-
-
-
 
     def annotationMethodRest(self):
 
         localctx = JavaParser.AnnotationMethodRestContext(self, self._ctx, self.state)
         self.enterRule(localctx, 132, self.RULE_annotationMethodRest)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 926
@@ -6567,7 +6387,7 @@ class JavaParser ( Parser ):
             self.state = 930
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.DEFAULT:
+            if _la == JavaParser.DEFAULT:
                 self.state = 929
                 self.defaultValue()
 
@@ -6580,31 +6400,26 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class AnnotationConstantRestContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def variableDeclarators(self):
-            return self.getTypedRuleContext(JavaParser.VariableDeclaratorsContext,0)
-
+            return self.getTypedRuleContext(JavaParser.VariableDeclaratorsContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_annotationConstantRest
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAnnotationConstantRest" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterAnnotationConstantRest"):
                 listener.enterAnnotationConstantRest(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAnnotationConstantRest" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitAnnotationConstantRest"):
                 listener.exitAnnotationConstantRest(self)
-
-
-
 
     def annotationConstantRest(self):
 
@@ -6622,11 +6437,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class DefaultValueContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -6634,22 +6448,18 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.DEFAULT, 0)
 
         def elementValue(self):
-            return self.getTypedRuleContext(JavaParser.ElementValueContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ElementValueContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_defaultValue
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterDefaultValue" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterDefaultValue"):
                 listener.enterDefaultValue(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitDefaultValue" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitDefaultValue"):
                 listener.exitDefaultValue(self)
-
-
-
 
     def defaultValue(self):
 
@@ -6669,11 +6479,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ModuleDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -6681,12 +6490,10 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.MODULE, 0)
 
         def qualifiedName(self):
-            return self.getTypedRuleContext(JavaParser.QualifiedNameContext,0)
-
+            return self.getTypedRuleContext(JavaParser.QualifiedNameContext, 0)
 
         def moduleBody(self):
-            return self.getTypedRuleContext(JavaParser.ModuleBodyContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ModuleBodyContext, 0)
 
         def OPEN(self):
             return self.getToken(JavaParser.OPEN, 0)
@@ -6694,31 +6501,27 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_moduleDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterModuleDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterModuleDeclaration"):
                 listener.enterModuleDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitModuleDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitModuleDeclaration"):
                 listener.exitModuleDeclaration(self)
-
-
-
 
     def moduleDeclaration(self):
 
         localctx = JavaParser.ModuleDeclarationContext(self, self._ctx, self.state)
         self.enterRule(localctx, 138, self.RULE_moduleDeclaration)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 938
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.OPEN:
+            if _la == JavaParser.OPEN:
                 self.state = 937
                 self.match(JavaParser.OPEN)
-
 
             self.state = 940
             self.match(JavaParser.MODULE)
@@ -6734,11 +6537,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ModuleBodyContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -6748,32 +6550,28 @@ class JavaParser ( Parser ):
         def RBRACE(self):
             return self.getToken(JavaParser.RBRACE, 0)
 
-        def moduleDirective(self, i:int=None):
+        def moduleDirective(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.ModuleDirectiveContext)
             else:
-                return self.getTypedRuleContext(JavaParser.ModuleDirectiveContext,i)
-
+                return self.getTypedRuleContext(JavaParser.ModuleDirectiveContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_moduleBody
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterModuleBody" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterModuleBody"):
                 listener.enterModuleBody(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitModuleBody" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitModuleBody"):
                 listener.exitModuleBody(self)
-
-
-
 
     def moduleBody(self):
 
         localctx = JavaParser.ModuleBodyContext(self, self._ctx, self.state)
         self.enterRule(localctx, 140, self.RULE_moduleBody)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 944
@@ -6781,7 +6579,9 @@ class JavaParser ( Parser ):
             self.state = 948
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << JavaParser.REQUIRES) | (1 << JavaParser.EXPORTS) | (1 << JavaParser.OPENS) | (1 << JavaParser.USES) | (1 << JavaParser.PROVIDES))) != 0):
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & (
+                    (1 << JavaParser.REQUIRES) | (1 << JavaParser.EXPORTS) | (1 << JavaParser.OPENS) | (
+                    1 << JavaParser.USES) | (1 << JavaParser.PROVIDES))) != 0):
                 self.state = 945
                 self.moduleDirective()
                 self.state = 950
@@ -6798,33 +6598,30 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ModuleDirectiveContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def REQUIRES(self):
             return self.getToken(JavaParser.REQUIRES, 0)
 
-        def qualifiedName(self, i:int=None):
+        def qualifiedName(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.QualifiedNameContext)
             else:
-                return self.getTypedRuleContext(JavaParser.QualifiedNameContext,i)
-
+                return self.getTypedRuleContext(JavaParser.QualifiedNameContext, i)
 
         def SEMI(self):
             return self.getToken(JavaParser.SEMI, 0)
 
-        def requiresModifier(self, i:int=None):
+        def requiresModifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.RequiresModifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.RequiresModifierContext,i)
-
+                return self.getTypedRuleContext(JavaParser.RequiresModifierContext, i)
 
         def EXPORTS(self):
             return self.getToken(JavaParser.EXPORTS, 0)
@@ -6847,22 +6644,19 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_moduleDirective
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterModuleDirective" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterModuleDirective"):
                 listener.enterModuleDirective(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitModuleDirective" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitModuleDirective"):
                 listener.exitModuleDirective(self)
-
-
-
 
     def moduleDirective(self):
 
         localctx = JavaParser.ModuleDirectiveContext(self, self._ctx, self.state)
         self.enterRule(localctx, 142, self.RULE_moduleDirective)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.state = 989
             self._errHandler.sync(self)
@@ -6873,14 +6667,14 @@ class JavaParser ( Parser ):
                 self.match(JavaParser.REQUIRES)
                 self.state = 957
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,109,self._ctx)
-                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                    if _alt==1:
+                _alt = self._interp.adaptivePredict(self._input, 109, self._ctx)
+                while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                    if _alt == 1:
                         self.state = 954
-                        self.requiresModifier() 
+                        self.requiresModifier()
                     self.state = 959
                     self._errHandler.sync(self)
-                    _alt = self._interp.adaptivePredict(self._input,109,self._ctx)
+                    _alt = self._interp.adaptivePredict(self._input, 109, self._ctx)
 
                 self.state = 960
                 self.qualifiedName()
@@ -6896,12 +6690,11 @@ class JavaParser ( Parser ):
                 self.state = 967
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==JavaParser.TO:
+                if _la == JavaParser.TO:
                     self.state = 965
                     self.match(JavaParser.TO)
                     self.state = 966
                     self.qualifiedName()
-
 
                 self.state = 969
                 self.match(JavaParser.SEMI)
@@ -6915,12 +6708,11 @@ class JavaParser ( Parser ):
                 self.state = 975
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==JavaParser.TO:
+                if _la == JavaParser.TO:
                     self.state = 973
                     self.match(JavaParser.TO)
                     self.state = 974
                     self.qualifiedName()
-
 
                 self.state = 977
                 self.match(JavaParser.SEMI)
@@ -6958,11 +6750,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class RequiresModifierContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -6975,27 +6766,24 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_requiresModifier
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterRequiresModifier" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterRequiresModifier"):
                 listener.enterRequiresModifier(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitRequiresModifier" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitRequiresModifier"):
                 listener.exitRequiresModifier(self)
-
-
-
 
     def requiresModifier(self):
 
         localctx = JavaParser.RequiresModifierContext(self, self._ctx, self.state)
         self.enterRule(localctx, 144, self.RULE_requiresModifier)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 991
             _la = self._input.LA(1)
-            if not(_la==JavaParser.STATIC or _la==JavaParser.TRANSITIVE):
+            if not (_la == JavaParser.STATIC or _la == JavaParser.TRANSITIVE):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -7008,11 +6796,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class RecordDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -7020,47 +6807,39 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.RECORD, 0)
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def recordHeader(self):
-            return self.getTypedRuleContext(JavaParser.RecordHeaderContext,0)
-
+            return self.getTypedRuleContext(JavaParser.RecordHeaderContext, 0)
 
         def recordBody(self):
-            return self.getTypedRuleContext(JavaParser.RecordBodyContext,0)
-
+            return self.getTypedRuleContext(JavaParser.RecordBodyContext, 0)
 
         def typeParameters(self):
-            return self.getTypedRuleContext(JavaParser.TypeParametersContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeParametersContext, 0)
 
         def IMPLEMENTS(self):
             return self.getToken(JavaParser.IMPLEMENTS, 0)
 
         def typeList(self):
-            return self.getTypedRuleContext(JavaParser.TypeListContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeListContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_recordDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterRecordDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterRecordDeclaration"):
                 listener.enterRecordDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitRecordDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitRecordDeclaration"):
                 listener.exitRecordDeclaration(self)
-
-
-
 
     def recordDeclaration(self):
 
         localctx = JavaParser.RecordDeclarationContext(self, self._ctx, self.state)
         self.enterRule(localctx, 146, self.RULE_recordDeclaration)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 993
@@ -7070,22 +6849,20 @@ class JavaParser ( Parser ):
             self.state = 996
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.LT:
+            if _la == JavaParser.LT:
                 self.state = 995
                 self.typeParameters()
-
 
             self.state = 998
             self.recordHeader()
             self.state = 1001
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.IMPLEMENTS:
+            if _la == JavaParser.IMPLEMENTS:
                 self.state = 999
                 self.match(JavaParser.IMPLEMENTS)
                 self.state = 1000
                 self.typeList()
-
 
             self.state = 1003
             self.recordBody()
@@ -7097,11 +6874,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class RecordHeaderContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -7112,28 +6888,24 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.RPAREN, 0)
 
         def recordComponentList(self):
-            return self.getTypedRuleContext(JavaParser.RecordComponentListContext,0)
-
+            return self.getTypedRuleContext(JavaParser.RecordComponentListContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_recordHeader
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterRecordHeader" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterRecordHeader"):
                 listener.enterRecordHeader(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitRecordHeader" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitRecordHeader"):
                 listener.exitRecordHeader(self)
-
-
-
 
     def recordHeader(self):
 
         localctx = JavaParser.RecordHeaderContext(self, self._ctx, self.state)
         self.enterRule(localctx, 148, self.RULE_recordHeader)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 1005
@@ -7141,10 +6913,20 @@ class JavaParser ( Parser ):
             self.state = 1007
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if ((((_la - 3)) & ~0x3f) == 0 and ((1 << (_la - 3)) & ((1 << (JavaParser.BOOLEAN - 3)) | (1 << (JavaParser.BYTE - 3)) | (1 << (JavaParser.CHAR - 3)) | (1 << (JavaParser.DOUBLE - 3)) | (1 << (JavaParser.FLOAT - 3)) | (1 << (JavaParser.INT - 3)) | (1 << (JavaParser.LONG - 3)) | (1 << (JavaParser.SHORT - 3)) | (1 << (JavaParser.MODULE - 3)) | (1 << (JavaParser.OPEN - 3)) | (1 << (JavaParser.REQUIRES - 3)) | (1 << (JavaParser.EXPORTS - 3)) | (1 << (JavaParser.OPENS - 3)) | (1 << (JavaParser.TO - 3)) | (1 << (JavaParser.USES - 3)) | (1 << (JavaParser.PROVIDES - 3)) | (1 << (JavaParser.WITH - 3)) | (1 << (JavaParser.TRANSITIVE - 3)) | (1 << (JavaParser.VAR - 3)) | (1 << (JavaParser.YIELD - 3)) | (1 << (JavaParser.RECORD - 3)) | (1 << (JavaParser.SEALED - 3)) | (1 << (JavaParser.PERMITS - 3)))) != 0) or _la==JavaParser.AT or _la==JavaParser.IDENTIFIER:
+            if ((((_la - 3)) & ~0x3f) == 0 and ((1 << (_la - 3)) & (
+                    (1 << (JavaParser.BOOLEAN - 3)) | (1 << (JavaParser.BYTE - 3)) | (1 << (JavaParser.CHAR - 3)) | (
+                    1 << (JavaParser.DOUBLE - 3)) | (1 << (JavaParser.FLOAT - 3)) | (1 << (JavaParser.INT - 3)) | (
+                            1 << (JavaParser.LONG - 3)) | (1 << (JavaParser.SHORT - 3)) | (
+                            1 << (JavaParser.MODULE - 3)) | (1 << (JavaParser.OPEN - 3)) | (
+                            1 << (JavaParser.REQUIRES - 3)) | (1 << (JavaParser.EXPORTS - 3)) | (
+                            1 << (JavaParser.OPENS - 3)) | (1 << (JavaParser.TO - 3)) | (1 << (JavaParser.USES - 3)) | (
+                            1 << (JavaParser.PROVIDES - 3)) | (1 << (JavaParser.WITH - 3)) | (
+                            1 << (JavaParser.TRANSITIVE - 3)) | (1 << (JavaParser.VAR - 3)) | (
+                            1 << (JavaParser.YIELD - 3)) | (1 << (JavaParser.RECORD - 3)) | (
+                            1 << (JavaParser.SEALED - 3)) | (1 << (
+                    JavaParser.PERMITS - 3)))) != 0) or _la == JavaParser.AT or _la == JavaParser.IDENTIFIER:
                 self.state = 1006
                 self.recordComponentList()
-
 
             self.state = 1009
             self.match(JavaParser.RPAREN)
@@ -7156,22 +6938,20 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class RecordComponentListContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def recordComponent(self, i:int=None):
+        def recordComponent(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.RecordComponentContext)
             else:
-                return self.getTypedRuleContext(JavaParser.RecordComponentContext,i)
+                return self.getTypedRuleContext(JavaParser.RecordComponentContext, i)
 
-
-        def COMMA(self, i:int=None):
+        def COMMA(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.COMMA)
             else:
@@ -7180,22 +6960,19 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_recordComponentList
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterRecordComponentList" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterRecordComponentList"):
                 listener.enterRecordComponentList(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitRecordComponentList" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitRecordComponentList"):
                 listener.exitRecordComponentList(self)
-
-
-
 
     def recordComponentList(self):
 
         localctx = JavaParser.RecordComponentListContext(self, self._ctx, self.state)
         self.enterRule(localctx, 150, self.RULE_recordComponentList)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 1011
@@ -7203,7 +6980,7 @@ class JavaParser ( Parser ):
             self.state = 1016
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==JavaParser.COMMA:
+            while _la == JavaParser.COMMA:
                 self.state = 1012
                 self.match(JavaParser.COMMA)
                 self.state = 1013
@@ -7220,35 +6997,29 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class RecordComponentContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def typeType(self):
-            return self.getTypedRuleContext(JavaParser.TypeTypeContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeTypeContext, 0)
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_recordComponent
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterRecordComponent" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterRecordComponent"):
                 listener.enterRecordComponent(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitRecordComponent" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitRecordComponent"):
                 listener.exitRecordComponent(self)
-
-
-
 
     def recordComponent(self):
 
@@ -7268,11 +7039,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class RecordBodyContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -7282,39 +7052,34 @@ class JavaParser ( Parser ):
         def RBRACE(self):
             return self.getToken(JavaParser.RBRACE, 0)
 
-        def classBodyDeclaration(self, i:int=None):
+        def classBodyDeclaration(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.ClassBodyDeclarationContext)
             else:
-                return self.getTypedRuleContext(JavaParser.ClassBodyDeclarationContext,i)
+                return self.getTypedRuleContext(JavaParser.ClassBodyDeclarationContext, i)
 
-
-        def compactConstructorDeclaration(self, i:int=None):
+        def compactConstructorDeclaration(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.CompactConstructorDeclarationContext)
             else:
-                return self.getTypedRuleContext(JavaParser.CompactConstructorDeclarationContext,i)
-
+                return self.getTypedRuleContext(JavaParser.CompactConstructorDeclarationContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_recordBody
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterRecordBody" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterRecordBody"):
                 listener.enterRecordBody(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitRecordBody" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitRecordBody"):
                 listener.exitRecordBody(self)
-
-
-
 
     def recordBody(self):
 
         localctx = JavaParser.RecordBodyContext(self, self._ctx, self.state)
         self.enterRule(localctx, 154, self.RULE_recordBody)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 1022
@@ -7322,10 +7087,32 @@ class JavaParser ( Parser ):
             self.state = 1027
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while ((((_la - 1)) & ~0x3f) == 0 and ((1 << (_la - 1)) & ((1 << (JavaParser.ABSTRACT - 1)) | (1 << (JavaParser.BOOLEAN - 1)) | (1 << (JavaParser.BYTE - 1)) | (1 << (JavaParser.CHAR - 1)) | (1 << (JavaParser.CLASS - 1)) | (1 << (JavaParser.DOUBLE - 1)) | (1 << (JavaParser.ENUM - 1)) | (1 << (JavaParser.FINAL - 1)) | (1 << (JavaParser.FLOAT - 1)) | (1 << (JavaParser.INT - 1)) | (1 << (JavaParser.INTERFACE - 1)) | (1 << (JavaParser.LONG - 1)) | (1 << (JavaParser.NATIVE - 1)) | (1 << (JavaParser.PRIVATE - 1)) | (1 << (JavaParser.PROTECTED - 1)) | (1 << (JavaParser.PUBLIC - 1)) | (1 << (JavaParser.SHORT - 1)) | (1 << (JavaParser.STATIC - 1)) | (1 << (JavaParser.STRICTFP - 1)) | (1 << (JavaParser.SYNCHRONIZED - 1)) | (1 << (JavaParser.TRANSIENT - 1)) | (1 << (JavaParser.VOID - 1)) | (1 << (JavaParser.VOLATILE - 1)) | (1 << (JavaParser.MODULE - 1)) | (1 << (JavaParser.OPEN - 1)) | (1 << (JavaParser.REQUIRES - 1)) | (1 << (JavaParser.EXPORTS - 1)) | (1 << (JavaParser.OPENS - 1)) | (1 << (JavaParser.TO - 1)) | (1 << (JavaParser.USES - 1)) | (1 << (JavaParser.PROVIDES - 1)) | (1 << (JavaParser.WITH - 1)) | (1 << (JavaParser.TRANSITIVE - 1)) | (1 << (JavaParser.VAR - 1)) | (1 << (JavaParser.YIELD - 1)) | (1 << (JavaParser.RECORD - 1)) | (1 << (JavaParser.SEALED - 1)))) != 0) or ((((_la - 65)) & ~0x3f) == 0 and ((1 << (_la - 65)) & ((1 << (JavaParser.PERMITS - 65)) | (1 << (JavaParser.NON_SEALED - 65)) | (1 << (JavaParser.LBRACE - 65)) | (1 << (JavaParser.SEMI - 65)) | (1 << (JavaParser.LT - 65)) | (1 << (JavaParser.AT - 65)) | (1 << (JavaParser.IDENTIFIER - 65)))) != 0):
+            while ((((_la - 1)) & ~0x3f) == 0 and ((1 << (_la - 1)) & (
+                    (1 << (JavaParser.ABSTRACT - 1)) | (1 << (JavaParser.BOOLEAN - 1)) | (
+                    1 << (JavaParser.BYTE - 1)) | (1 << (JavaParser.CHAR - 1)) | (1 << (JavaParser.CLASS - 1)) | (
+                            1 << (JavaParser.DOUBLE - 1)) | (1 << (JavaParser.ENUM - 1)) | (
+                            1 << (JavaParser.FINAL - 1)) | (1 << (JavaParser.FLOAT - 1)) | (
+                            1 << (JavaParser.INT - 1)) | (1 << (JavaParser.INTERFACE - 1)) | (
+                            1 << (JavaParser.LONG - 1)) | (1 << (JavaParser.NATIVE - 1)) | (
+                            1 << (JavaParser.PRIVATE - 1)) | (1 << (JavaParser.PROTECTED - 1)) | (
+                            1 << (JavaParser.PUBLIC - 1)) | (1 << (JavaParser.SHORT - 1)) | (
+                            1 << (JavaParser.STATIC - 1)) | (1 << (JavaParser.STRICTFP - 1)) | (
+                            1 << (JavaParser.SYNCHRONIZED - 1)) | (1 << (JavaParser.TRANSIENT - 1)) | (
+                            1 << (JavaParser.VOID - 1)) | (1 << (JavaParser.VOLATILE - 1)) | (
+                            1 << (JavaParser.MODULE - 1)) | (1 << (JavaParser.OPEN - 1)) | (
+                            1 << (JavaParser.REQUIRES - 1)) | (1 << (JavaParser.EXPORTS - 1)) | (
+                            1 << (JavaParser.OPENS - 1)) | (1 << (JavaParser.TO - 1)) | (1 << (JavaParser.USES - 1)) | (
+                            1 << (JavaParser.PROVIDES - 1)) | (1 << (JavaParser.WITH - 1)) | (
+                            1 << (JavaParser.TRANSITIVE - 1)) | (1 << (JavaParser.VAR - 1)) | (
+                            1 << (JavaParser.YIELD - 1)) | (1 << (JavaParser.RECORD - 1)) | (
+                            1 << (JavaParser.SEALED - 1)))) != 0) or ((((_la - 65)) & ~0x3f) == 0 and (
+                    (1 << (_la - 65)) & ((1 << (JavaParser.PERMITS - 65)) | (1 << (JavaParser.NON_SEALED - 65)) | (
+                    1 << (JavaParser.LBRACE - 65)) | (1 << (JavaParser.SEMI - 65)) | (1 << (JavaParser.LT - 65)) | (
+                                                 1 << (JavaParser.AT - 65)) | (
+                                                 1 << (JavaParser.IDENTIFIER - 65)))) != 0):
                 self.state = 1025
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,117,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input, 117, self._ctx)
                 if la_ == 1:
                     self.state = 1023
                     self.classBodyDeclaration()
@@ -7335,7 +7122,6 @@ class JavaParser ( Parser ):
                     self.state = 1024
                     self.compactConstructorDeclaration()
                     pass
-
 
                 self.state = 1029
                 self._errHandler.sync(self)
@@ -7351,11 +7137,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class BlockContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -7365,32 +7150,28 @@ class JavaParser ( Parser ):
         def RBRACE(self):
             return self.getToken(JavaParser.RBRACE, 0)
 
-        def blockStatement(self, i:int=None):
+        def blockStatement(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.BlockStatementContext)
             else:
-                return self.getTypedRuleContext(JavaParser.BlockStatementContext,i)
-
+                return self.getTypedRuleContext(JavaParser.BlockStatementContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_block
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterBlock" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterBlock"):
                 listener.enterBlock(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitBlock" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitBlock"):
                 listener.exitBlock(self)
-
-
-
 
     def block(self):
 
         localctx = JavaParser.BlockContext(self, self._ctx, self.state)
         self.enterRule(localctx, 156, self.RULE_block)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 1032
@@ -7398,7 +7179,48 @@ class JavaParser ( Parser ):
             self.state = 1036
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while ((((_la - 1)) & ~0x3f) == 0 and ((1 << (_la - 1)) & ((1 << (JavaParser.ABSTRACT - 1)) | (1 << (JavaParser.ASSERT - 1)) | (1 << (JavaParser.BOOLEAN - 1)) | (1 << (JavaParser.BREAK - 1)) | (1 << (JavaParser.BYTE - 1)) | (1 << (JavaParser.CHAR - 1)) | (1 << (JavaParser.CLASS - 1)) | (1 << (JavaParser.CONTINUE - 1)) | (1 << (JavaParser.DO - 1)) | (1 << (JavaParser.DOUBLE - 1)) | (1 << (JavaParser.FINAL - 1)) | (1 << (JavaParser.FLOAT - 1)) | (1 << (JavaParser.FOR - 1)) | (1 << (JavaParser.IF - 1)) | (1 << (JavaParser.INT - 1)) | (1 << (JavaParser.INTERFACE - 1)) | (1 << (JavaParser.LONG - 1)) | (1 << (JavaParser.NEW - 1)) | (1 << (JavaParser.PRIVATE - 1)) | (1 << (JavaParser.PROTECTED - 1)) | (1 << (JavaParser.PUBLIC - 1)) | (1 << (JavaParser.RETURN - 1)) | (1 << (JavaParser.SHORT - 1)) | (1 << (JavaParser.STATIC - 1)) | (1 << (JavaParser.STRICTFP - 1)) | (1 << (JavaParser.SUPER - 1)) | (1 << (JavaParser.SWITCH - 1)) | (1 << (JavaParser.SYNCHRONIZED - 1)) | (1 << (JavaParser.THIS - 1)) | (1 << (JavaParser.THROW - 1)) | (1 << (JavaParser.TRY - 1)) | (1 << (JavaParser.VOID - 1)) | (1 << (JavaParser.WHILE - 1)) | (1 << (JavaParser.MODULE - 1)) | (1 << (JavaParser.OPEN - 1)) | (1 << (JavaParser.REQUIRES - 1)) | (1 << (JavaParser.EXPORTS - 1)) | (1 << (JavaParser.OPENS - 1)) | (1 << (JavaParser.TO - 1)) | (1 << (JavaParser.USES - 1)) | (1 << (JavaParser.PROVIDES - 1)) | (1 << (JavaParser.WITH - 1)) | (1 << (JavaParser.TRANSITIVE - 1)) | (1 << (JavaParser.VAR - 1)) | (1 << (JavaParser.YIELD - 1)) | (1 << (JavaParser.RECORD - 1)) | (1 << (JavaParser.SEALED - 1)))) != 0) or ((((_la - 65)) & ~0x3f) == 0 and ((1 << (_la - 65)) & ((1 << (JavaParser.PERMITS - 65)) | (1 << (JavaParser.NON_SEALED - 65)) | (1 << (JavaParser.DECIMAL_LITERAL - 65)) | (1 << (JavaParser.HEX_LITERAL - 65)) | (1 << (JavaParser.OCT_LITERAL - 65)) | (1 << (JavaParser.BINARY_LITERAL - 65)) | (1 << (JavaParser.FLOAT_LITERAL - 65)) | (1 << (JavaParser.HEX_FLOAT_LITERAL - 65)) | (1 << (JavaParser.BOOL_LITERAL - 65)) | (1 << (JavaParser.CHAR_LITERAL - 65)) | (1 << (JavaParser.STRING_LITERAL - 65)) | (1 << (JavaParser.TEXT_BLOCK - 65)) | (1 << (JavaParser.NULL_LITERAL - 65)) | (1 << (JavaParser.LPAREN - 65)) | (1 << (JavaParser.LBRACE - 65)) | (1 << (JavaParser.SEMI - 65)) | (1 << (JavaParser.LT - 65)) | (1 << (JavaParser.BANG - 65)) | (1 << (JavaParser.TILDE - 65)) | (1 << (JavaParser.INC - 65)) | (1 << (JavaParser.DEC - 65)) | (1 << (JavaParser.ADD - 65)) | (1 << (JavaParser.SUB - 65)) | (1 << (JavaParser.AT - 65)) | (1 << (JavaParser.IDENTIFIER - 65)))) != 0):
+            while ((((_la - 1)) & ~0x3f) == 0 and ((1 << (_la - 1)) & (
+                    (1 << (JavaParser.ABSTRACT - 1)) | (1 << (JavaParser.ASSERT - 1)) | (
+                    1 << (JavaParser.BOOLEAN - 1)) | (1 << (JavaParser.BREAK - 1)) | (1 << (JavaParser.BYTE - 1)) | (
+                            1 << (JavaParser.CHAR - 1)) | (1 << (JavaParser.CLASS - 1)) | (
+                            1 << (JavaParser.CONTINUE - 1)) | (1 << (JavaParser.DO - 1)) | (
+                            1 << (JavaParser.DOUBLE - 1)) | (1 << (JavaParser.FINAL - 1)) | (
+                            1 << (JavaParser.FLOAT - 1)) | (1 << (JavaParser.FOR - 1)) | (1 << (JavaParser.IF - 1)) | (
+                            1 << (JavaParser.INT - 1)) | (1 << (JavaParser.INTERFACE - 1)) | (
+                            1 << (JavaParser.LONG - 1)) | (1 << (JavaParser.NEW - 1)) | (
+                            1 << (JavaParser.PRIVATE - 1)) | (1 << (JavaParser.PROTECTED - 1)) | (
+                            1 << (JavaParser.PUBLIC - 1)) | (1 << (JavaParser.RETURN - 1)) | (
+                            1 << (JavaParser.SHORT - 1)) | (1 << (JavaParser.STATIC - 1)) | (
+                            1 << (JavaParser.STRICTFP - 1)) | (1 << (JavaParser.SUPER - 1)) | (
+                            1 << (JavaParser.SWITCH - 1)) | (1 << (JavaParser.SYNCHRONIZED - 1)) | (
+                            1 << (JavaParser.THIS - 1)) | (1 << (JavaParser.THROW - 1)) | (
+                            1 << (JavaParser.TRY - 1)) | (1 << (JavaParser.VOID - 1)) | (
+                            1 << (JavaParser.WHILE - 1)) | (1 << (JavaParser.MODULE - 1)) | (
+                            1 << (JavaParser.OPEN - 1)) | (1 << (JavaParser.REQUIRES - 1)) | (
+                            1 << (JavaParser.EXPORTS - 1)) | (1 << (JavaParser.OPENS - 1)) | (
+                            1 << (JavaParser.TO - 1)) | (1 << (JavaParser.USES - 1)) | (
+                            1 << (JavaParser.PROVIDES - 1)) | (1 << (JavaParser.WITH - 1)) | (
+                            1 << (JavaParser.TRANSITIVE - 1)) | (1 << (JavaParser.VAR - 1)) | (
+                            1 << (JavaParser.YIELD - 1)) | (1 << (JavaParser.RECORD - 1)) | (
+                            1 << (JavaParser.SEALED - 1)))) != 0) or ((((_la - 65)) & ~0x3f) == 0 and (
+                    (1 << (_la - 65)) & ((1 << (JavaParser.PERMITS - 65)) | (1 << (JavaParser.NON_SEALED - 65)) | (
+                    1 << (JavaParser.DECIMAL_LITERAL - 65)) | (1 << (JavaParser.HEX_LITERAL - 65)) | (
+                                                 1 << (JavaParser.OCT_LITERAL - 65)) | (
+                                                 1 << (JavaParser.BINARY_LITERAL - 65)) | (
+                                                 1 << (JavaParser.FLOAT_LITERAL - 65)) | (
+                                                 1 << (JavaParser.HEX_FLOAT_LITERAL - 65)) | (
+                                                 1 << (JavaParser.BOOL_LITERAL - 65)) | (
+                                                 1 << (JavaParser.CHAR_LITERAL - 65)) | (
+                                                 1 << (JavaParser.STRING_LITERAL - 65)) | (
+                                                 1 << (JavaParser.TEXT_BLOCK - 65)) | (
+                                                 1 << (JavaParser.NULL_LITERAL - 65)) | (
+                                                 1 << (JavaParser.LPAREN - 65)) | (1 << (JavaParser.LBRACE - 65)) | (
+                                                 1 << (JavaParser.SEMI - 65)) | (1 << (JavaParser.LT - 65)) | (
+                                                 1 << (JavaParser.BANG - 65)) | (1 << (JavaParser.TILDE - 65)) | (
+                                                 1 << (JavaParser.INC - 65)) | (1 << (JavaParser.DEC - 65)) | (
+                                                 1 << (JavaParser.ADD - 65)) | (1 << (JavaParser.SUB - 65)) | (
+                                                 1 << (JavaParser.AT - 65)) | (
+                                                 1 << (JavaParser.IDENTIFIER - 65)))) != 0):
                 self.state = 1033
                 self.blockStatement()
                 self.state = 1038
@@ -7415,42 +7237,35 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class BlockStatementContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def localVariableDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.LocalVariableDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.LocalVariableDeclarationContext, 0)
 
         def SEMI(self):
             return self.getToken(JavaParser.SEMI, 0)
 
         def localTypeDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.LocalTypeDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.LocalTypeDeclarationContext, 0)
 
         def statement(self):
-            return self.getTypedRuleContext(JavaParser.StatementContext,0)
-
+            return self.getTypedRuleContext(JavaParser.StatementContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_blockStatement
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterBlockStatement" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterBlockStatement"):
                 listener.enterBlockStatement(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitBlockStatement" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitBlockStatement"):
                 listener.exitBlockStatement(self)
-
-
-
 
     def blockStatement(self):
 
@@ -7459,7 +7274,7 @@ class JavaParser ( Parser ):
         try:
             self.state = 1046
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,120,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 120, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 1041
@@ -7489,11 +7304,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class LocalVariableDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -7501,44 +7315,36 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.VAR, 0)
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def ASSIGN(self):
             return self.getToken(JavaParser.ASSIGN, 0)
 
         def expression(self):
-            return self.getTypedRuleContext(JavaParser.ExpressionContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ExpressionContext, 0)
 
         def typeType(self):
-            return self.getTypedRuleContext(JavaParser.TypeTypeContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeTypeContext, 0)
 
         def variableDeclarators(self):
-            return self.getTypedRuleContext(JavaParser.VariableDeclaratorsContext,0)
+            return self.getTypedRuleContext(JavaParser.VariableDeclaratorsContext, 0)
 
-
-        def variableModifier(self, i:int=None):
+        def variableModifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.VariableModifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.VariableModifierContext,i)
-
+                return self.getTypedRuleContext(JavaParser.VariableModifierContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_localVariableDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterLocalVariableDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterLocalVariableDeclaration"):
                 listener.enterLocalVariableDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitLocalVariableDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitLocalVariableDeclaration"):
                 listener.exitLocalVariableDeclaration(self)
-
-
-
 
     def localVariableDeclaration(self):
 
@@ -7548,18 +7354,18 @@ class JavaParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 1051
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,121,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 121, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 1048
-                    self.variableModifier() 
+                    self.variableModifier()
                 self.state = 1053
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,121,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 121, self._ctx)
 
             self.state = 1062
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,122,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 122, self._ctx)
             if la_ == 1:
                 self.state = 1054
                 self.match(JavaParser.VAR)
@@ -7587,11 +7393,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class IdentifierContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -7646,27 +7451,32 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_identifier
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterIdentifier" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterIdentifier"):
                 listener.enterIdentifier(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitIdentifier" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitIdentifier"):
                 listener.exitIdentifier(self)
-
-
-
 
     def identifier(self):
 
         localctx = JavaParser.IdentifierContext(self, self._ctx, self.state)
         self.enterRule(localctx, 162, self.RULE_identifier)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 1064
             _la = self._input.LA(1)
-            if not(((((_la - 51)) & ~0x3f) == 0 and ((1 << (_la - 51)) & ((1 << (JavaParser.MODULE - 51)) | (1 << (JavaParser.OPEN - 51)) | (1 << (JavaParser.REQUIRES - 51)) | (1 << (JavaParser.EXPORTS - 51)) | (1 << (JavaParser.OPENS - 51)) | (1 << (JavaParser.TO - 51)) | (1 << (JavaParser.USES - 51)) | (1 << (JavaParser.PROVIDES - 51)) | (1 << (JavaParser.WITH - 51)) | (1 << (JavaParser.TRANSITIVE - 51)) | (1 << (JavaParser.VAR - 51)) | (1 << (JavaParser.YIELD - 51)) | (1 << (JavaParser.RECORD - 51)) | (1 << (JavaParser.SEALED - 51)) | (1 << (JavaParser.PERMITS - 51)))) != 0) or _la==JavaParser.IDENTIFIER):
+            if not (((((_la - 51)) & ~0x3f) == 0 and ((1 << (_la - 51)) & (
+                    (1 << (JavaParser.MODULE - 51)) | (1 << (JavaParser.OPEN - 51)) | (
+                    1 << (JavaParser.REQUIRES - 51)) | (1 << (JavaParser.EXPORTS - 51)) | (
+                            1 << (JavaParser.OPENS - 51)) | (1 << (JavaParser.TO - 51)) | (
+                            1 << (JavaParser.USES - 51)) | (1 << (JavaParser.PROVIDES - 51)) | (
+                            1 << (JavaParser.WITH - 51)) | (1 << (JavaParser.TRANSITIVE - 51)) | (
+                            1 << (JavaParser.VAR - 51)) | (1 << (JavaParser.YIELD - 51)) | (
+                            1 << (JavaParser.RECORD - 51)) | (1 << (JavaParser.SEALED - 51)) | (
+                            1 << (JavaParser.PERMITS - 51)))) != 0) or _la == JavaParser.IDENTIFIER):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -7679,11 +7489,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class TypeIdentifierContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -7732,27 +7541,31 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_typeIdentifier
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTypeIdentifier" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterTypeIdentifier"):
                 listener.enterTypeIdentifier(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTypeIdentifier" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitTypeIdentifier"):
                 listener.exitTypeIdentifier(self)
-
-
-
 
     def typeIdentifier(self):
 
         localctx = JavaParser.TypeIdentifierContext(self, self._ctx, self.state)
         self.enterRule(localctx, 164, self.RULE_typeIdentifier)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 1066
             _la = self._input.LA(1)
-            if not(((((_la - 51)) & ~0x3f) == 0 and ((1 << (_la - 51)) & ((1 << (JavaParser.MODULE - 51)) | (1 << (JavaParser.OPEN - 51)) | (1 << (JavaParser.REQUIRES - 51)) | (1 << (JavaParser.EXPORTS - 51)) | (1 << (JavaParser.OPENS - 51)) | (1 << (JavaParser.TO - 51)) | (1 << (JavaParser.USES - 51)) | (1 << (JavaParser.PROVIDES - 51)) | (1 << (JavaParser.WITH - 51)) | (1 << (JavaParser.TRANSITIVE - 51)) | (1 << (JavaParser.RECORD - 51)) | (1 << (JavaParser.SEALED - 51)) | (1 << (JavaParser.PERMITS - 51)))) != 0) or _la==JavaParser.IDENTIFIER):
+            if not (((((_la - 51)) & ~0x3f) == 0 and ((1 << (_la - 51)) & (
+                    (1 << (JavaParser.MODULE - 51)) | (1 << (JavaParser.OPEN - 51)) | (
+                    1 << (JavaParser.REQUIRES - 51)) | (1 << (JavaParser.EXPORTS - 51)) | (
+                            1 << (JavaParser.OPENS - 51)) | (1 << (JavaParser.TO - 51)) | (
+                            1 << (JavaParser.USES - 51)) | (1 << (JavaParser.PROVIDES - 51)) | (
+                            1 << (JavaParser.WITH - 51)) | (1 << (JavaParser.TRANSITIVE - 51)) | (
+                            1 << (JavaParser.RECORD - 51)) | (1 << (JavaParser.SEALED - 51)) | (
+                            1 << (JavaParser.PERMITS - 51)))) != 0) or _la == JavaParser.IDENTIFIER):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -7765,46 +7578,38 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class LocalTypeDeclarationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def classDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.ClassDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ClassDeclarationContext, 0)
 
         def interfaceDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.InterfaceDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.InterfaceDeclarationContext, 0)
 
         def recordDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.RecordDeclarationContext,0)
+            return self.getTypedRuleContext(JavaParser.RecordDeclarationContext, 0)
 
-
-        def classOrInterfaceModifier(self, i:int=None):
+        def classOrInterfaceModifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.ClassOrInterfaceModifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.ClassOrInterfaceModifierContext,i)
-
+                return self.getTypedRuleContext(JavaParser.ClassOrInterfaceModifierContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_localTypeDeclaration
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterLocalTypeDeclaration" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterLocalTypeDeclaration"):
                 listener.enterLocalTypeDeclaration(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitLocalTypeDeclaration" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitLocalTypeDeclaration"):
                 listener.exitLocalTypeDeclaration(self)
-
-
-
 
     def localTypeDeclaration(self):
 
@@ -7814,14 +7619,14 @@ class JavaParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 1071
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,123,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 123, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 1068
-                    self.classOrInterfaceModifier() 
+                    self.classOrInterfaceModifier()
                 self.state = 1073
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,123,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 123, self._ctx)
 
             self.state = 1077
             self._errHandler.sync(self)
@@ -7849,30 +7654,27 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class StatementContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
-            self.blockLabel = None # BlockContext
-            self.statementExpression = None # ExpressionContext
-            self.identifierLabel = None # IdentifierContext
+            self.blockLabel = None  # BlockContext
+            self.statementExpression = None  # ExpressionContext
+            self.identifierLabel = None  # IdentifierContext
 
         def block(self):
-            return self.getTypedRuleContext(JavaParser.BlockContext,0)
-
+            return self.getTypedRuleContext(JavaParser.BlockContext, 0)
 
         def ASSERT(self):
             return self.getToken(JavaParser.ASSERT, 0)
 
-        def expression(self, i:int=None):
+        def expression(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.ExpressionContext)
             else:
-                return self.getTypedRuleContext(JavaParser.ExpressionContext,i)
-
+                return self.getTypedRuleContext(JavaParser.ExpressionContext, i)
 
         def SEMI(self):
             return self.getToken(JavaParser.SEMI, 0)
@@ -7884,15 +7686,13 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.IF, 0)
 
         def parExpression(self):
-            return self.getTypedRuleContext(JavaParser.ParExpressionContext,0)
+            return self.getTypedRuleContext(JavaParser.ParExpressionContext, 0)
 
-
-        def statement(self, i:int=None):
+        def statement(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.StatementContext)
             else:
-                return self.getTypedRuleContext(JavaParser.StatementContext,i)
-
+                return self.getTypedRuleContext(JavaParser.StatementContext, i)
 
         def ELSE(self):
             return self.getToken(JavaParser.ELSE, 0)
@@ -7904,8 +7704,7 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.LPAREN, 0)
 
         def forControl(self):
-            return self.getTypedRuleContext(JavaParser.ForControlContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ForControlContext, 0)
 
         def RPAREN(self):
             return self.getToken(JavaParser.RPAREN, 0)
@@ -7920,19 +7719,16 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.TRY, 0)
 
         def finallyBlock(self):
-            return self.getTypedRuleContext(JavaParser.FinallyBlockContext,0)
+            return self.getTypedRuleContext(JavaParser.FinallyBlockContext, 0)
 
-
-        def catchClause(self, i:int=None):
+        def catchClause(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.CatchClauseContext)
             else:
-                return self.getTypedRuleContext(JavaParser.CatchClauseContext,i)
-
+                return self.getTypedRuleContext(JavaParser.CatchClauseContext, i)
 
         def resourceSpecification(self):
-            return self.getTypedRuleContext(JavaParser.ResourceSpecificationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ResourceSpecificationContext, 0)
 
         def SWITCH(self):
             return self.getToken(JavaParser.SWITCH, 0)
@@ -7943,19 +7739,17 @@ class JavaParser ( Parser ):
         def RBRACE(self):
             return self.getToken(JavaParser.RBRACE, 0)
 
-        def switchBlockStatementGroup(self, i:int=None):
+        def switchBlockStatementGroup(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.SwitchBlockStatementGroupContext)
             else:
-                return self.getTypedRuleContext(JavaParser.SwitchBlockStatementGroupContext,i)
+                return self.getTypedRuleContext(JavaParser.SwitchBlockStatementGroupContext, i)
 
-
-        def switchLabel(self, i:int=None):
+        def switchLabel(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.SwitchLabelContext)
             else:
-                return self.getTypedRuleContext(JavaParser.SwitchLabelContext,i)
-
+                return self.getTypedRuleContext(JavaParser.SwitchLabelContext, i)
 
         def SYNCHRONIZED(self):
             return self.getToken(JavaParser.SYNCHRONIZED, 0)
@@ -7970,8 +7764,7 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.BREAK, 0)
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def CONTINUE(self):
             return self.getToken(JavaParser.CONTINUE, 0)
@@ -7980,32 +7773,28 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.YIELD, 0)
 
         def switchExpression(self):
-            return self.getTypedRuleContext(JavaParser.SwitchExpressionContext,0)
-
+            return self.getTypedRuleContext(JavaParser.SwitchExpressionContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_statement
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterStatement" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterStatement"):
                 listener.enterStatement(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitStatement" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitStatement"):
                 listener.exitStatement(self)
-
-
-
 
     def statement(self):
 
         localctx = JavaParser.StatementContext(self, self._ctx, self.state)
         self.enterRule(localctx, 168, self.RULE_statement)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.state = 1192
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,138,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 138, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 1079
@@ -8021,12 +7810,11 @@ class JavaParser ( Parser ):
                 self.state = 1084
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==JavaParser.COLON:
+                if _la == JavaParser.COLON:
                     self.state = 1082
                     self.match(JavaParser.COLON)
                     self.state = 1083
                     self.expression(0)
-
 
                 self.state = 1086
                 self.match(JavaParser.SEMI)
@@ -8042,13 +7830,12 @@ class JavaParser ( Parser ):
                 self.statement()
                 self.state = 1093
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,126,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input, 126, self._ctx)
                 if la_ == 1:
                     self.state = 1091
                     self.match(JavaParser.ELSE)
                     self.state = 1092
                     self.statement()
-
 
                 pass
 
@@ -8100,25 +7887,24 @@ class JavaParser ( Parser ):
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
                 if token in [JavaParser.CATCH]:
-                    self.state = 1114 
+                    self.state = 1114
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
                     while True:
                         self.state = 1113
                         self.catchClause()
-                        self.state = 1116 
+                        self.state = 1116
                         self._errHandler.sync(self)
                         _la = self._input.LA(1)
-                        if not (_la==JavaParser.CATCH):
+                        if not (_la == JavaParser.CATCH):
                             break
 
                     self.state = 1119
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
-                    if _la==JavaParser.FINALLY:
+                    if _la == JavaParser.FINALLY:
                         self.state = 1118
                         self.finallyBlock()
-
 
                     pass
                 elif token in [JavaParser.FINALLY]:
@@ -8141,7 +7927,7 @@ class JavaParser ( Parser ):
                 self.state = 1130
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                while _la==JavaParser.CATCH:
+                while _la == JavaParser.CATCH:
                     self.state = 1127
                     self.catchClause()
                     self.state = 1132
@@ -8151,10 +7937,9 @@ class JavaParser ( Parser ):
                 self.state = 1134
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==JavaParser.FINALLY:
+                if _la == JavaParser.FINALLY:
                     self.state = 1133
                     self.finallyBlock()
-
 
                 pass
 
@@ -8168,19 +7953,19 @@ class JavaParser ( Parser ):
                 self.match(JavaParser.LBRACE)
                 self.state = 1142
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,132,self._ctx)
-                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                    if _alt==1:
+                _alt = self._interp.adaptivePredict(self._input, 132, self._ctx)
+                while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                    if _alt == 1:
                         self.state = 1139
-                        self.switchBlockStatementGroup() 
+                        self.switchBlockStatementGroup()
                     self.state = 1144
                     self._errHandler.sync(self)
-                    _alt = self._interp.adaptivePredict(self._input,132,self._ctx)
+                    _alt = self._interp.adaptivePredict(self._input, 132, self._ctx)
 
                 self.state = 1148
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                while _la==JavaParser.CASE or _la==JavaParser.DEFAULT:
+                while _la == JavaParser.CASE or _la == JavaParser.DEFAULT:
                     self.state = 1145
                     self.switchLabel()
                     self.state = 1150
@@ -8208,10 +7993,35 @@ class JavaParser ( Parser ):
                 self.state = 1159
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if ((((_la - 3)) & ~0x3f) == 0 and ((1 << (_la - 3)) & ((1 << (JavaParser.BOOLEAN - 3)) | (1 << (JavaParser.BYTE - 3)) | (1 << (JavaParser.CHAR - 3)) | (1 << (JavaParser.DOUBLE - 3)) | (1 << (JavaParser.FLOAT - 3)) | (1 << (JavaParser.INT - 3)) | (1 << (JavaParser.LONG - 3)) | (1 << (JavaParser.NEW - 3)) | (1 << (JavaParser.SHORT - 3)) | (1 << (JavaParser.SUPER - 3)) | (1 << (JavaParser.SWITCH - 3)) | (1 << (JavaParser.THIS - 3)) | (1 << (JavaParser.VOID - 3)) | (1 << (JavaParser.MODULE - 3)) | (1 << (JavaParser.OPEN - 3)) | (1 << (JavaParser.REQUIRES - 3)) | (1 << (JavaParser.EXPORTS - 3)) | (1 << (JavaParser.OPENS - 3)) | (1 << (JavaParser.TO - 3)) | (1 << (JavaParser.USES - 3)) | (1 << (JavaParser.PROVIDES - 3)) | (1 << (JavaParser.WITH - 3)) | (1 << (JavaParser.TRANSITIVE - 3)) | (1 << (JavaParser.VAR - 3)) | (1 << (JavaParser.YIELD - 3)) | (1 << (JavaParser.RECORD - 3)) | (1 << (JavaParser.SEALED - 3)) | (1 << (JavaParser.PERMITS - 3)))) != 0) or ((((_la - 67)) & ~0x3f) == 0 and ((1 << (_la - 67)) & ((1 << (JavaParser.DECIMAL_LITERAL - 67)) | (1 << (JavaParser.HEX_LITERAL - 67)) | (1 << (JavaParser.OCT_LITERAL - 67)) | (1 << (JavaParser.BINARY_LITERAL - 67)) | (1 << (JavaParser.FLOAT_LITERAL - 67)) | (1 << (JavaParser.HEX_FLOAT_LITERAL - 67)) | (1 << (JavaParser.BOOL_LITERAL - 67)) | (1 << (JavaParser.CHAR_LITERAL - 67)) | (1 << (JavaParser.STRING_LITERAL - 67)) | (1 << (JavaParser.TEXT_BLOCK - 67)) | (1 << (JavaParser.NULL_LITERAL - 67)) | (1 << (JavaParser.LPAREN - 67)) | (1 << (JavaParser.LT - 67)) | (1 << (JavaParser.BANG - 67)) | (1 << (JavaParser.TILDE - 67)) | (1 << (JavaParser.INC - 67)) | (1 << (JavaParser.DEC - 67)) | (1 << (JavaParser.ADD - 67)) | (1 << (JavaParser.SUB - 67)) | (1 << (JavaParser.AT - 67)) | (1 << (JavaParser.IDENTIFIER - 67)))) != 0):
+                if ((((_la - 3)) & ~0x3f) == 0 and ((1 << (_la - 3)) & (
+                        (1 << (JavaParser.BOOLEAN - 3)) | (1 << (JavaParser.BYTE - 3)) | (
+                        1 << (JavaParser.CHAR - 3)) | (1 << (JavaParser.DOUBLE - 3)) | (1 << (JavaParser.FLOAT - 3)) | (
+                                1 << (JavaParser.INT - 3)) | (1 << (JavaParser.LONG - 3)) | (
+                                1 << (JavaParser.NEW - 3)) | (1 << (JavaParser.SHORT - 3)) | (
+                                1 << (JavaParser.SUPER - 3)) | (1 << (JavaParser.SWITCH - 3)) | (
+                                1 << (JavaParser.THIS - 3)) | (1 << (JavaParser.VOID - 3)) | (
+                                1 << (JavaParser.MODULE - 3)) | (1 << (JavaParser.OPEN - 3)) | (
+                                1 << (JavaParser.REQUIRES - 3)) | (1 << (JavaParser.EXPORTS - 3)) | (
+                                1 << (JavaParser.OPENS - 3)) | (1 << (JavaParser.TO - 3)) | (
+                                1 << (JavaParser.USES - 3)) | (1 << (JavaParser.PROVIDES - 3)) | (
+                                1 << (JavaParser.WITH - 3)) | (1 << (JavaParser.TRANSITIVE - 3)) | (
+                                1 << (JavaParser.VAR - 3)) | (1 << (JavaParser.YIELD - 3)) | (
+                                1 << (JavaParser.RECORD - 3)) | (1 << (JavaParser.SEALED - 3)) | (
+                                1 << (JavaParser.PERMITS - 3)))) != 0) or ((((_la - 67)) & ~0x3f) == 0 and (
+                        (1 << (_la - 67)) & (
+                        (1 << (JavaParser.DECIMAL_LITERAL - 67)) | (1 << (JavaParser.HEX_LITERAL - 67)) | (
+                        1 << (JavaParser.OCT_LITERAL - 67)) | (1 << (JavaParser.BINARY_LITERAL - 67)) | (
+                                1 << (JavaParser.FLOAT_LITERAL - 67)) | (1 << (JavaParser.HEX_FLOAT_LITERAL - 67)) | (
+                                1 << (JavaParser.BOOL_LITERAL - 67)) | (1 << (JavaParser.CHAR_LITERAL - 67)) | (
+                                1 << (JavaParser.STRING_LITERAL - 67)) | (1 << (JavaParser.TEXT_BLOCK - 67)) | (
+                                1 << (JavaParser.NULL_LITERAL - 67)) | (1 << (JavaParser.LPAREN - 67)) | (
+                                1 << (JavaParser.LT - 67)) | (1 << (JavaParser.BANG - 67)) | (
+                                1 << (JavaParser.TILDE - 67)) | (1 << (JavaParser.INC - 67)) | (
+                                1 << (JavaParser.DEC - 67)) | (1 << (JavaParser.ADD - 67)) | (
+                                1 << (JavaParser.SUB - 67)) | (1 << (JavaParser.AT - 67)) | (
+                                1 << (JavaParser.IDENTIFIER - 67)))) != 0):
                     self.state = 1158
                     self.expression(0)
-
 
                 self.state = 1161
                 self.match(JavaParser.SEMI)
@@ -8234,10 +8044,17 @@ class JavaParser ( Parser ):
                 self.state = 1168
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if ((((_la - 51)) & ~0x3f) == 0 and ((1 << (_la - 51)) & ((1 << (JavaParser.MODULE - 51)) | (1 << (JavaParser.OPEN - 51)) | (1 << (JavaParser.REQUIRES - 51)) | (1 << (JavaParser.EXPORTS - 51)) | (1 << (JavaParser.OPENS - 51)) | (1 << (JavaParser.TO - 51)) | (1 << (JavaParser.USES - 51)) | (1 << (JavaParser.PROVIDES - 51)) | (1 << (JavaParser.WITH - 51)) | (1 << (JavaParser.TRANSITIVE - 51)) | (1 << (JavaParser.VAR - 51)) | (1 << (JavaParser.YIELD - 51)) | (1 << (JavaParser.RECORD - 51)) | (1 << (JavaParser.SEALED - 51)) | (1 << (JavaParser.PERMITS - 51)))) != 0) or _la==JavaParser.IDENTIFIER:
+                if ((((_la - 51)) & ~0x3f) == 0 and ((1 << (_la - 51)) & (
+                        (1 << (JavaParser.MODULE - 51)) | (1 << (JavaParser.OPEN - 51)) | (
+                        1 << (JavaParser.REQUIRES - 51)) | (1 << (JavaParser.EXPORTS - 51)) | (
+                                1 << (JavaParser.OPENS - 51)) | (1 << (JavaParser.TO - 51)) | (
+                                1 << (JavaParser.USES - 51)) | (1 << (JavaParser.PROVIDES - 51)) | (
+                                1 << (JavaParser.WITH - 51)) | (1 << (JavaParser.TRANSITIVE - 51)) | (
+                                1 << (JavaParser.VAR - 51)) | (1 << (JavaParser.YIELD - 51)) | (
+                                1 << (JavaParser.RECORD - 51)) | (1 << (JavaParser.SEALED - 51)) | (
+                                1 << (JavaParser.PERMITS - 51)))) != 0) or _la == JavaParser.IDENTIFIER:
                     self.state = 1167
                     self.identifier()
-
 
                 self.state = 1170
                 self.match(JavaParser.SEMI)
@@ -8250,10 +8067,17 @@ class JavaParser ( Parser ):
                 self.state = 1173
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if ((((_la - 51)) & ~0x3f) == 0 and ((1 << (_la - 51)) & ((1 << (JavaParser.MODULE - 51)) | (1 << (JavaParser.OPEN - 51)) | (1 << (JavaParser.REQUIRES - 51)) | (1 << (JavaParser.EXPORTS - 51)) | (1 << (JavaParser.OPENS - 51)) | (1 << (JavaParser.TO - 51)) | (1 << (JavaParser.USES - 51)) | (1 << (JavaParser.PROVIDES - 51)) | (1 << (JavaParser.WITH - 51)) | (1 << (JavaParser.TRANSITIVE - 51)) | (1 << (JavaParser.VAR - 51)) | (1 << (JavaParser.YIELD - 51)) | (1 << (JavaParser.RECORD - 51)) | (1 << (JavaParser.SEALED - 51)) | (1 << (JavaParser.PERMITS - 51)))) != 0) or _la==JavaParser.IDENTIFIER:
+                if ((((_la - 51)) & ~0x3f) == 0 and ((1 << (_la - 51)) & (
+                        (1 << (JavaParser.MODULE - 51)) | (1 << (JavaParser.OPEN - 51)) | (
+                        1 << (JavaParser.REQUIRES - 51)) | (1 << (JavaParser.EXPORTS - 51)) | (
+                                1 << (JavaParser.OPENS - 51)) | (1 << (JavaParser.TO - 51)) | (
+                                1 << (JavaParser.USES - 51)) | (1 << (JavaParser.PROVIDES - 51)) | (
+                                1 << (JavaParser.WITH - 51)) | (1 << (JavaParser.TRANSITIVE - 51)) | (
+                                1 << (JavaParser.VAR - 51)) | (1 << (JavaParser.YIELD - 51)) | (
+                                1 << (JavaParser.RECORD - 51)) | (1 << (JavaParser.SEALED - 51)) | (
+                                1 << (JavaParser.PERMITS - 51)))) != 0) or _la == JavaParser.IDENTIFIER:
                     self.state = 1172
                     self.identifier()
-
 
                 self.state = 1175
                 self.match(JavaParser.SEMI)
@@ -8289,11 +8113,10 @@ class JavaParser ( Parser ):
                 self.switchExpression()
                 self.state = 1186
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,137,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input, 137, self._ctx)
                 if la_ == 1:
                     self.state = 1185
                     self.match(JavaParser.SEMI)
-
 
                 pass
 
@@ -8316,11 +8139,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class CatchClauseContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -8331,40 +8153,33 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.LPAREN, 0)
 
         def catchType(self):
-            return self.getTypedRuleContext(JavaParser.CatchTypeContext,0)
-
+            return self.getTypedRuleContext(JavaParser.CatchTypeContext, 0)
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def RPAREN(self):
             return self.getToken(JavaParser.RPAREN, 0)
 
         def block(self):
-            return self.getTypedRuleContext(JavaParser.BlockContext,0)
+            return self.getTypedRuleContext(JavaParser.BlockContext, 0)
 
-
-        def variableModifier(self, i:int=None):
+        def variableModifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.VariableModifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.VariableModifierContext,i)
-
+                return self.getTypedRuleContext(JavaParser.VariableModifierContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_catchClause
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterCatchClause" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterCatchClause"):
                 listener.enterCatchClause(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitCatchClause" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitCatchClause"):
                 listener.exitCatchClause(self)
-
-
-
 
     def catchClause(self):
 
@@ -8378,14 +8193,14 @@ class JavaParser ( Parser ):
             self.match(JavaParser.LPAREN)
             self.state = 1199
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,139,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 139, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 1196
-                    self.variableModifier() 
+                    self.variableModifier()
                 self.state = 1201
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,139,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 139, self._ctx)
 
             self.state = 1202
             self.catchType()
@@ -8403,22 +8218,20 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class CatchTypeContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def qualifiedName(self, i:int=None):
+        def qualifiedName(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.QualifiedNameContext)
             else:
-                return self.getTypedRuleContext(JavaParser.QualifiedNameContext,i)
+                return self.getTypedRuleContext(JavaParser.QualifiedNameContext, i)
 
-
-        def BITOR(self, i:int=None):
+        def BITOR(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.BITOR)
             else:
@@ -8427,22 +8240,19 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_catchType
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterCatchType" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterCatchType"):
                 listener.enterCatchType(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitCatchType" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitCatchType"):
                 listener.exitCatchType(self)
-
-
-
 
     def catchType(self):
 
         localctx = JavaParser.CatchTypeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 172, self.RULE_catchType)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 1207
@@ -8450,7 +8260,7 @@ class JavaParser ( Parser ):
             self.state = 1212
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==JavaParser.BITOR:
+            while _la == JavaParser.BITOR:
                 self.state = 1208
                 self.match(JavaParser.BITOR)
                 self.state = 1209
@@ -8467,11 +8277,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class FinallyBlockContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -8479,22 +8288,18 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.FINALLY, 0)
 
         def block(self):
-            return self.getTypedRuleContext(JavaParser.BlockContext,0)
-
+            return self.getTypedRuleContext(JavaParser.BlockContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_finallyBlock
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterFinallyBlock" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterFinallyBlock"):
                 listener.enterFinallyBlock(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitFinallyBlock" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitFinallyBlock"):
                 listener.exitFinallyBlock(self)
-
-
-
 
     def finallyBlock(self):
 
@@ -8514,11 +8319,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ResourceSpecificationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -8526,8 +8330,7 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.LPAREN, 0)
 
         def resources(self):
-            return self.getTypedRuleContext(JavaParser.ResourcesContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ResourcesContext, 0)
 
         def RPAREN(self):
             return self.getToken(JavaParser.RPAREN, 0)
@@ -8538,22 +8341,19 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_resourceSpecification
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterResourceSpecification" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterResourceSpecification"):
                 listener.enterResourceSpecification(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitResourceSpecification" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitResourceSpecification"):
                 listener.exitResourceSpecification(self)
-
-
-
 
     def resourceSpecification(self):
 
         localctx = JavaParser.ResourceSpecificationContext(self, self._ctx, self.state)
         self.enterRule(localctx, 176, self.RULE_resourceSpecification)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 1218
@@ -8563,10 +8363,9 @@ class JavaParser ( Parser ):
             self.state = 1221
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.SEMI:
+            if _la == JavaParser.SEMI:
                 self.state = 1220
                 self.match(JavaParser.SEMI)
-
 
             self.state = 1223
             self.match(JavaParser.RPAREN)
@@ -8578,22 +8377,20 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ResourcesContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def resource(self, i:int=None):
+        def resource(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.ResourceContext)
             else:
-                return self.getTypedRuleContext(JavaParser.ResourceContext,i)
+                return self.getTypedRuleContext(JavaParser.ResourceContext, i)
 
-
-        def SEMI(self, i:int=None):
+        def SEMI(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.SEMI)
             else:
@@ -8602,16 +8399,13 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_resources
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterResources" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterResources"):
                 listener.enterResources(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitResources" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitResources"):
                 listener.exitResources(self)
-
-
-
 
     def resources(self):
 
@@ -8623,16 +8417,16 @@ class JavaParser ( Parser ):
             self.resource()
             self.state = 1230
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,142,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 142, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 1226
                     self.match(JavaParser.SEMI)
                     self.state = 1227
-                    self.resource() 
+                    self.resource()
                 self.state = 1232
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,142,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 142, self._ctx)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -8642,11 +8436,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ResourceContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -8654,48 +8447,39 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.ASSIGN, 0)
 
         def expression(self):
-            return self.getTypedRuleContext(JavaParser.ExpressionContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ExpressionContext, 0)
 
         def classOrInterfaceType(self):
-            return self.getTypedRuleContext(JavaParser.ClassOrInterfaceTypeContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ClassOrInterfaceTypeContext, 0)
 
         def variableDeclaratorId(self):
-            return self.getTypedRuleContext(JavaParser.VariableDeclaratorIdContext,0)
-
+            return self.getTypedRuleContext(JavaParser.VariableDeclaratorIdContext, 0)
 
         def VAR(self):
             return self.getToken(JavaParser.VAR, 0)
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
-
-        def variableModifier(self, i:int=None):
+        def variableModifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.VariableModifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.VariableModifierContext,i)
-
+                return self.getTypedRuleContext(JavaParser.VariableModifierContext, i)
 
         def qualifiedName(self):
-            return self.getTypedRuleContext(JavaParser.QualifiedNameContext,0)
-
+            return self.getTypedRuleContext(JavaParser.QualifiedNameContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_resource
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterResource" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterResource"):
                 listener.enterResource(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitResource" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitResource"):
                 listener.exitResource(self)
-
-
-
 
     def resource(self):
 
@@ -8704,23 +8488,23 @@ class JavaParser ( Parser ):
         try:
             self.state = 1250
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,145,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 145, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 1236
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,143,self._ctx)
-                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                    if _alt==1:
+                _alt = self._interp.adaptivePredict(self._input, 143, self._ctx)
+                while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                    if _alt == 1:
                         self.state = 1233
-                        self.variableModifier() 
+                        self.variableModifier()
                     self.state = 1238
                     self._errHandler.sync(self)
-                    _alt = self._interp.adaptivePredict(self._input,143,self._ctx)
+                    _alt = self._interp.adaptivePredict(self._input, 143, self._ctx)
 
                 self.state = 1244
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,144,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input, 144, self._ctx)
                 if la_ == 1:
                     self.state = 1239
                     self.classOrInterfaceType()
@@ -8734,7 +8518,6 @@ class JavaParser ( Parser ):
                     self.state = 1243
                     self.identifier()
                     pass
-
 
                 self.state = 1246
                 self.match(JavaParser.ASSIGN)
@@ -8757,71 +8540,107 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class SwitchBlockStatementGroupContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def switchLabel(self, i:int=None):
+        def switchLabel(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.SwitchLabelContext)
             else:
-                return self.getTypedRuleContext(JavaParser.SwitchLabelContext,i)
+                return self.getTypedRuleContext(JavaParser.SwitchLabelContext, i)
 
-
-        def blockStatement(self, i:int=None):
+        def blockStatement(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.BlockStatementContext)
             else:
-                return self.getTypedRuleContext(JavaParser.BlockStatementContext,i)
-
+                return self.getTypedRuleContext(JavaParser.BlockStatementContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_switchBlockStatementGroup
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSwitchBlockStatementGroup" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterSwitchBlockStatementGroup"):
                 listener.enterSwitchBlockStatementGroup(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSwitchBlockStatementGroup" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitSwitchBlockStatementGroup"):
                 listener.exitSwitchBlockStatementGroup(self)
-
-
-
 
     def switchBlockStatementGroup(self):
 
         localctx = JavaParser.SwitchBlockStatementGroupContext(self, self._ctx, self.state)
         self.enterRule(localctx, 182, self.RULE_switchBlockStatementGroup)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 1253 
+            self.state = 1253
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
                 self.state = 1252
                 self.switchLabel()
-                self.state = 1255 
+                self.state = 1255
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not (_la==JavaParser.CASE or _la==JavaParser.DEFAULT):
+                if not (_la == JavaParser.CASE or _la == JavaParser.DEFAULT):
                     break
 
-            self.state = 1258 
+            self.state = 1258
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
                 self.state = 1257
                 self.blockStatement()
-                self.state = 1260 
+                self.state = 1260
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not (((((_la - 1)) & ~0x3f) == 0 and ((1 << (_la - 1)) & ((1 << (JavaParser.ABSTRACT - 1)) | (1 << (JavaParser.ASSERT - 1)) | (1 << (JavaParser.BOOLEAN - 1)) | (1 << (JavaParser.BREAK - 1)) | (1 << (JavaParser.BYTE - 1)) | (1 << (JavaParser.CHAR - 1)) | (1 << (JavaParser.CLASS - 1)) | (1 << (JavaParser.CONTINUE - 1)) | (1 << (JavaParser.DO - 1)) | (1 << (JavaParser.DOUBLE - 1)) | (1 << (JavaParser.FINAL - 1)) | (1 << (JavaParser.FLOAT - 1)) | (1 << (JavaParser.FOR - 1)) | (1 << (JavaParser.IF - 1)) | (1 << (JavaParser.INT - 1)) | (1 << (JavaParser.INTERFACE - 1)) | (1 << (JavaParser.LONG - 1)) | (1 << (JavaParser.NEW - 1)) | (1 << (JavaParser.PRIVATE - 1)) | (1 << (JavaParser.PROTECTED - 1)) | (1 << (JavaParser.PUBLIC - 1)) | (1 << (JavaParser.RETURN - 1)) | (1 << (JavaParser.SHORT - 1)) | (1 << (JavaParser.STATIC - 1)) | (1 << (JavaParser.STRICTFP - 1)) | (1 << (JavaParser.SUPER - 1)) | (1 << (JavaParser.SWITCH - 1)) | (1 << (JavaParser.SYNCHRONIZED - 1)) | (1 << (JavaParser.THIS - 1)) | (1 << (JavaParser.THROW - 1)) | (1 << (JavaParser.TRY - 1)) | (1 << (JavaParser.VOID - 1)) | (1 << (JavaParser.WHILE - 1)) | (1 << (JavaParser.MODULE - 1)) | (1 << (JavaParser.OPEN - 1)) | (1 << (JavaParser.REQUIRES - 1)) | (1 << (JavaParser.EXPORTS - 1)) | (1 << (JavaParser.OPENS - 1)) | (1 << (JavaParser.TO - 1)) | (1 << (JavaParser.USES - 1)) | (1 << (JavaParser.PROVIDES - 1)) | (1 << (JavaParser.WITH - 1)) | (1 << (JavaParser.TRANSITIVE - 1)) | (1 << (JavaParser.VAR - 1)) | (1 << (JavaParser.YIELD - 1)) | (1 << (JavaParser.RECORD - 1)) | (1 << (JavaParser.SEALED - 1)))) != 0) or ((((_la - 65)) & ~0x3f) == 0 and ((1 << (_la - 65)) & ((1 << (JavaParser.PERMITS - 65)) | (1 << (JavaParser.NON_SEALED - 65)) | (1 << (JavaParser.DECIMAL_LITERAL - 65)) | (1 << (JavaParser.HEX_LITERAL - 65)) | (1 << (JavaParser.OCT_LITERAL - 65)) | (1 << (JavaParser.BINARY_LITERAL - 65)) | (1 << (JavaParser.FLOAT_LITERAL - 65)) | (1 << (JavaParser.HEX_FLOAT_LITERAL - 65)) | (1 << (JavaParser.BOOL_LITERAL - 65)) | (1 << (JavaParser.CHAR_LITERAL - 65)) | (1 << (JavaParser.STRING_LITERAL - 65)) | (1 << (JavaParser.TEXT_BLOCK - 65)) | (1 << (JavaParser.NULL_LITERAL - 65)) | (1 << (JavaParser.LPAREN - 65)) | (1 << (JavaParser.LBRACE - 65)) | (1 << (JavaParser.SEMI - 65)) | (1 << (JavaParser.LT - 65)) | (1 << (JavaParser.BANG - 65)) | (1 << (JavaParser.TILDE - 65)) | (1 << (JavaParser.INC - 65)) | (1 << (JavaParser.DEC - 65)) | (1 << (JavaParser.ADD - 65)) | (1 << (JavaParser.SUB - 65)) | (1 << (JavaParser.AT - 65)) | (1 << (JavaParser.IDENTIFIER - 65)))) != 0)):
+                if not (((((_la - 1)) & ~0x3f) == 0 and ((1 << (_la - 1)) & (
+                        (1 << (JavaParser.ABSTRACT - 1)) | (1 << (JavaParser.ASSERT - 1)) | (
+                        1 << (JavaParser.BOOLEAN - 1)) | (1 << (JavaParser.BREAK - 1)) | (
+                                1 << (JavaParser.BYTE - 1)) | (1 << (JavaParser.CHAR - 1)) | (
+                                1 << (JavaParser.CLASS - 1)) | (1 << (JavaParser.CONTINUE - 1)) | (
+                                1 << (JavaParser.DO - 1)) | (1 << (JavaParser.DOUBLE - 1)) | (
+                                1 << (JavaParser.FINAL - 1)) | (1 << (JavaParser.FLOAT - 1)) | (
+                                1 << (JavaParser.FOR - 1)) | (1 << (JavaParser.IF - 1)) | (
+                                1 << (JavaParser.INT - 1)) | (1 << (JavaParser.INTERFACE - 1)) | (
+                                1 << (JavaParser.LONG - 1)) | (1 << (JavaParser.NEW - 1)) | (
+                                1 << (JavaParser.PRIVATE - 1)) | (1 << (JavaParser.PROTECTED - 1)) | (
+                                1 << (JavaParser.PUBLIC - 1)) | (1 << (JavaParser.RETURN - 1)) | (
+                                1 << (JavaParser.SHORT - 1)) | (1 << (JavaParser.STATIC - 1)) | (
+                                1 << (JavaParser.STRICTFP - 1)) | (1 << (JavaParser.SUPER - 1)) | (
+                                1 << (JavaParser.SWITCH - 1)) | (1 << (JavaParser.SYNCHRONIZED - 1)) | (
+                                1 << (JavaParser.THIS - 1)) | (1 << (JavaParser.THROW - 1)) | (
+                                1 << (JavaParser.TRY - 1)) | (1 << (JavaParser.VOID - 1)) | (
+                                1 << (JavaParser.WHILE - 1)) | (1 << (JavaParser.MODULE - 1)) | (
+                                1 << (JavaParser.OPEN - 1)) | (1 << (JavaParser.REQUIRES - 1)) | (
+                                1 << (JavaParser.EXPORTS - 1)) | (1 << (JavaParser.OPENS - 1)) | (
+                                1 << (JavaParser.TO - 1)) | (1 << (JavaParser.USES - 1)) | (
+                                1 << (JavaParser.PROVIDES - 1)) | (1 << (JavaParser.WITH - 1)) | (
+                                1 << (JavaParser.TRANSITIVE - 1)) | (1 << (JavaParser.VAR - 1)) | (
+                                1 << (JavaParser.YIELD - 1)) | (1 << (JavaParser.RECORD - 1)) | (
+                                1 << (JavaParser.SEALED - 1)))) != 0) or ((((_la - 65)) & ~0x3f) == 0 and (
+                        (1 << (_la - 65)) & ((1 << (JavaParser.PERMITS - 65)) | (1 << (JavaParser.NON_SEALED - 65)) | (
+                        1 << (JavaParser.DECIMAL_LITERAL - 65)) | (1 << (JavaParser.HEX_LITERAL - 65)) | (
+                                                     1 << (JavaParser.OCT_LITERAL - 65)) | (
+                                                     1 << (JavaParser.BINARY_LITERAL - 65)) | (
+                                                     1 << (JavaParser.FLOAT_LITERAL - 65)) | (
+                                                     1 << (JavaParser.HEX_FLOAT_LITERAL - 65)) | (
+                                                     1 << (JavaParser.BOOL_LITERAL - 65)) | (
+                                                     1 << (JavaParser.CHAR_LITERAL - 65)) | (
+                                                     1 << (JavaParser.STRING_LITERAL - 65)) | (
+                                                     1 << (JavaParser.TEXT_BLOCK - 65)) | (
+                                                     1 << (JavaParser.NULL_LITERAL - 65)) | (
+                                                     1 << (JavaParser.LPAREN - 65)) | (
+                                                     1 << (JavaParser.LBRACE - 65)) | (1 << (JavaParser.SEMI - 65)) | (
+                                                     1 << (JavaParser.LT - 65)) | (1 << (JavaParser.BANG - 65)) | (
+                                                     1 << (JavaParser.TILDE - 65)) | (1 << (JavaParser.INC - 65)) | (
+                                                     1 << (JavaParser.DEC - 65)) | (1 << (JavaParser.ADD - 65)) | (
+                                                     1 << (JavaParser.SUB - 65)) | (1 << (JavaParser.AT - 65)) | (
+                                                     1 << (JavaParser.IDENTIFIER - 65)))) != 0)):
                     break
 
         except RecognitionException as re:
@@ -8832,16 +8651,15 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class SwitchLabelContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
-            self.constantExpression = None # ExpressionContext
-            self.enumConstantName = None # Token
-            self.varName = None # IdentifierContext
+            self.constantExpression = None  # ExpressionContext
+            self.enumConstantName = None  # Token
+            self.varName = None  # IdentifierContext
 
         def CASE(self):
             return self.getToken(JavaParser.CASE, 0)
@@ -8850,19 +8668,16 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.COLON, 0)
 
         def typeType(self):
-            return self.getTypedRuleContext(JavaParser.TypeTypeContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeTypeContext, 0)
 
         def expression(self):
-            return self.getTypedRuleContext(JavaParser.ExpressionContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ExpressionContext, 0)
 
         def IDENTIFIER(self):
             return self.getToken(JavaParser.IDENTIFIER, 0)
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def DEFAULT(self):
             return self.getToken(JavaParser.DEFAULT, 0)
@@ -8870,16 +8685,13 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_switchLabel
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSwitchLabel" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterSwitchLabel"):
                 listener.enterSwitchLabel(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSwitchLabel" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitSwitchLabel"):
                 listener.exitSwitchLabel(self)
-
-
-
 
     def switchLabel(self):
 
@@ -8895,7 +8707,7 @@ class JavaParser ( Parser ):
                 self.match(JavaParser.CASE)
                 self.state = 1268
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,148,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input, 148, self._ctx)
                 if la_ == 1:
                     self.state = 1263
                     localctx.constantExpression = self.expression(0)
@@ -8912,7 +8724,6 @@ class JavaParser ( Parser ):
                     self.state = 1266
                     localctx.varName = self.identifier()
                     pass
-
 
                 self.state = 1270
                 self.match(JavaParser.COLON)
@@ -8935,60 +8746,52 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ForControlContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
-            self.forUpdate = None # ExpressionListContext
+            self.forUpdate = None  # ExpressionListContext
 
         def enhancedForControl(self):
-            return self.getTypedRuleContext(JavaParser.EnhancedForControlContext,0)
+            return self.getTypedRuleContext(JavaParser.EnhancedForControlContext, 0)
 
-
-        def SEMI(self, i:int=None):
+        def SEMI(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.SEMI)
             else:
                 return self.getToken(JavaParser.SEMI, i)
 
         def forInit(self):
-            return self.getTypedRuleContext(JavaParser.ForInitContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ForInitContext, 0)
 
         def expression(self):
-            return self.getTypedRuleContext(JavaParser.ExpressionContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ExpressionContext, 0)
 
         def expressionList(self):
-            return self.getTypedRuleContext(JavaParser.ExpressionListContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ExpressionListContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_forControl
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterForControl" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterForControl"):
                 listener.enterForControl(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitForControl" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitForControl"):
                 listener.exitForControl(self)
-
-
-
 
     def forControl(self):
 
         localctx = JavaParser.ForControlContext(self, self._ctx, self.state)
         self.enterRule(localctx, 186, self.RULE_forControl)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.state = 1287
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,153,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 153, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 1275
@@ -9000,30 +8803,105 @@ class JavaParser ( Parser ):
                 self.state = 1277
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if ((((_la - 3)) & ~0x3f) == 0 and ((1 << (_la - 3)) & ((1 << (JavaParser.BOOLEAN - 3)) | (1 << (JavaParser.BYTE - 3)) | (1 << (JavaParser.CHAR - 3)) | (1 << (JavaParser.DOUBLE - 3)) | (1 << (JavaParser.FINAL - 3)) | (1 << (JavaParser.FLOAT - 3)) | (1 << (JavaParser.INT - 3)) | (1 << (JavaParser.LONG - 3)) | (1 << (JavaParser.NEW - 3)) | (1 << (JavaParser.SHORT - 3)) | (1 << (JavaParser.SUPER - 3)) | (1 << (JavaParser.SWITCH - 3)) | (1 << (JavaParser.THIS - 3)) | (1 << (JavaParser.VOID - 3)) | (1 << (JavaParser.MODULE - 3)) | (1 << (JavaParser.OPEN - 3)) | (1 << (JavaParser.REQUIRES - 3)) | (1 << (JavaParser.EXPORTS - 3)) | (1 << (JavaParser.OPENS - 3)) | (1 << (JavaParser.TO - 3)) | (1 << (JavaParser.USES - 3)) | (1 << (JavaParser.PROVIDES - 3)) | (1 << (JavaParser.WITH - 3)) | (1 << (JavaParser.TRANSITIVE - 3)) | (1 << (JavaParser.VAR - 3)) | (1 << (JavaParser.YIELD - 3)) | (1 << (JavaParser.RECORD - 3)) | (1 << (JavaParser.SEALED - 3)) | (1 << (JavaParser.PERMITS - 3)))) != 0) or ((((_la - 67)) & ~0x3f) == 0 and ((1 << (_la - 67)) & ((1 << (JavaParser.DECIMAL_LITERAL - 67)) | (1 << (JavaParser.HEX_LITERAL - 67)) | (1 << (JavaParser.OCT_LITERAL - 67)) | (1 << (JavaParser.BINARY_LITERAL - 67)) | (1 << (JavaParser.FLOAT_LITERAL - 67)) | (1 << (JavaParser.HEX_FLOAT_LITERAL - 67)) | (1 << (JavaParser.BOOL_LITERAL - 67)) | (1 << (JavaParser.CHAR_LITERAL - 67)) | (1 << (JavaParser.STRING_LITERAL - 67)) | (1 << (JavaParser.TEXT_BLOCK - 67)) | (1 << (JavaParser.NULL_LITERAL - 67)) | (1 << (JavaParser.LPAREN - 67)) | (1 << (JavaParser.LT - 67)) | (1 << (JavaParser.BANG - 67)) | (1 << (JavaParser.TILDE - 67)) | (1 << (JavaParser.INC - 67)) | (1 << (JavaParser.DEC - 67)) | (1 << (JavaParser.ADD - 67)) | (1 << (JavaParser.SUB - 67)) | (1 << (JavaParser.AT - 67)) | (1 << (JavaParser.IDENTIFIER - 67)))) != 0):
+                if ((((_la - 3)) & ~0x3f) == 0 and ((1 << (_la - 3)) & (
+                        (1 << (JavaParser.BOOLEAN - 3)) | (1 << (JavaParser.BYTE - 3)) | (
+                        1 << (JavaParser.CHAR - 3)) | (1 << (JavaParser.DOUBLE - 3)) | (1 << (JavaParser.FINAL - 3)) | (
+                                1 << (JavaParser.FLOAT - 3)) | (1 << (JavaParser.INT - 3)) | (
+                                1 << (JavaParser.LONG - 3)) | (1 << (JavaParser.NEW - 3)) | (
+                                1 << (JavaParser.SHORT - 3)) | (1 << (JavaParser.SUPER - 3)) | (
+                                1 << (JavaParser.SWITCH - 3)) | (1 << (JavaParser.THIS - 3)) | (
+                                1 << (JavaParser.VOID - 3)) | (1 << (JavaParser.MODULE - 3)) | (
+                                1 << (JavaParser.OPEN - 3)) | (1 << (JavaParser.REQUIRES - 3)) | (
+                                1 << (JavaParser.EXPORTS - 3)) | (1 << (JavaParser.OPENS - 3)) | (
+                                1 << (JavaParser.TO - 3)) | (1 << (JavaParser.USES - 3)) | (
+                                1 << (JavaParser.PROVIDES - 3)) | (1 << (JavaParser.WITH - 3)) | (
+                                1 << (JavaParser.TRANSITIVE - 3)) | (1 << (JavaParser.VAR - 3)) | (
+                                1 << (JavaParser.YIELD - 3)) | (1 << (JavaParser.RECORD - 3)) | (
+                                1 << (JavaParser.SEALED - 3)) | (1 << (JavaParser.PERMITS - 3)))) != 0) or (
+                        (((_la - 67)) & ~0x3f) == 0 and ((1 << (_la - 67)) & (
+                        (1 << (JavaParser.DECIMAL_LITERAL - 67)) | (1 << (JavaParser.HEX_LITERAL - 67)) | (
+                        1 << (JavaParser.OCT_LITERAL - 67)) | (1 << (JavaParser.BINARY_LITERAL - 67)) | (
+                                1 << (JavaParser.FLOAT_LITERAL - 67)) | (1 << (JavaParser.HEX_FLOAT_LITERAL - 67)) | (
+                                1 << (JavaParser.BOOL_LITERAL - 67)) | (1 << (JavaParser.CHAR_LITERAL - 67)) | (
+                                1 << (JavaParser.STRING_LITERAL - 67)) | (1 << (JavaParser.TEXT_BLOCK - 67)) | (
+                                1 << (JavaParser.NULL_LITERAL - 67)) | (1 << (JavaParser.LPAREN - 67)) | (
+                                1 << (JavaParser.LT - 67)) | (1 << (JavaParser.BANG - 67)) | (
+                                1 << (JavaParser.TILDE - 67)) | (1 << (JavaParser.INC - 67)) | (
+                                1 << (JavaParser.DEC - 67)) | (1 << (JavaParser.ADD - 67)) | (
+                                1 << (JavaParser.SUB - 67)) | (1 << (JavaParser.AT - 67)) | (
+                                1 << (JavaParser.IDENTIFIER - 67)))) != 0):
                     self.state = 1276
                     self.forInit()
-
 
                 self.state = 1279
                 self.match(JavaParser.SEMI)
                 self.state = 1281
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if ((((_la - 3)) & ~0x3f) == 0 and ((1 << (_la - 3)) & ((1 << (JavaParser.BOOLEAN - 3)) | (1 << (JavaParser.BYTE - 3)) | (1 << (JavaParser.CHAR - 3)) | (1 << (JavaParser.DOUBLE - 3)) | (1 << (JavaParser.FLOAT - 3)) | (1 << (JavaParser.INT - 3)) | (1 << (JavaParser.LONG - 3)) | (1 << (JavaParser.NEW - 3)) | (1 << (JavaParser.SHORT - 3)) | (1 << (JavaParser.SUPER - 3)) | (1 << (JavaParser.SWITCH - 3)) | (1 << (JavaParser.THIS - 3)) | (1 << (JavaParser.VOID - 3)) | (1 << (JavaParser.MODULE - 3)) | (1 << (JavaParser.OPEN - 3)) | (1 << (JavaParser.REQUIRES - 3)) | (1 << (JavaParser.EXPORTS - 3)) | (1 << (JavaParser.OPENS - 3)) | (1 << (JavaParser.TO - 3)) | (1 << (JavaParser.USES - 3)) | (1 << (JavaParser.PROVIDES - 3)) | (1 << (JavaParser.WITH - 3)) | (1 << (JavaParser.TRANSITIVE - 3)) | (1 << (JavaParser.VAR - 3)) | (1 << (JavaParser.YIELD - 3)) | (1 << (JavaParser.RECORD - 3)) | (1 << (JavaParser.SEALED - 3)) | (1 << (JavaParser.PERMITS - 3)))) != 0) or ((((_la - 67)) & ~0x3f) == 0 and ((1 << (_la - 67)) & ((1 << (JavaParser.DECIMAL_LITERAL - 67)) | (1 << (JavaParser.HEX_LITERAL - 67)) | (1 << (JavaParser.OCT_LITERAL - 67)) | (1 << (JavaParser.BINARY_LITERAL - 67)) | (1 << (JavaParser.FLOAT_LITERAL - 67)) | (1 << (JavaParser.HEX_FLOAT_LITERAL - 67)) | (1 << (JavaParser.BOOL_LITERAL - 67)) | (1 << (JavaParser.CHAR_LITERAL - 67)) | (1 << (JavaParser.STRING_LITERAL - 67)) | (1 << (JavaParser.TEXT_BLOCK - 67)) | (1 << (JavaParser.NULL_LITERAL - 67)) | (1 << (JavaParser.LPAREN - 67)) | (1 << (JavaParser.LT - 67)) | (1 << (JavaParser.BANG - 67)) | (1 << (JavaParser.TILDE - 67)) | (1 << (JavaParser.INC - 67)) | (1 << (JavaParser.DEC - 67)) | (1 << (JavaParser.ADD - 67)) | (1 << (JavaParser.SUB - 67)) | (1 << (JavaParser.AT - 67)) | (1 << (JavaParser.IDENTIFIER - 67)))) != 0):
+                if ((((_la - 3)) & ~0x3f) == 0 and ((1 << (_la - 3)) & (
+                        (1 << (JavaParser.BOOLEAN - 3)) | (1 << (JavaParser.BYTE - 3)) | (
+                        1 << (JavaParser.CHAR - 3)) | (1 << (JavaParser.DOUBLE - 3)) | (1 << (JavaParser.FLOAT - 3)) | (
+                                1 << (JavaParser.INT - 3)) | (1 << (JavaParser.LONG - 3)) | (
+                                1 << (JavaParser.NEW - 3)) | (1 << (JavaParser.SHORT - 3)) | (
+                                1 << (JavaParser.SUPER - 3)) | (1 << (JavaParser.SWITCH - 3)) | (
+                                1 << (JavaParser.THIS - 3)) | (1 << (JavaParser.VOID - 3)) | (
+                                1 << (JavaParser.MODULE - 3)) | (1 << (JavaParser.OPEN - 3)) | (
+                                1 << (JavaParser.REQUIRES - 3)) | (1 << (JavaParser.EXPORTS - 3)) | (
+                                1 << (JavaParser.OPENS - 3)) | (1 << (JavaParser.TO - 3)) | (
+                                1 << (JavaParser.USES - 3)) | (1 << (JavaParser.PROVIDES - 3)) | (
+                                1 << (JavaParser.WITH - 3)) | (1 << (JavaParser.TRANSITIVE - 3)) | (
+                                1 << (JavaParser.VAR - 3)) | (1 << (JavaParser.YIELD - 3)) | (
+                                1 << (JavaParser.RECORD - 3)) | (1 << (JavaParser.SEALED - 3)) | (
+                                1 << (JavaParser.PERMITS - 3)))) != 0) or ((((_la - 67)) & ~0x3f) == 0 and (
+                        (1 << (_la - 67)) & (
+                        (1 << (JavaParser.DECIMAL_LITERAL - 67)) | (1 << (JavaParser.HEX_LITERAL - 67)) | (
+                        1 << (JavaParser.OCT_LITERAL - 67)) | (1 << (JavaParser.BINARY_LITERAL - 67)) | (
+                                1 << (JavaParser.FLOAT_LITERAL - 67)) | (1 << (JavaParser.HEX_FLOAT_LITERAL - 67)) | (
+                                1 << (JavaParser.BOOL_LITERAL - 67)) | (1 << (JavaParser.CHAR_LITERAL - 67)) | (
+                                1 << (JavaParser.STRING_LITERAL - 67)) | (1 << (JavaParser.TEXT_BLOCK - 67)) | (
+                                1 << (JavaParser.NULL_LITERAL - 67)) | (1 << (JavaParser.LPAREN - 67)) | (
+                                1 << (JavaParser.LT - 67)) | (1 << (JavaParser.BANG - 67)) | (
+                                1 << (JavaParser.TILDE - 67)) | (1 << (JavaParser.INC - 67)) | (
+                                1 << (JavaParser.DEC - 67)) | (1 << (JavaParser.ADD - 67)) | (
+                                1 << (JavaParser.SUB - 67)) | (1 << (JavaParser.AT - 67)) | (
+                                1 << (JavaParser.IDENTIFIER - 67)))) != 0):
                     self.state = 1280
                     self.expression(0)
-
 
                 self.state = 1283
                 self.match(JavaParser.SEMI)
                 self.state = 1285
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if ((((_la - 3)) & ~0x3f) == 0 and ((1 << (_la - 3)) & ((1 << (JavaParser.BOOLEAN - 3)) | (1 << (JavaParser.BYTE - 3)) | (1 << (JavaParser.CHAR - 3)) | (1 << (JavaParser.DOUBLE - 3)) | (1 << (JavaParser.FLOAT - 3)) | (1 << (JavaParser.INT - 3)) | (1 << (JavaParser.LONG - 3)) | (1 << (JavaParser.NEW - 3)) | (1 << (JavaParser.SHORT - 3)) | (1 << (JavaParser.SUPER - 3)) | (1 << (JavaParser.SWITCH - 3)) | (1 << (JavaParser.THIS - 3)) | (1 << (JavaParser.VOID - 3)) | (1 << (JavaParser.MODULE - 3)) | (1 << (JavaParser.OPEN - 3)) | (1 << (JavaParser.REQUIRES - 3)) | (1 << (JavaParser.EXPORTS - 3)) | (1 << (JavaParser.OPENS - 3)) | (1 << (JavaParser.TO - 3)) | (1 << (JavaParser.USES - 3)) | (1 << (JavaParser.PROVIDES - 3)) | (1 << (JavaParser.WITH - 3)) | (1 << (JavaParser.TRANSITIVE - 3)) | (1 << (JavaParser.VAR - 3)) | (1 << (JavaParser.YIELD - 3)) | (1 << (JavaParser.RECORD - 3)) | (1 << (JavaParser.SEALED - 3)) | (1 << (JavaParser.PERMITS - 3)))) != 0) or ((((_la - 67)) & ~0x3f) == 0 and ((1 << (_la - 67)) & ((1 << (JavaParser.DECIMAL_LITERAL - 67)) | (1 << (JavaParser.HEX_LITERAL - 67)) | (1 << (JavaParser.OCT_LITERAL - 67)) | (1 << (JavaParser.BINARY_LITERAL - 67)) | (1 << (JavaParser.FLOAT_LITERAL - 67)) | (1 << (JavaParser.HEX_FLOAT_LITERAL - 67)) | (1 << (JavaParser.BOOL_LITERAL - 67)) | (1 << (JavaParser.CHAR_LITERAL - 67)) | (1 << (JavaParser.STRING_LITERAL - 67)) | (1 << (JavaParser.TEXT_BLOCK - 67)) | (1 << (JavaParser.NULL_LITERAL - 67)) | (1 << (JavaParser.LPAREN - 67)) | (1 << (JavaParser.LT - 67)) | (1 << (JavaParser.BANG - 67)) | (1 << (JavaParser.TILDE - 67)) | (1 << (JavaParser.INC - 67)) | (1 << (JavaParser.DEC - 67)) | (1 << (JavaParser.ADD - 67)) | (1 << (JavaParser.SUB - 67)) | (1 << (JavaParser.AT - 67)) | (1 << (JavaParser.IDENTIFIER - 67)))) != 0):
+                if ((((_la - 3)) & ~0x3f) == 0 and ((1 << (_la - 3)) & (
+                        (1 << (JavaParser.BOOLEAN - 3)) | (1 << (JavaParser.BYTE - 3)) | (
+                        1 << (JavaParser.CHAR - 3)) | (1 << (JavaParser.DOUBLE - 3)) | (1 << (JavaParser.FLOAT - 3)) | (
+                                1 << (JavaParser.INT - 3)) | (1 << (JavaParser.LONG - 3)) | (
+                                1 << (JavaParser.NEW - 3)) | (1 << (JavaParser.SHORT - 3)) | (
+                                1 << (JavaParser.SUPER - 3)) | (1 << (JavaParser.SWITCH - 3)) | (
+                                1 << (JavaParser.THIS - 3)) | (1 << (JavaParser.VOID - 3)) | (
+                                1 << (JavaParser.MODULE - 3)) | (1 << (JavaParser.OPEN - 3)) | (
+                                1 << (JavaParser.REQUIRES - 3)) | (1 << (JavaParser.EXPORTS - 3)) | (
+                                1 << (JavaParser.OPENS - 3)) | (1 << (JavaParser.TO - 3)) | (
+                                1 << (JavaParser.USES - 3)) | (1 << (JavaParser.PROVIDES - 3)) | (
+                                1 << (JavaParser.WITH - 3)) | (1 << (JavaParser.TRANSITIVE - 3)) | (
+                                1 << (JavaParser.VAR - 3)) | (1 << (JavaParser.YIELD - 3)) | (
+                                1 << (JavaParser.RECORD - 3)) | (1 << (JavaParser.SEALED - 3)) | (
+                                1 << (JavaParser.PERMITS - 3)))) != 0) or ((((_la - 67)) & ~0x3f) == 0 and (
+                        (1 << (_la - 67)) & (
+                        (1 << (JavaParser.DECIMAL_LITERAL - 67)) | (1 << (JavaParser.HEX_LITERAL - 67)) | (
+                        1 << (JavaParser.OCT_LITERAL - 67)) | (1 << (JavaParser.BINARY_LITERAL - 67)) | (
+                                1 << (JavaParser.FLOAT_LITERAL - 67)) | (1 << (JavaParser.HEX_FLOAT_LITERAL - 67)) | (
+                                1 << (JavaParser.BOOL_LITERAL - 67)) | (1 << (JavaParser.CHAR_LITERAL - 67)) | (
+                                1 << (JavaParser.STRING_LITERAL - 67)) | (1 << (JavaParser.TEXT_BLOCK - 67)) | (
+                                1 << (JavaParser.NULL_LITERAL - 67)) | (1 << (JavaParser.LPAREN - 67)) | (
+                                1 << (JavaParser.LT - 67)) | (1 << (JavaParser.BANG - 67)) | (
+                                1 << (JavaParser.TILDE - 67)) | (1 << (JavaParser.INC - 67)) | (
+                                1 << (JavaParser.DEC - 67)) | (1 << (JavaParser.ADD - 67)) | (
+                                1 << (JavaParser.SUB - 67)) | (1 << (JavaParser.AT - 67)) | (
+                                1 << (JavaParser.IDENTIFIER - 67)))) != 0):
                     self.state = 1284
                     localctx.forUpdate = self.expressionList()
-
 
                 pass
 
@@ -9036,35 +8914,29 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ForInitContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def localVariableDeclaration(self):
-            return self.getTypedRuleContext(JavaParser.LocalVariableDeclarationContext,0)
-
+            return self.getTypedRuleContext(JavaParser.LocalVariableDeclarationContext, 0)
 
         def expressionList(self):
-            return self.getTypedRuleContext(JavaParser.ExpressionListContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ExpressionListContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_forInit
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterForInit" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterForInit"):
                 listener.enterForInit(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitForInit" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitForInit"):
                 listener.exitForInit(self)
-
-
-
 
     def forInit(self):
 
@@ -9073,7 +8945,7 @@ class JavaParser ( Parser ):
         try:
             self.state = 1291
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,154,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 154, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 1289
@@ -9095,52 +8967,44 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class EnhancedForControlContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def variableDeclaratorId(self):
-            return self.getTypedRuleContext(JavaParser.VariableDeclaratorIdContext,0)
-
+            return self.getTypedRuleContext(JavaParser.VariableDeclaratorIdContext, 0)
 
         def COLON(self):
             return self.getToken(JavaParser.COLON, 0)
 
         def expression(self):
-            return self.getTypedRuleContext(JavaParser.ExpressionContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ExpressionContext, 0)
 
         def typeType(self):
-            return self.getTypedRuleContext(JavaParser.TypeTypeContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeTypeContext, 0)
 
         def VAR(self):
             return self.getToken(JavaParser.VAR, 0)
 
-        def variableModifier(self, i:int=None):
+        def variableModifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.VariableModifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.VariableModifierContext,i)
-
+                return self.getTypedRuleContext(JavaParser.VariableModifierContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_enhancedForControl
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterEnhancedForControl" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterEnhancedForControl"):
                 listener.enterEnhancedForControl(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitEnhancedForControl" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitEnhancedForControl"):
                 listener.exitEnhancedForControl(self)
-
-
-
 
     def enhancedForControl(self):
 
@@ -9150,18 +9014,18 @@ class JavaParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 1296
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,155,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 155, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 1293
-                    self.variableModifier() 
+                    self.variableModifier()
                 self.state = 1298
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,155,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 155, self._ctx)
 
             self.state = 1301
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,156,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 156, self._ctx)
             if la_ == 1:
                 self.state = 1299
                 self.typeType()
@@ -9171,7 +9035,6 @@ class JavaParser ( Parser ):
                 self.state = 1300
                 self.match(JavaParser.VAR)
                 pass
-
 
             self.state = 1303
             self.variableDeclaratorId()
@@ -9187,11 +9050,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ParExpressionContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -9199,8 +9061,7 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.LPAREN, 0)
 
         def expression(self):
-            return self.getTypedRuleContext(JavaParser.ExpressionContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ExpressionContext, 0)
 
         def RPAREN(self):
             return self.getToken(JavaParser.RPAREN, 0)
@@ -9208,16 +9069,13 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_parExpression
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterParExpression" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterParExpression"):
                 listener.enterParExpression(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitParExpression" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitParExpression"):
                 listener.exitParExpression(self)
-
-
-
 
     def parExpression(self):
 
@@ -9239,22 +9097,20 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ExpressionListContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def expression(self, i:int=None):
+        def expression(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.ExpressionContext)
             else:
-                return self.getTypedRuleContext(JavaParser.ExpressionContext,i)
+                return self.getTypedRuleContext(JavaParser.ExpressionContext, i)
 
-
-        def COMMA(self, i:int=None):
+        def COMMA(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.COMMA)
             else:
@@ -9263,22 +9119,19 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_expressionList
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterExpressionList" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterExpressionList"):
                 listener.enterExpressionList(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitExpressionList" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitExpressionList"):
                 listener.exitExpressionList(self)
-
-
-
 
     def expressionList(self):
 
         localctx = JavaParser.ExpressionListContext(self, self._ctx, self.state)
         self.enterRule(localctx, 194, self.RULE_expressionList)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 1311
@@ -9286,7 +9139,7 @@ class JavaParser ( Parser ):
             self.state = 1316
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==JavaParser.COMMA:
+            while _la == JavaParser.COMMA:
                 self.state = 1312
                 self.match(JavaParser.COMMA)
                 self.state = 1313
@@ -9303,21 +9156,18 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class MethodCallContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def arguments(self):
-            return self.getTypedRuleContext(JavaParser.ArgumentsContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ArgumentsContext, 0)
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def THIS(self):
             return self.getToken(JavaParser.THIS, 0)
@@ -9328,16 +9178,13 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_methodCall
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterMethodCall" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterMethodCall"):
                 listener.enterMethodCall(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitMethodCall" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitMethodCall"):
                 listener.exitMethodCall(self)
-
-
-
 
     def methodCall(self):
 
@@ -9348,7 +9195,10 @@ class JavaParser ( Parser ):
             self.state = 1322
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS, JavaParser.IDENTIFIER]:
+            if token in [JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS,
+                         JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE,
+                         JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS,
+                         JavaParser.IDENTIFIER]:
                 self.state = 1319
                 self.identifier()
                 pass
@@ -9373,477 +9223,495 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ExpressionContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
-
 
         def getRuleIndex(self):
             return JavaParser.RULE_expression
 
-     
-        def copyFrom(self, ctx:ParserRuleContext):
+        def copyFrom(self, ctx: ParserRuleContext):
             super().copyFrom(ctx)
-
 
     class TernaryExpressionContext(ExpressionContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a JavaParser.ExpressionContext
+        def __init__(self, parser, ctx: ParserRuleContext):  # actually a JavaParser.ExpressionContext
             super().__init__(parser)
-            self.bop = None # Token
+            self.bop = None  # Token
             self.copyFrom(ctx)
 
-        def expression(self, i:int=None):
+        def expression(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.ExpressionContext)
             else:
-                return self.getTypedRuleContext(JavaParser.ExpressionContext,i)
+                return self.getTypedRuleContext(JavaParser.ExpressionContext, i)
 
         def COLON(self):
             return self.getToken(JavaParser.COLON, 0)
+
         def QUESTION(self):
             return self.getToken(JavaParser.QUESTION, 0)
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTernaryExpression" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterTernaryExpression"):
                 listener.enterTernaryExpression(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTernaryExpression" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitTernaryExpression"):
                 listener.exitTernaryExpression(self)
-
 
     class InstanceOfOperatorExpressionContext(ExpressionContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a JavaParser.ExpressionContext
+        def __init__(self, parser, ctx: ParserRuleContext):  # actually a JavaParser.ExpressionContext
             super().__init__(parser)
-            self.bop = None # Token
+            self.bop = None  # Token
             self.copyFrom(ctx)
 
         def expression(self):
-            return self.getTypedRuleContext(JavaParser.ExpressionContext,0)
+            return self.getTypedRuleContext(JavaParser.ExpressionContext, 0)
 
         def INSTANCEOF(self):
             return self.getToken(JavaParser.INSTANCEOF, 0)
+
         def typeType(self):
-            return self.getTypedRuleContext(JavaParser.TypeTypeContext,0)
+            return self.getTypedRuleContext(JavaParser.TypeTypeContext, 0)
 
         def pattern(self):
-            return self.getTypedRuleContext(JavaParser.PatternContext,0)
+            return self.getTypedRuleContext(JavaParser.PatternContext, 0)
 
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterInstanceOfOperatorExpression" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterInstanceOfOperatorExpression"):
                 listener.enterInstanceOfOperatorExpression(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitInstanceOfOperatorExpression" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitInstanceOfOperatorExpression"):
                 listener.exitInstanceOfOperatorExpression(self)
-
 
     class UnaryOperatorExpressionContext(ExpressionContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a JavaParser.ExpressionContext
+        def __init__(self, parser, ctx: ParserRuleContext):  # actually a JavaParser.ExpressionContext
             super().__init__(parser)
-            self.prefix = None # Token
+            self.prefix = None  # Token
             self.copyFrom(ctx)
 
         def expression(self):
-            return self.getTypedRuleContext(JavaParser.ExpressionContext,0)
+            return self.getTypedRuleContext(JavaParser.ExpressionContext, 0)
 
         def ADD(self):
             return self.getToken(JavaParser.ADD, 0)
+
         def SUB(self):
             return self.getToken(JavaParser.SUB, 0)
+
         def INC(self):
             return self.getToken(JavaParser.INC, 0)
+
         def DEC(self):
             return self.getToken(JavaParser.DEC, 0)
+
         def TILDE(self):
             return self.getToken(JavaParser.TILDE, 0)
+
         def BANG(self):
             return self.getToken(JavaParser.BANG, 0)
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterUnaryOperatorExpression" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterUnaryOperatorExpression"):
                 listener.enterUnaryOperatorExpression(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitUnaryOperatorExpression" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitUnaryOperatorExpression"):
                 listener.exitUnaryOperatorExpression(self)
-
 
     class PrimaryExpressionContext(ExpressionContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a JavaParser.ExpressionContext
+        def __init__(self, parser, ctx: ParserRuleContext):  # actually a JavaParser.ExpressionContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def primary(self):
-            return self.getTypedRuleContext(JavaParser.PrimaryContext,0)
+            return self.getTypedRuleContext(JavaParser.PrimaryContext, 0)
 
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterPrimaryExpression" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterPrimaryExpression"):
                 listener.enterPrimaryExpression(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitPrimaryExpression" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitPrimaryExpression"):
                 listener.exitPrimaryExpression(self)
-
 
     class ObjectCreationExpressionContext(ExpressionContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a JavaParser.ExpressionContext
+        def __init__(self, parser, ctx: ParserRuleContext):  # actually a JavaParser.ExpressionContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def NEW(self):
             return self.getToken(JavaParser.NEW, 0)
+
         def creator(self):
-            return self.getTypedRuleContext(JavaParser.CreatorContext,0)
+            return self.getTypedRuleContext(JavaParser.CreatorContext, 0)
 
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterObjectCreationExpression" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterObjectCreationExpression"):
                 listener.enterObjectCreationExpression(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitObjectCreationExpression" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitObjectCreationExpression"):
                 listener.exitObjectCreationExpression(self)
-
 
     class ExpressionLambdaContext(ExpressionContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a JavaParser.ExpressionContext
+        def __init__(self, parser, ctx: ParserRuleContext):  # actually a JavaParser.ExpressionContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def lambdaExpression(self):
-            return self.getTypedRuleContext(JavaParser.LambdaExpressionContext,0)
+            return self.getTypedRuleContext(JavaParser.LambdaExpressionContext, 0)
 
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterExpressionLambda" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterExpressionLambda"):
                 listener.enterExpressionLambda(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitExpressionLambda" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitExpressionLambda"):
                 listener.exitExpressionLambda(self)
-
 
     class PostIncrementDecrementOperatorExpressionContext(ExpressionContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a JavaParser.ExpressionContext
+        def __init__(self, parser, ctx: ParserRuleContext):  # actually a JavaParser.ExpressionContext
             super().__init__(parser)
-            self.postfix = None # Token
+            self.postfix = None  # Token
             self.copyFrom(ctx)
 
         def expression(self):
-            return self.getTypedRuleContext(JavaParser.ExpressionContext,0)
+            return self.getTypedRuleContext(JavaParser.ExpressionContext, 0)
 
         def INC(self):
             return self.getToken(JavaParser.INC, 0)
+
         def DEC(self):
             return self.getToken(JavaParser.DEC, 0)
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterPostIncrementDecrementOperatorExpression" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterPostIncrementDecrementOperatorExpression"):
                 listener.enterPostIncrementDecrementOperatorExpression(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitPostIncrementDecrementOperatorExpression" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitPostIncrementDecrementOperatorExpression"):
                 listener.exitPostIncrementDecrementOperatorExpression(self)
-
 
     class MemberReferenceExpressionContext(ExpressionContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a JavaParser.ExpressionContext
+        def __init__(self, parser, ctx: ParserRuleContext):  # actually a JavaParser.ExpressionContext
             super().__init__(parser)
-            self.bop = None # Token
+            self.bop = None  # Token
             self.copyFrom(ctx)
 
         def expression(self):
-            return self.getTypedRuleContext(JavaParser.ExpressionContext,0)
+            return self.getTypedRuleContext(JavaParser.ExpressionContext, 0)
 
         def DOT(self):
             return self.getToken(JavaParser.DOT, 0)
+
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def methodCall(self):
-            return self.getTypedRuleContext(JavaParser.MethodCallContext,0)
+            return self.getTypedRuleContext(JavaParser.MethodCallContext, 0)
 
         def THIS(self):
             return self.getToken(JavaParser.THIS, 0)
+
         def NEW(self):
             return self.getToken(JavaParser.NEW, 0)
+
         def innerCreator(self):
-            return self.getTypedRuleContext(JavaParser.InnerCreatorContext,0)
+            return self.getTypedRuleContext(JavaParser.InnerCreatorContext, 0)
 
         def SUPER(self):
             return self.getToken(JavaParser.SUPER, 0)
+
         def superSuffix(self):
-            return self.getTypedRuleContext(JavaParser.SuperSuffixContext,0)
+            return self.getTypedRuleContext(JavaParser.SuperSuffixContext, 0)
 
         def explicitGenericInvocation(self):
-            return self.getTypedRuleContext(JavaParser.ExplicitGenericInvocationContext,0)
+            return self.getTypedRuleContext(JavaParser.ExplicitGenericInvocationContext, 0)
 
         def nonWildcardTypeArguments(self):
-            return self.getTypedRuleContext(JavaParser.NonWildcardTypeArgumentsContext,0)
+            return self.getTypedRuleContext(JavaParser.NonWildcardTypeArgumentsContext, 0)
 
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterMemberReferenceExpression" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterMemberReferenceExpression"):
                 listener.enterMemberReferenceExpression(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitMemberReferenceExpression" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitMemberReferenceExpression"):
                 listener.exitMemberReferenceExpression(self)
-
 
     class ExpressionSwitchContext(ExpressionContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a JavaParser.ExpressionContext
+        def __init__(self, parser, ctx: ParserRuleContext):  # actually a JavaParser.ExpressionContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def switchExpression(self):
-            return self.getTypedRuleContext(JavaParser.SwitchExpressionContext,0)
+            return self.getTypedRuleContext(JavaParser.SwitchExpressionContext, 0)
 
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterExpressionSwitch" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterExpressionSwitch"):
                 listener.enterExpressionSwitch(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitExpressionSwitch" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitExpressionSwitch"):
                 listener.exitExpressionSwitch(self)
-
 
     class BinaryOperatorExpressionContext(ExpressionContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a JavaParser.ExpressionContext
+        def __init__(self, parser, ctx: ParserRuleContext):  # actually a JavaParser.ExpressionContext
             super().__init__(parser)
-            self.bop = None # Token
+            self.bop = None  # Token
             self.copyFrom(ctx)
 
-        def expression(self, i:int=None):
+        def expression(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.ExpressionContext)
             else:
-                return self.getTypedRuleContext(JavaParser.ExpressionContext,i)
+                return self.getTypedRuleContext(JavaParser.ExpressionContext, i)
 
         def MUL(self):
             return self.getToken(JavaParser.MUL, 0)
+
         def DIV(self):
             return self.getToken(JavaParser.DIV, 0)
+
         def MOD(self):
             return self.getToken(JavaParser.MOD, 0)
+
         def ADD(self):
             return self.getToken(JavaParser.ADD, 0)
+
         def SUB(self):
             return self.getToken(JavaParser.SUB, 0)
-        def LT(self, i:int=None):
+
+        def LT(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.LT)
             else:
                 return self.getToken(JavaParser.LT, i)
-        def GT(self, i:int=None):
+
+        def GT(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.GT)
             else:
                 return self.getToken(JavaParser.GT, i)
+
         def LE(self):
             return self.getToken(JavaParser.LE, 0)
+
         def GE(self):
             return self.getToken(JavaParser.GE, 0)
+
         def EQUAL(self):
             return self.getToken(JavaParser.EQUAL, 0)
+
         def NOTEQUAL(self):
             return self.getToken(JavaParser.NOTEQUAL, 0)
+
         def BITAND(self):
             return self.getToken(JavaParser.BITAND, 0)
+
         def CARET(self):
             return self.getToken(JavaParser.CARET, 0)
+
         def BITOR(self):
             return self.getToken(JavaParser.BITOR, 0)
+
         def AND(self):
             return self.getToken(JavaParser.AND, 0)
+
         def OR(self):
             return self.getToken(JavaParser.OR, 0)
+
         def ASSIGN(self):
             return self.getToken(JavaParser.ASSIGN, 0)
+
         def ADD_ASSIGN(self):
             return self.getToken(JavaParser.ADD_ASSIGN, 0)
+
         def SUB_ASSIGN(self):
             return self.getToken(JavaParser.SUB_ASSIGN, 0)
+
         def MUL_ASSIGN(self):
             return self.getToken(JavaParser.MUL_ASSIGN, 0)
+
         def DIV_ASSIGN(self):
             return self.getToken(JavaParser.DIV_ASSIGN, 0)
+
         def AND_ASSIGN(self):
             return self.getToken(JavaParser.AND_ASSIGN, 0)
+
         def OR_ASSIGN(self):
             return self.getToken(JavaParser.OR_ASSIGN, 0)
+
         def XOR_ASSIGN(self):
             return self.getToken(JavaParser.XOR_ASSIGN, 0)
+
         def RSHIFT_ASSIGN(self):
             return self.getToken(JavaParser.RSHIFT_ASSIGN, 0)
+
         def URSHIFT_ASSIGN(self):
             return self.getToken(JavaParser.URSHIFT_ASSIGN, 0)
+
         def LSHIFT_ASSIGN(self):
             return self.getToken(JavaParser.LSHIFT_ASSIGN, 0)
+
         def MOD_ASSIGN(self):
             return self.getToken(JavaParser.MOD_ASSIGN, 0)
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterBinaryOperatorExpression" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterBinaryOperatorExpression"):
                 listener.enterBinaryOperatorExpression(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitBinaryOperatorExpression" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitBinaryOperatorExpression"):
                 listener.exitBinaryOperatorExpression(self)
-
 
     class MethodCallExpressionContext(ExpressionContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a JavaParser.ExpressionContext
+        def __init__(self, parser, ctx: ParserRuleContext):  # actually a JavaParser.ExpressionContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def methodCall(self):
-            return self.getTypedRuleContext(JavaParser.MethodCallContext,0)
+            return self.getTypedRuleContext(JavaParser.MethodCallContext, 0)
 
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterMethodCallExpression" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterMethodCallExpression"):
                 listener.enterMethodCallExpression(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitMethodCallExpression" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitMethodCallExpression"):
                 listener.exitMethodCallExpression(self)
-
 
     class MethodReferenceExpressionContext(ExpressionContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a JavaParser.ExpressionContext
+        def __init__(self, parser, ctx: ParserRuleContext):  # actually a JavaParser.ExpressionContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def typeType(self):
-            return self.getTypedRuleContext(JavaParser.TypeTypeContext,0)
+            return self.getTypedRuleContext(JavaParser.TypeTypeContext, 0)
 
         def COLONCOLON(self):
             return self.getToken(JavaParser.COLONCOLON, 0)
+
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def NEW(self):
             return self.getToken(JavaParser.NEW, 0)
+
         def typeArguments(self):
-            return self.getTypedRuleContext(JavaParser.TypeArgumentsContext,0)
+            return self.getTypedRuleContext(JavaParser.TypeArgumentsContext, 0)
 
         def classType(self):
-            return self.getTypedRuleContext(JavaParser.ClassTypeContext,0)
+            return self.getTypedRuleContext(JavaParser.ClassTypeContext, 0)
 
         def expression(self):
-            return self.getTypedRuleContext(JavaParser.ExpressionContext,0)
+            return self.getTypedRuleContext(JavaParser.ExpressionContext, 0)
 
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterMethodReferenceExpression" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterMethodReferenceExpression"):
                 listener.enterMethodReferenceExpression(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitMethodReferenceExpression" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitMethodReferenceExpression"):
                 listener.exitMethodReferenceExpression(self)
-
 
     class SquareBracketExpressionContext(ExpressionContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a JavaParser.ExpressionContext
+        def __init__(self, parser, ctx: ParserRuleContext):  # actually a JavaParser.ExpressionContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def expression(self, i:int=None):
+        def expression(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.ExpressionContext)
             else:
-                return self.getTypedRuleContext(JavaParser.ExpressionContext,i)
+                return self.getTypedRuleContext(JavaParser.ExpressionContext, i)
 
         def LBRACK(self):
             return self.getToken(JavaParser.LBRACK, 0)
+
         def RBRACK(self):
             return self.getToken(JavaParser.RBRACK, 0)
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSquareBracketExpression" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterSquareBracketExpression"):
                 listener.enterSquareBracketExpression(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSquareBracketExpression" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitSquareBracketExpression"):
                 listener.exitSquareBracketExpression(self)
-
 
     class CastExpressionContext(ExpressionContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a JavaParser.ExpressionContext
+        def __init__(self, parser, ctx: ParserRuleContext):  # actually a JavaParser.ExpressionContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def LPAREN(self):
             return self.getToken(JavaParser.LPAREN, 0)
-        def typeType(self, i:int=None):
+
+        def typeType(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.TypeTypeContext)
             else:
-                return self.getTypedRuleContext(JavaParser.TypeTypeContext,i)
+                return self.getTypedRuleContext(JavaParser.TypeTypeContext, i)
 
         def RPAREN(self):
             return self.getToken(JavaParser.RPAREN, 0)
-        def expression(self):
-            return self.getTypedRuleContext(JavaParser.ExpressionContext,0)
 
-        def annotation(self, i:int=None):
+        def expression(self):
+            return self.getTypedRuleContext(JavaParser.ExpressionContext, 0)
+
+        def annotation(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.AnnotationContext)
             else:
-                return self.getTypedRuleContext(JavaParser.AnnotationContext,i)
+                return self.getTypedRuleContext(JavaParser.AnnotationContext, i)
 
-        def BITAND(self, i:int=None):
+        def BITAND(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.BITAND)
             else:
                 return self.getToken(JavaParser.BITAND, i)
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterCastExpression" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterCastExpression"):
                 listener.enterCastExpression(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitCastExpression" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitCastExpression"):
                 listener.exitCastExpression(self)
 
-
-
-    def expression(self, _p:int=0):
+    def expression(self, _p: int = 0):
         _parentctx = self._ctx
         _parentState = self.state
         localctx = JavaParser.ExpressionContext(self, self._ctx, _parentState)
         _prevctx = localctx
         _startState = 198
         self.enterRecursionRule(localctx, 198, self.RULE_expression, _p)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 1369
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,164,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 164, self._ctx)
             if la_ == 1:
                 localctx = JavaParser.PrimaryExpressionContext(self, localctx)
                 self._ctx = localctx
@@ -9872,14 +9740,16 @@ class JavaParser ( Parser ):
                 self.state = 1336
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
-                if token in [JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS, JavaParser.LT, JavaParser.IDENTIFIER]:
+                if token in [JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS,
+                             JavaParser.OPENS, JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH,
+                             JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD,
+                             JavaParser.SEALED, JavaParser.PERMITS, JavaParser.LT, JavaParser.IDENTIFIER]:
                     self.state = 1332
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
-                    if _la==JavaParser.LT:
+                    if _la == JavaParser.LT:
                         self.state = 1331
                         self.typeArguments()
-
 
                     self.state = 1334
                     self.identifier()
@@ -9904,10 +9774,9 @@ class JavaParser ( Parser ):
                 self.state = 1341
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==JavaParser.LT:
+                if _la == JavaParser.LT:
                     self.state = 1340
                     self.typeArguments()
-
 
                 self.state = 1343
                 self.match(JavaParser.NEW)
@@ -9928,7 +9797,10 @@ class JavaParser ( Parser ):
                 self.state = 1346
                 localctx.prefix = self._input.LT(1)
                 _la = self._input.LA(1)
-                if not(((((_la - 90)) & ~0x3f) == 0 and ((1 << (_la - 90)) & ((1 << (JavaParser.BANG - 90)) | (1 << (JavaParser.TILDE - 90)) | (1 << (JavaParser.INC - 90)) | (1 << (JavaParser.DEC - 90)) | (1 << (JavaParser.ADD - 90)) | (1 << (JavaParser.SUB - 90)))) != 0)):
+                if not (((((_la - 90)) & ~0x3f) == 0 and ((1 << (_la - 90)) & (
+                        (1 << (JavaParser.BANG - 90)) | (1 << (JavaParser.TILDE - 90)) | (
+                        1 << (JavaParser.INC - 90)) | (1 << (JavaParser.DEC - 90)) | (1 << (JavaParser.ADD - 90)) | (
+                                1 << (JavaParser.SUB - 90)))) != 0)):
                     localctx.prefix = self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
@@ -9945,21 +9817,21 @@ class JavaParser ( Parser ):
                 self.match(JavaParser.LPAREN)
                 self.state = 1352
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,162,self._ctx)
-                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                    if _alt==1:
+                _alt = self._interp.adaptivePredict(self._input, 162, self._ctx)
+                while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                    if _alt == 1:
                         self.state = 1349
-                        self.annotation() 
+                        self.annotation()
                     self.state = 1354
                     self._errHandler.sync(self)
-                    _alt = self._interp.adaptivePredict(self._input,162,self._ctx)
+                    _alt = self._interp.adaptivePredict(self._input, 162, self._ctx)
 
                 self.state = 1355
                 self.typeType()
                 self.state = 1360
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                while _la==JavaParser.BITAND:
+                while _la == JavaParser.BITAND:
                     self.state = 1356
                     self.match(JavaParser.BITAND)
                     self.state = 1357
@@ -9992,21 +9864,22 @@ class JavaParser ( Parser ):
                 self.lambdaExpression()
                 pass
 
-
             self._ctx.stop = self._input.LT(-1)
             self.state = 1454
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,171,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 171, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     if self._parseListeners is not None:
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
                     self.state = 1452
                     self._errHandler.sync(self)
-                    la_ = self._interp.adaptivePredict(self._input,170,self._ctx)
+                    la_ = self._interp.adaptivePredict(self._input, 170, self._ctx)
                     if la_ == 1:
-                        localctx = JavaParser.BinaryOperatorExpressionContext(self, JavaParser.ExpressionContext(self, _parentctx, _parentState))
+                        localctx = JavaParser.BinaryOperatorExpressionContext(self, JavaParser.ExpressionContext(self,
+                                                                                                                 _parentctx,
+                                                                                                                 _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 1371
                         if not self.precpred(self._ctx, 14):
@@ -10015,7 +9888,9 @@ class JavaParser ( Parser ):
                         self.state = 1372
                         localctx.bop = self._input.LT(1)
                         _la = self._input.LA(1)
-                        if not(((((_la - 104)) & ~0x3f) == 0 and ((1 << (_la - 104)) & ((1 << (JavaParser.MUL - 104)) | (1 << (JavaParser.DIV - 104)) | (1 << (JavaParser.MOD - 104)))) != 0)):
+                        if not (((((_la - 104)) & ~0x3f) == 0 and ((1 << (_la - 104)) & (
+                                (1 << (JavaParser.MUL - 104)) | (1 << (JavaParser.DIV - 104)) | (
+                                1 << (JavaParser.MOD - 104)))) != 0)):
                             localctx.bop = self._errHandler.recoverInline(self)
                         else:
                             self._errHandler.reportMatch(self)
@@ -10025,7 +9900,9 @@ class JavaParser ( Parser ):
                         pass
 
                     elif la_ == 2:
-                        localctx = JavaParser.BinaryOperatorExpressionContext(self, JavaParser.ExpressionContext(self, _parentctx, _parentState))
+                        localctx = JavaParser.BinaryOperatorExpressionContext(self, JavaParser.ExpressionContext(self,
+                                                                                                                 _parentctx,
+                                                                                                                 _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 1374
                         if not self.precpred(self._ctx, 13):
@@ -10034,7 +9911,7 @@ class JavaParser ( Parser ):
                         self.state = 1375
                         localctx.bop = self._input.LT(1)
                         _la = self._input.LA(1)
-                        if not(_la==JavaParser.ADD or _la==JavaParser.SUB):
+                        if not (_la == JavaParser.ADD or _la == JavaParser.SUB):
                             localctx.bop = self._errHandler.recoverInline(self)
                         else:
                             self._errHandler.reportMatch(self)
@@ -10044,7 +9921,9 @@ class JavaParser ( Parser ):
                         pass
 
                     elif la_ == 3:
-                        localctx = JavaParser.BinaryOperatorExpressionContext(self, JavaParser.ExpressionContext(self, _parentctx, _parentState))
+                        localctx = JavaParser.BinaryOperatorExpressionContext(self, JavaParser.ExpressionContext(self,
+                                                                                                                 _parentctx,
+                                                                                                                 _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 1377
                         if not self.precpred(self._ctx, 12):
@@ -10052,7 +9931,7 @@ class JavaParser ( Parser ):
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 12)")
                         self.state = 1385
                         self._errHandler.sync(self)
-                        la_ = self._interp.adaptivePredict(self._input,165,self._ctx)
+                        la_ = self._interp.adaptivePredict(self._input, 165, self._ctx)
                         if la_ == 1:
                             self.state = 1378
                             self.match(JavaParser.LT)
@@ -10076,13 +9955,14 @@ class JavaParser ( Parser ):
                             self.match(JavaParser.GT)
                             pass
 
-
                         self.state = 1387
                         self.expression(13)
                         pass
 
                     elif la_ == 4:
-                        localctx = JavaParser.BinaryOperatorExpressionContext(self, JavaParser.ExpressionContext(self, _parentctx, _parentState))
+                        localctx = JavaParser.BinaryOperatorExpressionContext(self, JavaParser.ExpressionContext(self,
+                                                                                                                 _parentctx,
+                                                                                                                 _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 1388
                         if not self.precpred(self._ctx, 11):
@@ -10091,7 +9971,9 @@ class JavaParser ( Parser ):
                         self.state = 1389
                         localctx.bop = self._input.LT(1)
                         _la = self._input.LA(1)
-                        if not(((((_la - 88)) & ~0x3f) == 0 and ((1 << (_la - 88)) & ((1 << (JavaParser.GT - 88)) | (1 << (JavaParser.LT - 88)) | (1 << (JavaParser.LE - 88)) | (1 << (JavaParser.GE - 88)))) != 0)):
+                        if not (((((_la - 88)) & ~0x3f) == 0 and ((1 << (_la - 88)) & (
+                                (1 << (JavaParser.GT - 88)) | (1 << (JavaParser.LT - 88)) | (
+                                1 << (JavaParser.LE - 88)) | (1 << (JavaParser.GE - 88)))) != 0)):
                             localctx.bop = self._errHandler.recoverInline(self)
                         else:
                             self._errHandler.reportMatch(self)
@@ -10101,7 +9983,9 @@ class JavaParser ( Parser ):
                         pass
 
                     elif la_ == 5:
-                        localctx = JavaParser.BinaryOperatorExpressionContext(self, JavaParser.ExpressionContext(self, _parentctx, _parentState))
+                        localctx = JavaParser.BinaryOperatorExpressionContext(self, JavaParser.ExpressionContext(self,
+                                                                                                                 _parentctx,
+                                                                                                                 _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 1391
                         if not self.precpred(self._ctx, 9):
@@ -10110,7 +9994,7 @@ class JavaParser ( Parser ):
                         self.state = 1392
                         localctx.bop = self._input.LT(1)
                         _la = self._input.LA(1)
-                        if not(_la==JavaParser.EQUAL or _la==JavaParser.NOTEQUAL):
+                        if not (_la == JavaParser.EQUAL or _la == JavaParser.NOTEQUAL):
                             localctx.bop = self._errHandler.recoverInline(self)
                         else:
                             self._errHandler.reportMatch(self)
@@ -10120,7 +10004,9 @@ class JavaParser ( Parser ):
                         pass
 
                     elif la_ == 6:
-                        localctx = JavaParser.BinaryOperatorExpressionContext(self, JavaParser.ExpressionContext(self, _parentctx, _parentState))
+                        localctx = JavaParser.BinaryOperatorExpressionContext(self, JavaParser.ExpressionContext(self,
+                                                                                                                 _parentctx,
+                                                                                                                 _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 1394
                         if not self.precpred(self._ctx, 8):
@@ -10133,7 +10019,9 @@ class JavaParser ( Parser ):
                         pass
 
                     elif la_ == 7:
-                        localctx = JavaParser.BinaryOperatorExpressionContext(self, JavaParser.ExpressionContext(self, _parentctx, _parentState))
+                        localctx = JavaParser.BinaryOperatorExpressionContext(self, JavaParser.ExpressionContext(self,
+                                                                                                                 _parentctx,
+                                                                                                                 _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 1397
                         if not self.precpred(self._ctx, 7):
@@ -10146,7 +10034,9 @@ class JavaParser ( Parser ):
                         pass
 
                     elif la_ == 8:
-                        localctx = JavaParser.BinaryOperatorExpressionContext(self, JavaParser.ExpressionContext(self, _parentctx, _parentState))
+                        localctx = JavaParser.BinaryOperatorExpressionContext(self, JavaParser.ExpressionContext(self,
+                                                                                                                 _parentctx,
+                                                                                                                 _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 1400
                         if not self.precpred(self._ctx, 6):
@@ -10159,7 +10049,9 @@ class JavaParser ( Parser ):
                         pass
 
                     elif la_ == 9:
-                        localctx = JavaParser.BinaryOperatorExpressionContext(self, JavaParser.ExpressionContext(self, _parentctx, _parentState))
+                        localctx = JavaParser.BinaryOperatorExpressionContext(self, JavaParser.ExpressionContext(self,
+                                                                                                                 _parentctx,
+                                                                                                                 _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 1403
                         if not self.precpred(self._ctx, 5):
@@ -10172,7 +10064,9 @@ class JavaParser ( Parser ):
                         pass
 
                     elif la_ == 10:
-                        localctx = JavaParser.BinaryOperatorExpressionContext(self, JavaParser.ExpressionContext(self, _parentctx, _parentState))
+                        localctx = JavaParser.BinaryOperatorExpressionContext(self, JavaParser.ExpressionContext(self,
+                                                                                                                 _parentctx,
+                                                                                                                 _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 1406
                         if not self.precpred(self._ctx, 4):
@@ -10185,7 +10079,9 @@ class JavaParser ( Parser ):
                         pass
 
                     elif la_ == 11:
-                        localctx = JavaParser.TernaryExpressionContext(self, JavaParser.ExpressionContext(self, _parentctx, _parentState))
+                        localctx = JavaParser.TernaryExpressionContext(self,
+                                                                       JavaParser.ExpressionContext(self, _parentctx,
+                                                                                                    _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 1409
                         if not self.precpred(self._ctx, 3):
@@ -10202,7 +10098,9 @@ class JavaParser ( Parser ):
                         pass
 
                     elif la_ == 12:
-                        localctx = JavaParser.BinaryOperatorExpressionContext(self, JavaParser.ExpressionContext(self, _parentctx, _parentState))
+                        localctx = JavaParser.BinaryOperatorExpressionContext(self, JavaParser.ExpressionContext(self,
+                                                                                                                 _parentctx,
+                                                                                                                 _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 1415
                         if not self.precpred(self._ctx, 2):
@@ -10211,7 +10109,14 @@ class JavaParser ( Parser ):
                         self.state = 1416
                         localctx.bop = self._input.LT(1)
                         _la = self._input.LA(1)
-                        if not(((((_la - 87)) & ~0x3f) == 0 and ((1 << (_la - 87)) & ((1 << (JavaParser.ASSIGN - 87)) | (1 << (JavaParser.ADD_ASSIGN - 87)) | (1 << (JavaParser.SUB_ASSIGN - 87)) | (1 << (JavaParser.MUL_ASSIGN - 87)) | (1 << (JavaParser.DIV_ASSIGN - 87)) | (1 << (JavaParser.AND_ASSIGN - 87)) | (1 << (JavaParser.OR_ASSIGN - 87)) | (1 << (JavaParser.XOR_ASSIGN - 87)) | (1 << (JavaParser.MOD_ASSIGN - 87)) | (1 << (JavaParser.LSHIFT_ASSIGN - 87)) | (1 << (JavaParser.RSHIFT_ASSIGN - 87)) | (1 << (JavaParser.URSHIFT_ASSIGN - 87)))) != 0)):
+                        if not (((((_la - 87)) & ~0x3f) == 0 and ((1 << (_la - 87)) & (
+                                (1 << (JavaParser.ASSIGN - 87)) | (1 << (JavaParser.ADD_ASSIGN - 87)) | (
+                                1 << (JavaParser.SUB_ASSIGN - 87)) | (1 << (JavaParser.MUL_ASSIGN - 87)) | (
+                                        1 << (JavaParser.DIV_ASSIGN - 87)) | (1 << (JavaParser.AND_ASSIGN - 87)) | (
+                                        1 << (JavaParser.OR_ASSIGN - 87)) | (1 << (JavaParser.XOR_ASSIGN - 87)) | (
+                                        1 << (JavaParser.MOD_ASSIGN - 87)) | (1 << (JavaParser.LSHIFT_ASSIGN - 87)) | (
+                                        1 << (JavaParser.RSHIFT_ASSIGN - 87)) | (
+                                        1 << (JavaParser.URSHIFT_ASSIGN - 87)))) != 0)):
                             localctx.bop = self._errHandler.recoverInline(self)
                         else:
                             self._errHandler.reportMatch(self)
@@ -10221,7 +10126,9 @@ class JavaParser ( Parser ):
                         pass
 
                     elif la_ == 13:
-                        localctx = JavaParser.SquareBracketExpressionContext(self, JavaParser.ExpressionContext(self, _parentctx, _parentState))
+                        localctx = JavaParser.SquareBracketExpressionContext(self, JavaParser.ExpressionContext(self,
+                                                                                                                _parentctx,
+                                                                                                                _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 1418
                         if not self.precpred(self._ctx, 25):
@@ -10236,7 +10143,9 @@ class JavaParser ( Parser ):
                         pass
 
                     elif la_ == 14:
-                        localctx = JavaParser.MemberReferenceExpressionContext(self, JavaParser.ExpressionContext(self, _parentctx, _parentState))
+                        localctx = JavaParser.MemberReferenceExpressionContext(self, JavaParser.ExpressionContext(self,
+                                                                                                                  _parentctx,
+                                                                                                                  _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 1423
                         if not self.precpred(self._ctx, 24):
@@ -10246,7 +10155,7 @@ class JavaParser ( Parser ):
                         localctx.bop = self.match(JavaParser.DOT)
                         self.state = 1436
                         self._errHandler.sync(self)
-                        la_ = self._interp.adaptivePredict(self._input,167,self._ctx)
+                        la_ = self._interp.adaptivePredict(self._input, 167, self._ctx)
                         if la_ == 1:
                             self.state = 1425
                             self.identifier()
@@ -10268,10 +10177,9 @@ class JavaParser ( Parser ):
                             self.state = 1430
                             self._errHandler.sync(self)
                             _la = self._input.LA(1)
-                            if _la==JavaParser.LT:
+                            if _la == JavaParser.LT:
                                 self.state = 1429
                                 self.nonWildcardTypeArguments()
-
 
                             self.state = 1432
                             self.innerCreator()
@@ -10289,11 +10197,12 @@ class JavaParser ( Parser ):
                             self.explicitGenericInvocation()
                             pass
 
-
                         pass
 
                     elif la_ == 15:
-                        localctx = JavaParser.MethodReferenceExpressionContext(self, JavaParser.ExpressionContext(self, _parentctx, _parentState))
+                        localctx = JavaParser.MethodReferenceExpressionContext(self, JavaParser.ExpressionContext(self,
+                                                                                                                  _parentctx,
+                                                                                                                  _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 1438
                         if not self.precpred(self._ctx, 22):
@@ -10304,17 +10213,19 @@ class JavaParser ( Parser ):
                         self.state = 1441
                         self._errHandler.sync(self)
                         _la = self._input.LA(1)
-                        if _la==JavaParser.LT:
+                        if _la == JavaParser.LT:
                             self.state = 1440
                             self.typeArguments()
-
 
                         self.state = 1443
                         self.identifier()
                         pass
 
                     elif la_ == 16:
-                        localctx = JavaParser.PostIncrementDecrementOperatorExpressionContext(self, JavaParser.ExpressionContext(self, _parentctx, _parentState))
+                        localctx = JavaParser.PostIncrementDecrementOperatorExpressionContext(self,
+                                                                                              JavaParser.ExpressionContext(
+                                                                                                  self, _parentctx,
+                                                                                                  _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 1444
                         if not self.precpred(self._ctx, 18):
@@ -10323,7 +10234,7 @@ class JavaParser ( Parser ):
                         self.state = 1445
                         localctx.postfix = self._input.LT(1)
                         _la = self._input.LA(1)
-                        if not(_la==JavaParser.INC or _la==JavaParser.DEC):
+                        if not (_la == JavaParser.INC or _la == JavaParser.DEC):
                             localctx.postfix = self._errHandler.recoverInline(self)
                         else:
                             self._errHandler.reportMatch(self)
@@ -10331,7 +10242,10 @@ class JavaParser ( Parser ):
                         pass
 
                     elif la_ == 17:
-                        localctx = JavaParser.InstanceOfOperatorExpressionContext(self, JavaParser.ExpressionContext(self, _parentctx, _parentState))
+                        localctx = JavaParser.InstanceOfOperatorExpressionContext(self,
+                                                                                  JavaParser.ExpressionContext(self,
+                                                                                                               _parentctx,
+                                                                                                               _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 1446
                         if not self.precpred(self._ctx, 10):
@@ -10341,7 +10255,7 @@ class JavaParser ( Parser ):
                         localctx.bop = self.match(JavaParser.INSTANCEOF)
                         self.state = 1450
                         self._errHandler.sync(self)
-                        la_ = self._interp.adaptivePredict(self._input,169,self._ctx)
+                        la_ = self._interp.adaptivePredict(self._input, 169, self._ctx)
                         if la_ == 1:
                             self.state = 1448
                             self.typeType()
@@ -10352,13 +10266,11 @@ class JavaParser ( Parser ):
                             self.pattern()
                             pass
 
-
                         pass
 
-             
                 self.state = 1456
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,171,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 171, self._ctx)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -10368,49 +10280,41 @@ class JavaParser ( Parser ):
             self.unrollRecursionContexts(_parentctx)
         return localctx
 
-
     class PatternContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def typeType(self):
-            return self.getTypedRuleContext(JavaParser.TypeTypeContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeTypeContext, 0)
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
-
-        def variableModifier(self, i:int=None):
+        def variableModifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.VariableModifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.VariableModifierContext,i)
+                return self.getTypedRuleContext(JavaParser.VariableModifierContext, i)
 
-
-        def annotation(self, i:int=None):
+        def annotation(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.AnnotationContext)
             else:
-                return self.getTypedRuleContext(JavaParser.AnnotationContext,i)
-
+                return self.getTypedRuleContext(JavaParser.AnnotationContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_pattern
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterPattern" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterPattern"):
                 listener.enterPattern(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitPattern" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitPattern"):
                 listener.exitPattern(self)
-
-
-
 
     def pattern(self):
 
@@ -10420,27 +10324,27 @@ class JavaParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 1460
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,172,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 172, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 1457
-                    self.variableModifier() 
+                    self.variableModifier()
                 self.state = 1462
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,172,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 172, self._ctx)
 
             self.state = 1463
             self.typeType()
             self.state = 1467
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,173,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 173, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 1464
-                    self.annotation() 
+                    self.annotation()
                 self.state = 1469
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,173,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 173, self._ctx)
 
             self.state = 1470
             self.identifier()
@@ -10452,38 +10356,32 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class LambdaExpressionContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def lambdaParameters(self):
-            return self.getTypedRuleContext(JavaParser.LambdaParametersContext,0)
-
+            return self.getTypedRuleContext(JavaParser.LambdaParametersContext, 0)
 
         def ARROW(self):
             return self.getToken(JavaParser.ARROW, 0)
 
         def lambdaBody(self):
-            return self.getTypedRuleContext(JavaParser.LambdaBodyContext,0)
-
+            return self.getTypedRuleContext(JavaParser.LambdaBodyContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_lambdaExpression
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterLambdaExpression" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterLambdaExpression"):
                 listener.enterLambdaExpression(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitLambdaExpression" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitLambdaExpression"):
                 listener.exitLambdaExpression(self)
-
-
-
 
     def lambdaExpression(self):
 
@@ -10505,20 +10403,18 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class LambdaParametersContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def identifier(self, i:int=None):
+        def identifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.IdentifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.IdentifierContext,i)
-
+                return self.getTypedRuleContext(JavaParser.IdentifierContext, i)
 
         def LPAREN(self):
             return self.getToken(JavaParser.LPAREN, 0)
@@ -10527,42 +10423,37 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.RPAREN, 0)
 
         def formalParameterList(self):
-            return self.getTypedRuleContext(JavaParser.FormalParameterListContext,0)
+            return self.getTypedRuleContext(JavaParser.FormalParameterListContext, 0)
 
-
-        def COMMA(self, i:int=None):
+        def COMMA(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.COMMA)
             else:
                 return self.getToken(JavaParser.COMMA, i)
 
         def lambdaLVTIList(self):
-            return self.getTypedRuleContext(JavaParser.LambdaLVTIListContext,0)
-
+            return self.getTypedRuleContext(JavaParser.LambdaLVTIListContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_lambdaParameters
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterLambdaParameters" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterLambdaParameters"):
                 listener.enterLambdaParameters(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitLambdaParameters" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitLambdaParameters"):
                 listener.exitLambdaParameters(self)
-
-
-
 
     def lambdaParameters(self):
 
         localctx = JavaParser.LambdaParametersContext(self, self._ctx, self.state)
         self.enterRule(localctx, 204, self.RULE_lambdaParameters)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.state = 1498
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,177,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 177, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 1476
@@ -10576,10 +10467,21 @@ class JavaParser ( Parser ):
                 self.state = 1479
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if ((((_la - 3)) & ~0x3f) == 0 and ((1 << (_la - 3)) & ((1 << (JavaParser.BOOLEAN - 3)) | (1 << (JavaParser.BYTE - 3)) | (1 << (JavaParser.CHAR - 3)) | (1 << (JavaParser.DOUBLE - 3)) | (1 << (JavaParser.FINAL - 3)) | (1 << (JavaParser.FLOAT - 3)) | (1 << (JavaParser.INT - 3)) | (1 << (JavaParser.LONG - 3)) | (1 << (JavaParser.SHORT - 3)) | (1 << (JavaParser.MODULE - 3)) | (1 << (JavaParser.OPEN - 3)) | (1 << (JavaParser.REQUIRES - 3)) | (1 << (JavaParser.EXPORTS - 3)) | (1 << (JavaParser.OPENS - 3)) | (1 << (JavaParser.TO - 3)) | (1 << (JavaParser.USES - 3)) | (1 << (JavaParser.PROVIDES - 3)) | (1 << (JavaParser.WITH - 3)) | (1 << (JavaParser.TRANSITIVE - 3)) | (1 << (JavaParser.VAR - 3)) | (1 << (JavaParser.YIELD - 3)) | (1 << (JavaParser.RECORD - 3)) | (1 << (JavaParser.SEALED - 3)) | (1 << (JavaParser.PERMITS - 3)))) != 0) or _la==JavaParser.AT or _la==JavaParser.IDENTIFIER:
+                if ((((_la - 3)) & ~0x3f) == 0 and ((1 << (_la - 3)) & (
+                        (1 << (JavaParser.BOOLEAN - 3)) | (1 << (JavaParser.BYTE - 3)) | (
+                        1 << (JavaParser.CHAR - 3)) | (1 << (JavaParser.DOUBLE - 3)) | (1 << (JavaParser.FINAL - 3)) | (
+                                1 << (JavaParser.FLOAT - 3)) | (1 << (JavaParser.INT - 3)) | (
+                                1 << (JavaParser.LONG - 3)) | (1 << (JavaParser.SHORT - 3)) | (
+                                1 << (JavaParser.MODULE - 3)) | (1 << (JavaParser.OPEN - 3)) | (
+                                1 << (JavaParser.REQUIRES - 3)) | (1 << (JavaParser.EXPORTS - 3)) | (
+                                1 << (JavaParser.OPENS - 3)) | (1 << (JavaParser.TO - 3)) | (
+                                1 << (JavaParser.USES - 3)) | (1 << (JavaParser.PROVIDES - 3)) | (
+                                1 << (JavaParser.WITH - 3)) | (1 << (JavaParser.TRANSITIVE - 3)) | (
+                                1 << (JavaParser.VAR - 3)) | (1 << (JavaParser.YIELD - 3)) | (
+                                1 << (JavaParser.RECORD - 3)) | (1 << (JavaParser.SEALED - 3)) | (1 << (
+                        JavaParser.PERMITS - 3)))) != 0) or _la == JavaParser.AT or _la == JavaParser.IDENTIFIER:
                     self.state = 1478
                     self.formalParameterList()
-
 
                 self.state = 1481
                 self.match(JavaParser.RPAREN)
@@ -10594,7 +10496,7 @@ class JavaParser ( Parser ):
                 self.state = 1488
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                while _la==JavaParser.COMMA:
+                while _la == JavaParser.COMMA:
                     self.state = 1484
                     self.match(JavaParser.COMMA)
                     self.state = 1485
@@ -10614,10 +10516,18 @@ class JavaParser ( Parser ):
                 self.state = 1495
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if ((((_la - 18)) & ~0x3f) == 0 and ((1 << (_la - 18)) & ((1 << (JavaParser.FINAL - 18)) | (1 << (JavaParser.MODULE - 18)) | (1 << (JavaParser.OPEN - 18)) | (1 << (JavaParser.REQUIRES - 18)) | (1 << (JavaParser.EXPORTS - 18)) | (1 << (JavaParser.OPENS - 18)) | (1 << (JavaParser.TO - 18)) | (1 << (JavaParser.USES - 18)) | (1 << (JavaParser.PROVIDES - 18)) | (1 << (JavaParser.WITH - 18)) | (1 << (JavaParser.TRANSITIVE - 18)) | (1 << (JavaParser.VAR - 18)) | (1 << (JavaParser.YIELD - 18)) | (1 << (JavaParser.RECORD - 18)) | (1 << (JavaParser.SEALED - 18)) | (1 << (JavaParser.PERMITS - 18)))) != 0) or _la==JavaParser.AT or _la==JavaParser.IDENTIFIER:
+                if ((((_la - 18)) & ~0x3f) == 0 and ((1 << (_la - 18)) & (
+                        (1 << (JavaParser.FINAL - 18)) | (1 << (JavaParser.MODULE - 18)) | (
+                        1 << (JavaParser.OPEN - 18)) | (1 << (JavaParser.REQUIRES - 18)) | (
+                                1 << (JavaParser.EXPORTS - 18)) | (1 << (JavaParser.OPENS - 18)) | (
+                                1 << (JavaParser.TO - 18)) | (1 << (JavaParser.USES - 18)) | (
+                                1 << (JavaParser.PROVIDES - 18)) | (1 << (JavaParser.WITH - 18)) | (
+                                1 << (JavaParser.TRANSITIVE - 18)) | (1 << (JavaParser.VAR - 18)) | (
+                                1 << (JavaParser.YIELD - 18)) | (1 << (JavaParser.RECORD - 18)) | (
+                                1 << (JavaParser.SEALED - 18)) | (1 << (
+                        JavaParser.PERMITS - 18)))) != 0) or _la == JavaParser.AT or _la == JavaParser.IDENTIFIER:
                     self.state = 1494
                     self.lambdaLVTIList()
-
 
                 self.state = 1497
                 self.match(JavaParser.RPAREN)
@@ -10632,35 +10542,29 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class LambdaBodyContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def expression(self):
-            return self.getTypedRuleContext(JavaParser.ExpressionContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ExpressionContext, 0)
 
         def block(self):
-            return self.getTypedRuleContext(JavaParser.BlockContext,0)
-
+            return self.getTypedRuleContext(JavaParser.BlockContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_lambdaBody
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterLambdaBody" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterLambdaBody"):
                 listener.enterLambdaBody(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitLambdaBody" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitLambdaBody"):
                 listener.exitLambdaBody(self)
-
-
-
 
     def lambdaBody(self):
 
@@ -10670,7 +10574,18 @@ class JavaParser ( Parser ):
             self.state = 1502
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [JavaParser.BOOLEAN, JavaParser.BYTE, JavaParser.CHAR, JavaParser.DOUBLE, JavaParser.FLOAT, JavaParser.INT, JavaParser.LONG, JavaParser.NEW, JavaParser.SHORT, JavaParser.SUPER, JavaParser.SWITCH, JavaParser.THIS, JavaParser.VOID, JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS, JavaParser.DECIMAL_LITERAL, JavaParser.HEX_LITERAL, JavaParser.OCT_LITERAL, JavaParser.BINARY_LITERAL, JavaParser.FLOAT_LITERAL, JavaParser.HEX_FLOAT_LITERAL, JavaParser.BOOL_LITERAL, JavaParser.CHAR_LITERAL, JavaParser.STRING_LITERAL, JavaParser.TEXT_BLOCK, JavaParser.NULL_LITERAL, JavaParser.LPAREN, JavaParser.LT, JavaParser.BANG, JavaParser.TILDE, JavaParser.INC, JavaParser.DEC, JavaParser.ADD, JavaParser.SUB, JavaParser.AT, JavaParser.IDENTIFIER]:
+            if token in [JavaParser.BOOLEAN, JavaParser.BYTE, JavaParser.CHAR, JavaParser.DOUBLE, JavaParser.FLOAT,
+                         JavaParser.INT, JavaParser.LONG, JavaParser.NEW, JavaParser.SHORT, JavaParser.SUPER,
+                         JavaParser.SWITCH, JavaParser.THIS, JavaParser.VOID, JavaParser.MODULE, JavaParser.OPEN,
+                         JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO, JavaParser.USES,
+                         JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD,
+                         JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS, JavaParser.DECIMAL_LITERAL,
+                         JavaParser.HEX_LITERAL, JavaParser.OCT_LITERAL, JavaParser.BINARY_LITERAL,
+                         JavaParser.FLOAT_LITERAL, JavaParser.HEX_FLOAT_LITERAL, JavaParser.BOOL_LITERAL,
+                         JavaParser.CHAR_LITERAL, JavaParser.STRING_LITERAL, JavaParser.TEXT_BLOCK,
+                         JavaParser.NULL_LITERAL, JavaParser.LPAREN, JavaParser.LT, JavaParser.BANG, JavaParser.TILDE,
+                         JavaParser.INC, JavaParser.DEC, JavaParser.ADD, JavaParser.SUB, JavaParser.AT,
+                         JavaParser.IDENTIFIER]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 1500
                 self.expression(0)
@@ -10691,11 +10606,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class PrimaryContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -10703,8 +10617,7 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.LPAREN, 0)
 
         def expression(self):
-            return self.getTypedRuleContext(JavaParser.ExpressionContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ExpressionContext, 0)
 
         def RPAREN(self):
             return self.getToken(JavaParser.RPAREN, 0)
@@ -10716,16 +10629,13 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.SUPER, 0)
 
         def literal(self):
-            return self.getTypedRuleContext(JavaParser.LiteralContext,0)
-
+            return self.getTypedRuleContext(JavaParser.LiteralContext, 0)
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def typeTypeOrVoid(self):
-            return self.getTypedRuleContext(JavaParser.TypeTypeOrVoidContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeTypeOrVoidContext, 0)
 
         def DOT(self):
             return self.getToken(JavaParser.DOT, 0)
@@ -10734,30 +10644,24 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.CLASS, 0)
 
         def nonWildcardTypeArguments(self):
-            return self.getTypedRuleContext(JavaParser.NonWildcardTypeArgumentsContext,0)
-
+            return self.getTypedRuleContext(JavaParser.NonWildcardTypeArgumentsContext, 0)
 
         def explicitGenericInvocationSuffix(self):
-            return self.getTypedRuleContext(JavaParser.ExplicitGenericInvocationSuffixContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ExplicitGenericInvocationSuffixContext, 0)
 
         def arguments(self):
-            return self.getTypedRuleContext(JavaParser.ArgumentsContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ArgumentsContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_primary
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterPrimary" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterPrimary"):
                 listener.enterPrimary(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitPrimary" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitPrimary"):
                 listener.exitPrimary(self)
-
-
-
 
     def primary(self):
 
@@ -10766,7 +10670,7 @@ class JavaParser ( Parser ):
         try:
             self.state = 1522
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,180,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 180, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 1504
@@ -10818,7 +10722,10 @@ class JavaParser ( Parser ):
                 self.state = 1520
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
-                if token in [JavaParser.SUPER, JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS, JavaParser.IDENTIFIER]:
+                if token in [JavaParser.SUPER, JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES,
+                             JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES,
+                             JavaParser.WITH, JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD,
+                             JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS, JavaParser.IDENTIFIER]:
                     self.state = 1517
                     self.explicitGenericInvocationSuffix()
                     pass
@@ -10842,11 +10749,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class SwitchExpressionContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -10854,8 +10760,7 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.SWITCH, 0)
 
         def parExpression(self):
-            return self.getTypedRuleContext(JavaParser.ParExpressionContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ParExpressionContext, 0)
 
         def LBRACE(self):
             return self.getToken(JavaParser.LBRACE, 0)
@@ -10863,32 +10768,28 @@ class JavaParser ( Parser ):
         def RBRACE(self):
             return self.getToken(JavaParser.RBRACE, 0)
 
-        def switchLabeledRule(self, i:int=None):
+        def switchLabeledRule(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.SwitchLabeledRuleContext)
             else:
-                return self.getTypedRuleContext(JavaParser.SwitchLabeledRuleContext,i)
-
+                return self.getTypedRuleContext(JavaParser.SwitchLabeledRuleContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_switchExpression
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSwitchExpression" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterSwitchExpression"):
                 listener.enterSwitchExpression(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSwitchExpression" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitSwitchExpression"):
                 listener.exitSwitchExpression(self)
-
-
-
 
     def switchExpression(self):
 
         localctx = JavaParser.SwitchExpressionContext(self, self._ctx, self.state)
         self.enterRule(localctx, 210, self.RULE_switchExpression)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 1524
@@ -10900,7 +10801,7 @@ class JavaParser ( Parser ):
             self.state = 1530
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==JavaParser.CASE or _la==JavaParser.DEFAULT:
+            while _la == JavaParser.CASE or _la == JavaParser.DEFAULT:
                 self.state = 1527
                 self.switchLabeledRule()
                 self.state = 1532
@@ -10917,11 +10818,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class SwitchLabeledRuleContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -10929,8 +10829,7 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.CASE, 0)
 
         def switchRuleOutcome(self):
-            return self.getTypedRuleContext(JavaParser.SwitchRuleOutcomeContext,0)
-
+            return self.getTypedRuleContext(JavaParser.SwitchRuleOutcomeContext, 0)
 
         def ARROW(self):
             return self.getToken(JavaParser.ARROW, 0)
@@ -10939,15 +10838,13 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.COLON, 0)
 
         def expressionList(self):
-            return self.getTypedRuleContext(JavaParser.ExpressionListContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ExpressionListContext, 0)
 
         def NULL_LITERAL(self):
             return self.getToken(JavaParser.NULL_LITERAL, 0)
 
         def guardedPattern(self):
-            return self.getTypedRuleContext(JavaParser.GuardedPatternContext,0)
-
+            return self.getTypedRuleContext(JavaParser.GuardedPatternContext, 0)
 
         def DEFAULT(self):
             return self.getToken(JavaParser.DEFAULT, 0)
@@ -10955,22 +10852,19 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_switchLabeledRule
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSwitchLabeledRule" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterSwitchLabeledRule"):
                 listener.enterSwitchLabeledRule(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSwitchLabeledRule" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitSwitchLabeledRule"):
                 listener.exitSwitchLabeledRule(self)
-
-
-
 
     def switchLabeledRule(self):
 
         localctx = JavaParser.SwitchLabeledRuleContext(self, self._ctx, self.state)
         self.enterRule(localctx, 212, self.RULE_switchLabeledRule)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.state = 1546
             self._errHandler.sync(self)
@@ -10981,7 +10875,7 @@ class JavaParser ( Parser ):
                 self.match(JavaParser.CASE)
                 self.state = 1539
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,182,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input, 182, self._ctx)
                 if la_ == 1:
                     self.state = 1536
                     self.expressionList()
@@ -10997,10 +10891,9 @@ class JavaParser ( Parser ):
                     self.guardedPattern(0)
                     pass
 
-
                 self.state = 1541
                 _la = self._input.LA(1)
-                if not(_la==JavaParser.COLON or _la==JavaParser.ARROW):
+                if not (_la == JavaParser.COLON or _la == JavaParser.ARROW):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
@@ -11014,7 +10907,7 @@ class JavaParser ( Parser ):
                 self.match(JavaParser.DEFAULT)
                 self.state = 1544
                 _la = self._input.LA(1)
-                if not(_la==JavaParser.COLON or _la==JavaParser.ARROW):
+                if not (_la == JavaParser.COLON or _la == JavaParser.ARROW):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
@@ -11033,11 +10926,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class GuardedPatternContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -11045,61 +10937,53 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.LPAREN, 0)
 
         def guardedPattern(self):
-            return self.getTypedRuleContext(JavaParser.GuardedPatternContext,0)
-
+            return self.getTypedRuleContext(JavaParser.GuardedPatternContext, 0)
 
         def RPAREN(self):
             return self.getToken(JavaParser.RPAREN, 0)
 
         def typeType(self):
-            return self.getTypedRuleContext(JavaParser.TypeTypeContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeTypeContext, 0)
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
-
-        def variableModifier(self, i:int=None):
+        def variableModifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.VariableModifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.VariableModifierContext,i)
+                return self.getTypedRuleContext(JavaParser.VariableModifierContext, i)
 
-
-        def annotation(self, i:int=None):
+        def annotation(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.AnnotationContext)
             else:
-                return self.getTypedRuleContext(JavaParser.AnnotationContext,i)
+                return self.getTypedRuleContext(JavaParser.AnnotationContext, i)
 
-
-        def AND(self, i:int=None):
+        def AND(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.AND)
             else:
                 return self.getToken(JavaParser.AND, i)
 
-        def expression(self, i:int=None):
+        def expression(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.ExpressionContext)
             else:
-                return self.getTypedRuleContext(JavaParser.ExpressionContext,i)
-
+                return self.getTypedRuleContext(JavaParser.ExpressionContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_guardedPattern
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterGuardedPattern" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterGuardedPattern"):
                 listener.enterGuardedPattern(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitGuardedPattern" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitGuardedPattern"):
                 listener.exitGuardedPattern(self)
 
-
-
-    def guardedPattern(self, _p:int=0):
+    def guardedPattern(self, _p: int = 0):
         _parentctx = self._ctx
         _parentState = self.state
         localctx = JavaParser.GuardedPatternContext(self, self._ctx, _parentState)
@@ -11119,45 +11003,50 @@ class JavaParser ( Parser ):
                 self.state = 1551
                 self.match(JavaParser.RPAREN)
                 pass
-            elif token in [JavaParser.BOOLEAN, JavaParser.BYTE, JavaParser.CHAR, JavaParser.DOUBLE, JavaParser.FINAL, JavaParser.FLOAT, JavaParser.INT, JavaParser.LONG, JavaParser.SHORT, JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS, JavaParser.AT, JavaParser.IDENTIFIER]:
+            elif token in [JavaParser.BOOLEAN, JavaParser.BYTE, JavaParser.CHAR, JavaParser.DOUBLE, JavaParser.FINAL,
+                           JavaParser.FLOAT, JavaParser.INT, JavaParser.LONG, JavaParser.SHORT, JavaParser.MODULE,
+                           JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO,
+                           JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE, JavaParser.VAR,
+                           JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS, JavaParser.AT,
+                           JavaParser.IDENTIFIER]:
                 self.state = 1556
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,184,self._ctx)
-                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                    if _alt==1:
+                _alt = self._interp.adaptivePredict(self._input, 184, self._ctx)
+                while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                    if _alt == 1:
                         self.state = 1553
-                        self.variableModifier() 
+                        self.variableModifier()
                     self.state = 1558
                     self._errHandler.sync(self)
-                    _alt = self._interp.adaptivePredict(self._input,184,self._ctx)
+                    _alt = self._interp.adaptivePredict(self._input, 184, self._ctx)
 
                 self.state = 1559
                 self.typeType()
                 self.state = 1563
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,185,self._ctx)
-                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                    if _alt==1:
+                _alt = self._interp.adaptivePredict(self._input, 185, self._ctx)
+                while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                    if _alt == 1:
                         self.state = 1560
-                        self.annotation() 
+                        self.annotation()
                     self.state = 1565
                     self._errHandler.sync(self)
-                    _alt = self._interp.adaptivePredict(self._input,185,self._ctx)
+                    _alt = self._interp.adaptivePredict(self._input, 185, self._ctx)
 
                 self.state = 1566
                 self.identifier()
                 self.state = 1571
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,186,self._ctx)
-                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                    if _alt==1:
+                _alt = self._interp.adaptivePredict(self._input, 186, self._ctx)
+                while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                    if _alt == 1:
                         self.state = 1567
                         self.match(JavaParser.AND)
                         self.state = 1568
-                        self.expression(0) 
+                        self.expression(0)
                     self.state = 1573
                     self._errHandler.sync(self)
-                    _alt = self._interp.adaptivePredict(self._input,186,self._ctx)
+                    _alt = self._interp.adaptivePredict(self._input, 186, self._ctx)
 
                 pass
             else:
@@ -11166,9 +11055,9 @@ class JavaParser ( Parser ):
             self._ctx.stop = self._input.LT(-1)
             self.state = 1581
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,188,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 188, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     if self._parseListeners is not None:
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
@@ -11181,10 +11070,10 @@ class JavaParser ( Parser ):
                     self.state = 1577
                     self.match(JavaParser.AND)
                     self.state = 1578
-                    self.expression(0) 
+                    self.expression(0)
                 self.state = 1583
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,188,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 188, self._ctx)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -11194,48 +11083,42 @@ class JavaParser ( Parser ):
             self.unrollRecursionContexts(_parentctx)
         return localctx
 
-
     class SwitchRuleOutcomeContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def block(self):
-            return self.getTypedRuleContext(JavaParser.BlockContext,0)
+            return self.getTypedRuleContext(JavaParser.BlockContext, 0)
 
-
-        def blockStatement(self, i:int=None):
+        def blockStatement(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.BlockStatementContext)
             else:
-                return self.getTypedRuleContext(JavaParser.BlockStatementContext,i)
-
+                return self.getTypedRuleContext(JavaParser.BlockStatementContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_switchRuleOutcome
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSwitchRuleOutcome" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterSwitchRuleOutcome"):
                 listener.enterSwitchRuleOutcome(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSwitchRuleOutcome" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitSwitchRuleOutcome"):
                 listener.exitSwitchRuleOutcome(self)
-
-
-
 
     def switchRuleOutcome(self):
 
         localctx = JavaParser.SwitchRuleOutcomeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 216, self.RULE_switchRuleOutcome)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.state = 1591
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,190,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 190, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 1584
@@ -11247,7 +11130,49 @@ class JavaParser ( Parser ):
                 self.state = 1588
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                while ((((_la - 1)) & ~0x3f) == 0 and ((1 << (_la - 1)) & ((1 << (JavaParser.ABSTRACT - 1)) | (1 << (JavaParser.ASSERT - 1)) | (1 << (JavaParser.BOOLEAN - 1)) | (1 << (JavaParser.BREAK - 1)) | (1 << (JavaParser.BYTE - 1)) | (1 << (JavaParser.CHAR - 1)) | (1 << (JavaParser.CLASS - 1)) | (1 << (JavaParser.CONTINUE - 1)) | (1 << (JavaParser.DO - 1)) | (1 << (JavaParser.DOUBLE - 1)) | (1 << (JavaParser.FINAL - 1)) | (1 << (JavaParser.FLOAT - 1)) | (1 << (JavaParser.FOR - 1)) | (1 << (JavaParser.IF - 1)) | (1 << (JavaParser.INT - 1)) | (1 << (JavaParser.INTERFACE - 1)) | (1 << (JavaParser.LONG - 1)) | (1 << (JavaParser.NEW - 1)) | (1 << (JavaParser.PRIVATE - 1)) | (1 << (JavaParser.PROTECTED - 1)) | (1 << (JavaParser.PUBLIC - 1)) | (1 << (JavaParser.RETURN - 1)) | (1 << (JavaParser.SHORT - 1)) | (1 << (JavaParser.STATIC - 1)) | (1 << (JavaParser.STRICTFP - 1)) | (1 << (JavaParser.SUPER - 1)) | (1 << (JavaParser.SWITCH - 1)) | (1 << (JavaParser.SYNCHRONIZED - 1)) | (1 << (JavaParser.THIS - 1)) | (1 << (JavaParser.THROW - 1)) | (1 << (JavaParser.TRY - 1)) | (1 << (JavaParser.VOID - 1)) | (1 << (JavaParser.WHILE - 1)) | (1 << (JavaParser.MODULE - 1)) | (1 << (JavaParser.OPEN - 1)) | (1 << (JavaParser.REQUIRES - 1)) | (1 << (JavaParser.EXPORTS - 1)) | (1 << (JavaParser.OPENS - 1)) | (1 << (JavaParser.TO - 1)) | (1 << (JavaParser.USES - 1)) | (1 << (JavaParser.PROVIDES - 1)) | (1 << (JavaParser.WITH - 1)) | (1 << (JavaParser.TRANSITIVE - 1)) | (1 << (JavaParser.VAR - 1)) | (1 << (JavaParser.YIELD - 1)) | (1 << (JavaParser.RECORD - 1)) | (1 << (JavaParser.SEALED - 1)))) != 0) or ((((_la - 65)) & ~0x3f) == 0 and ((1 << (_la - 65)) & ((1 << (JavaParser.PERMITS - 65)) | (1 << (JavaParser.NON_SEALED - 65)) | (1 << (JavaParser.DECIMAL_LITERAL - 65)) | (1 << (JavaParser.HEX_LITERAL - 65)) | (1 << (JavaParser.OCT_LITERAL - 65)) | (1 << (JavaParser.BINARY_LITERAL - 65)) | (1 << (JavaParser.FLOAT_LITERAL - 65)) | (1 << (JavaParser.HEX_FLOAT_LITERAL - 65)) | (1 << (JavaParser.BOOL_LITERAL - 65)) | (1 << (JavaParser.CHAR_LITERAL - 65)) | (1 << (JavaParser.STRING_LITERAL - 65)) | (1 << (JavaParser.TEXT_BLOCK - 65)) | (1 << (JavaParser.NULL_LITERAL - 65)) | (1 << (JavaParser.LPAREN - 65)) | (1 << (JavaParser.LBRACE - 65)) | (1 << (JavaParser.SEMI - 65)) | (1 << (JavaParser.LT - 65)) | (1 << (JavaParser.BANG - 65)) | (1 << (JavaParser.TILDE - 65)) | (1 << (JavaParser.INC - 65)) | (1 << (JavaParser.DEC - 65)) | (1 << (JavaParser.ADD - 65)) | (1 << (JavaParser.SUB - 65)) | (1 << (JavaParser.AT - 65)) | (1 << (JavaParser.IDENTIFIER - 65)))) != 0):
+                while ((((_la - 1)) & ~0x3f) == 0 and ((1 << (_la - 1)) & (
+                        (1 << (JavaParser.ABSTRACT - 1)) | (1 << (JavaParser.ASSERT - 1)) | (
+                        1 << (JavaParser.BOOLEAN - 1)) | (1 << (JavaParser.BREAK - 1)) | (
+                                1 << (JavaParser.BYTE - 1)) | (1 << (JavaParser.CHAR - 1)) | (
+                                1 << (JavaParser.CLASS - 1)) | (1 << (JavaParser.CONTINUE - 1)) | (
+                                1 << (JavaParser.DO - 1)) | (1 << (JavaParser.DOUBLE - 1)) | (
+                                1 << (JavaParser.FINAL - 1)) | (1 << (JavaParser.FLOAT - 1)) | (
+                                1 << (JavaParser.FOR - 1)) | (1 << (JavaParser.IF - 1)) | (
+                                1 << (JavaParser.INT - 1)) | (1 << (JavaParser.INTERFACE - 1)) | (
+                                1 << (JavaParser.LONG - 1)) | (1 << (JavaParser.NEW - 1)) | (
+                                1 << (JavaParser.PRIVATE - 1)) | (1 << (JavaParser.PROTECTED - 1)) | (
+                                1 << (JavaParser.PUBLIC - 1)) | (1 << (JavaParser.RETURN - 1)) | (
+                                1 << (JavaParser.SHORT - 1)) | (1 << (JavaParser.STATIC - 1)) | (
+                                1 << (JavaParser.STRICTFP - 1)) | (1 << (JavaParser.SUPER - 1)) | (
+                                1 << (JavaParser.SWITCH - 1)) | (1 << (JavaParser.SYNCHRONIZED - 1)) | (
+                                1 << (JavaParser.THIS - 1)) | (1 << (JavaParser.THROW - 1)) | (
+                                1 << (JavaParser.TRY - 1)) | (1 << (JavaParser.VOID - 1)) | (
+                                1 << (JavaParser.WHILE - 1)) | (1 << (JavaParser.MODULE - 1)) | (
+                                1 << (JavaParser.OPEN - 1)) | (1 << (JavaParser.REQUIRES - 1)) | (
+                                1 << (JavaParser.EXPORTS - 1)) | (1 << (JavaParser.OPENS - 1)) | (
+                                1 << (JavaParser.TO - 1)) | (1 << (JavaParser.USES - 1)) | (
+                                1 << (JavaParser.PROVIDES - 1)) | (1 << (JavaParser.WITH - 1)) | (
+                                1 << (JavaParser.TRANSITIVE - 1)) | (1 << (JavaParser.VAR - 1)) | (
+                                1 << (JavaParser.YIELD - 1)) | (1 << (JavaParser.RECORD - 1)) | (
+                                1 << (JavaParser.SEALED - 1)))) != 0) or ((((_la - 65)) & ~0x3f) == 0 and (
+                        (1 << (_la - 65)) & ((1 << (JavaParser.PERMITS - 65)) | (1 << (JavaParser.NON_SEALED - 65)) | (
+                        1 << (JavaParser.DECIMAL_LITERAL - 65)) | (1 << (JavaParser.HEX_LITERAL - 65)) | (
+                                                     1 << (JavaParser.OCT_LITERAL - 65)) | (
+                                                     1 << (JavaParser.BINARY_LITERAL - 65)) | (
+                                                     1 << (JavaParser.FLOAT_LITERAL - 65)) | (
+                                                     1 << (JavaParser.HEX_FLOAT_LITERAL - 65)) | (
+                                                     1 << (JavaParser.BOOL_LITERAL - 65)) | (
+                                                     1 << (JavaParser.CHAR_LITERAL - 65)) | (
+                                                     1 << (JavaParser.STRING_LITERAL - 65)) | (
+                                                     1 << (JavaParser.TEXT_BLOCK - 65)) | (
+                                                     1 << (JavaParser.NULL_LITERAL - 65)) | (
+                                                     1 << (JavaParser.LPAREN - 65)) | (
+                                                     1 << (JavaParser.LBRACE - 65)) | (1 << (JavaParser.SEMI - 65)) | (
+                                                     1 << (JavaParser.LT - 65)) | (1 << (JavaParser.BANG - 65)) | (
+                                                     1 << (JavaParser.TILDE - 65)) | (1 << (JavaParser.INC - 65)) | (
+                                                     1 << (JavaParser.DEC - 65)) | (1 << (JavaParser.ADD - 65)) | (
+                                                     1 << (JavaParser.SUB - 65)) | (1 << (JavaParser.AT - 65)) | (
+                                                     1 << (JavaParser.IDENTIFIER - 65)))) != 0):
                     self.state = 1585
                     self.blockStatement()
                     self.state = 1590
@@ -11265,84 +11190,75 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ClassTypeContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def classOrInterfaceType(self):
-            return self.getTypedRuleContext(JavaParser.ClassOrInterfaceTypeContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ClassOrInterfaceTypeContext, 0)
 
         def DOT(self):
             return self.getToken(JavaParser.DOT, 0)
 
-        def annotation(self, i:int=None):
+        def annotation(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.AnnotationContext)
             else:
-                return self.getTypedRuleContext(JavaParser.AnnotationContext,i)
-
+                return self.getTypedRuleContext(JavaParser.AnnotationContext, i)
 
         def typeArguments(self):
-            return self.getTypedRuleContext(JavaParser.TypeArgumentsContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeArgumentsContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_classType
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterClassType" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterClassType"):
                 listener.enterClassType(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitClassType" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitClassType"):
                 listener.exitClassType(self)
-
-
-
 
     def classType(self):
 
         localctx = JavaParser.ClassTypeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 218, self.RULE_classType)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 1596
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,191,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 191, self._ctx)
             if la_ == 1:
                 self.state = 1593
                 self.classOrInterfaceType()
                 self.state = 1594
                 self.match(JavaParser.DOT)
 
-
             self.state = 1601
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,192,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 192, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 1598
-                    self.annotation() 
+                    self.annotation()
                 self.state = 1603
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,192,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 192, self._ctx)
 
             self.state = 1604
             self.identifier()
             self.state = 1606
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.LT:
+            if _la == JavaParser.LT:
                 self.state = 1605
                 self.typeArguments()
 
@@ -11355,62 +11271,53 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class CreatorContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def createdName(self):
-            return self.getTypedRuleContext(JavaParser.CreatedNameContext,0)
-
+            return self.getTypedRuleContext(JavaParser.CreatedNameContext, 0)
 
         def classCreatorRest(self):
-            return self.getTypedRuleContext(JavaParser.ClassCreatorRestContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ClassCreatorRestContext, 0)
 
         def nonWildcardTypeArguments(self):
-            return self.getTypedRuleContext(JavaParser.NonWildcardTypeArgumentsContext,0)
-
+            return self.getTypedRuleContext(JavaParser.NonWildcardTypeArgumentsContext, 0)
 
         def arrayCreatorRest(self):
-            return self.getTypedRuleContext(JavaParser.ArrayCreatorRestContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ArrayCreatorRestContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_creator
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterCreator" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterCreator"):
                 listener.enterCreator(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitCreator" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitCreator"):
                 listener.exitCreator(self)
-
-
-
 
     def creator(self):
 
         localctx = JavaParser.CreatorContext(self, self._ctx, self.state)
         self.enterRule(localctx, 220, self.RULE_creator)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.state = 1617
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,195,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 195, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 1609
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==JavaParser.LT:
+                if _la == JavaParser.LT:
                     self.state = 1608
                     self.nonWildcardTypeArguments()
-
 
                 self.state = 1611
                 self.createdName()
@@ -11435,77 +11342,72 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class CreatedNameContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def identifier(self, i:int=None):
+        def identifier(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.IdentifierContext)
             else:
-                return self.getTypedRuleContext(JavaParser.IdentifierContext,i)
+                return self.getTypedRuleContext(JavaParser.IdentifierContext, i)
 
-
-        def typeArgumentsOrDiamond(self, i:int=None):
+        def typeArgumentsOrDiamond(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.TypeArgumentsOrDiamondContext)
             else:
-                return self.getTypedRuleContext(JavaParser.TypeArgumentsOrDiamondContext,i)
+                return self.getTypedRuleContext(JavaParser.TypeArgumentsOrDiamondContext, i)
 
-
-        def DOT(self, i:int=None):
+        def DOT(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.DOT)
             else:
                 return self.getToken(JavaParser.DOT, i)
 
         def primitiveType(self):
-            return self.getTypedRuleContext(JavaParser.PrimitiveTypeContext,0)
-
+            return self.getTypedRuleContext(JavaParser.PrimitiveTypeContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_createdName
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterCreatedName" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterCreatedName"):
                 listener.enterCreatedName(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitCreatedName" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitCreatedName"):
                 listener.exitCreatedName(self)
-
-
-
 
     def createdName(self):
 
         localctx = JavaParser.CreatedNameContext(self, self._ctx, self.state)
         self.enterRule(localctx, 222, self.RULE_createdName)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.state = 1634
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS, JavaParser.IDENTIFIER]:
+            if token in [JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS,
+                         JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE,
+                         JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS,
+                         JavaParser.IDENTIFIER]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 1619
                 self.identifier()
                 self.state = 1621
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==JavaParser.LT:
+                if _la == JavaParser.LT:
                     self.state = 1620
                     self.typeArgumentsOrDiamond()
-
 
                 self.state = 1630
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                while _la==JavaParser.DOT:
+                while _la == JavaParser.DOT:
                     self.state = 1623
                     self.match(JavaParser.DOT)
                     self.state = 1624
@@ -11513,17 +11415,17 @@ class JavaParser ( Parser ):
                     self.state = 1626
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
-                    if _la==JavaParser.LT:
+                    if _la == JavaParser.LT:
                         self.state = 1625
                         self.typeArgumentsOrDiamond()
-
 
                     self.state = 1632
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
 
                 pass
-            elif token in [JavaParser.BOOLEAN, JavaParser.BYTE, JavaParser.CHAR, JavaParser.DOUBLE, JavaParser.FLOAT, JavaParser.INT, JavaParser.LONG, JavaParser.SHORT]:
+            elif token in [JavaParser.BOOLEAN, JavaParser.BYTE, JavaParser.CHAR, JavaParser.DOUBLE, JavaParser.FLOAT,
+                           JavaParser.INT, JavaParser.LONG, JavaParser.SHORT]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 1633
                 self.primitiveType()
@@ -11539,45 +11441,38 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class InnerCreatorContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def classCreatorRest(self):
-            return self.getTypedRuleContext(JavaParser.ClassCreatorRestContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ClassCreatorRestContext, 0)
 
         def nonWildcardTypeArgumentsOrDiamond(self):
-            return self.getTypedRuleContext(JavaParser.NonWildcardTypeArgumentsOrDiamondContext,0)
-
+            return self.getTypedRuleContext(JavaParser.NonWildcardTypeArgumentsOrDiamondContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_innerCreator
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterInnerCreator" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterInnerCreator"):
                 listener.enterInnerCreator(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitInnerCreator" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitInnerCreator"):
                 listener.exitInnerCreator(self)
-
-
-
 
     def innerCreator(self):
 
         localctx = JavaParser.InnerCreatorContext(self, self._ctx, self.state)
         self.enterRule(localctx, 224, self.RULE_innerCreator)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 1636
@@ -11585,10 +11480,9 @@ class JavaParser ( Parser ):
             self.state = 1638
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==JavaParser.LT:
+            if _la == JavaParser.LT:
                 self.state = 1637
                 self.nonWildcardTypeArgumentsOrDiamond()
-
 
             self.state = 1640
             self.classCreatorRest()
@@ -11600,63 +11494,57 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ArrayCreatorRestContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def arrayInitializer(self):
-            return self.getTypedRuleContext(JavaParser.ArrayInitializerContext,0)
+            return self.getTypedRuleContext(JavaParser.ArrayInitializerContext, 0)
 
-
-        def LBRACK(self, i:int=None):
+        def LBRACK(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.LBRACK)
             else:
                 return self.getToken(JavaParser.LBRACK, i)
 
-        def RBRACK(self, i:int=None):
+        def RBRACK(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.RBRACK)
             else:
                 return self.getToken(JavaParser.RBRACK, i)
 
-        def expression(self, i:int=None):
+        def expression(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.ExpressionContext)
             else:
-                return self.getTypedRuleContext(JavaParser.ExpressionContext,i)
-
+                return self.getTypedRuleContext(JavaParser.ExpressionContext, i)
 
         def getRuleIndex(self):
             return JavaParser.RULE_arrayCreatorRest
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterArrayCreatorRest" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterArrayCreatorRest"):
                 listener.enterArrayCreatorRest(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitArrayCreatorRest" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitArrayCreatorRest"):
                 listener.exitArrayCreatorRest(self)
-
-
-
 
     def arrayCreatorRest(self):
 
         localctx = JavaParser.ArrayCreatorRestContext(self, self._ctx, self.state)
         self.enterRule(localctx, 226, self.RULE_arrayCreatorRest)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.state = 1664
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,204,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 204, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 1644 
+                self.state = 1644
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while True:
@@ -11664,10 +11552,10 @@ class JavaParser ( Parser ):
                     self.match(JavaParser.LBRACK)
                     self.state = 1643
                     self.match(JavaParser.RBRACK)
-                    self.state = 1646 
+                    self.state = 1646
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
-                    if not (_la==JavaParser.LBRACK):
+                    if not (_la == JavaParser.LBRACK):
                         break
 
                 self.state = 1648
@@ -11676,10 +11564,10 @@ class JavaParser ( Parser ):
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 1653 
+                self.state = 1653
                 self._errHandler.sync(self)
                 _alt = 1
-                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
+                while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
                     if _alt == 1:
                         self.state = 1649
                         self.match(JavaParser.LBRACK)
@@ -11690,22 +11578,22 @@ class JavaParser ( Parser ):
 
                     else:
                         raise NoViableAltException(self)
-                    self.state = 1655 
+                    self.state = 1655
                     self._errHandler.sync(self)
-                    _alt = self._interp.adaptivePredict(self._input,202,self._ctx)
+                    _alt = self._interp.adaptivePredict(self._input, 202, self._ctx)
 
                 self.state = 1661
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,203,self._ctx)
-                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                    if _alt==1:
+                _alt = self._interp.adaptivePredict(self._input, 203, self._ctx)
+                while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                    if _alt == 1:
                         self.state = 1657
                         self.match(JavaParser.LBRACK)
                         self.state = 1658
-                        self.match(JavaParser.RBRACK) 
+                        self.match(JavaParser.RBRACK)
                     self.state = 1663
                     self._errHandler.sync(self)
-                    _alt = self._interp.adaptivePredict(self._input,203,self._ctx)
+                    _alt = self._interp.adaptivePredict(self._input, 203, self._ctx)
 
                 pass
 
@@ -11718,35 +11606,29 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ClassCreatorRestContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def arguments(self):
-            return self.getTypedRuleContext(JavaParser.ArgumentsContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ArgumentsContext, 0)
 
         def classBody(self):
-            return self.getTypedRuleContext(JavaParser.ClassBodyContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ClassBodyContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_classCreatorRest
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterClassCreatorRest" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterClassCreatorRest"):
                 listener.enterClassCreatorRest(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitClassCreatorRest" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitClassCreatorRest"):
                 listener.exitClassCreatorRest(self)
-
-
-
 
     def classCreatorRest(self):
 
@@ -11758,7 +11640,7 @@ class JavaParser ( Parser ):
             self.arguments()
             self.state = 1668
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,205,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 205, self._ctx)
             if la_ == 1:
                 self.state = 1667
                 self.classBody()
@@ -11772,35 +11654,29 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ExplicitGenericInvocationContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def nonWildcardTypeArguments(self):
-            return self.getTypedRuleContext(JavaParser.NonWildcardTypeArgumentsContext,0)
-
+            return self.getTypedRuleContext(JavaParser.NonWildcardTypeArgumentsContext, 0)
 
         def explicitGenericInvocationSuffix(self):
-            return self.getTypedRuleContext(JavaParser.ExplicitGenericInvocationSuffixContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ExplicitGenericInvocationSuffixContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_explicitGenericInvocation
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterExplicitGenericInvocation" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterExplicitGenericInvocation"):
                 listener.enterExplicitGenericInvocation(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitExplicitGenericInvocation" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitExplicitGenericInvocation"):
                 listener.exitExplicitGenericInvocation(self)
-
-
-
 
     def explicitGenericInvocation(self):
 
@@ -11820,11 +11696,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class TypeArgumentsOrDiamondContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -11835,22 +11710,18 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.GT, 0)
 
         def typeArguments(self):
-            return self.getTypedRuleContext(JavaParser.TypeArgumentsContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeArgumentsContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_typeArgumentsOrDiamond
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTypeArgumentsOrDiamond" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterTypeArgumentsOrDiamond"):
                 listener.enterTypeArgumentsOrDiamond(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTypeArgumentsOrDiamond" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitTypeArgumentsOrDiamond"):
                 listener.exitTypeArgumentsOrDiamond(self)
-
-
-
 
     def typeArgumentsOrDiamond(self):
 
@@ -11859,7 +11730,7 @@ class JavaParser ( Parser ):
         try:
             self.state = 1676
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,206,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 206, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 1673
@@ -11883,11 +11754,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class NonWildcardTypeArgumentsOrDiamondContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -11898,22 +11768,18 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.GT, 0)
 
         def nonWildcardTypeArguments(self):
-            return self.getTypedRuleContext(JavaParser.NonWildcardTypeArgumentsContext,0)
-
+            return self.getTypedRuleContext(JavaParser.NonWildcardTypeArgumentsContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_nonWildcardTypeArgumentsOrDiamond
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterNonWildcardTypeArgumentsOrDiamond" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterNonWildcardTypeArgumentsOrDiamond"):
                 listener.enterNonWildcardTypeArgumentsOrDiamond(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitNonWildcardTypeArgumentsOrDiamond" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitNonWildcardTypeArgumentsOrDiamond"):
                 listener.exitNonWildcardTypeArgumentsOrDiamond(self)
-
-
-
 
     def nonWildcardTypeArgumentsOrDiamond(self):
 
@@ -11922,7 +11788,7 @@ class JavaParser ( Parser ):
         try:
             self.state = 1681
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,207,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input, 207, self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 1678
@@ -11946,11 +11812,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class NonWildcardTypeArgumentsContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -11958,8 +11823,7 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.LT, 0)
 
         def typeList(self):
-            return self.getTypedRuleContext(JavaParser.TypeListContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeListContext, 0)
 
         def GT(self):
             return self.getToken(JavaParser.GT, 0)
@@ -11967,16 +11831,13 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_nonWildcardTypeArguments
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterNonWildcardTypeArguments" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterNonWildcardTypeArguments"):
                 listener.enterNonWildcardTypeArguments(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitNonWildcardTypeArguments" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitNonWildcardTypeArguments"):
                 listener.exitNonWildcardTypeArguments(self)
-
-
-
 
     def nonWildcardTypeArguments(self):
 
@@ -11998,22 +11859,20 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class TypeListContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def typeType(self, i:int=None):
+        def typeType(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.TypeTypeContext)
             else:
-                return self.getTypedRuleContext(JavaParser.TypeTypeContext,i)
+                return self.getTypedRuleContext(JavaParser.TypeTypeContext, i)
 
-
-        def COMMA(self, i:int=None):
+        def COMMA(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.COMMA)
             else:
@@ -12022,22 +11881,19 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_typeList
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTypeList" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterTypeList"):
                 listener.enterTypeList(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTypeList" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitTypeList"):
                 listener.exitTypeList(self)
-
-
-
 
     def typeList(self):
 
         localctx = JavaParser.TypeListContext(self, self._ctx, self.state)
         self.enterRule(localctx, 238, self.RULE_typeList)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 1687
@@ -12045,7 +11901,7 @@ class JavaParser ( Parser ):
             self.state = 1692
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==JavaParser.COMMA:
+            while _la == JavaParser.COMMA:
                 self.state = 1688
                 self.match(JavaParser.COMMA)
                 self.state = 1689
@@ -12062,36 +11918,32 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class TypeTypeContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def classOrInterfaceType(self):
-            return self.getTypedRuleContext(JavaParser.ClassOrInterfaceTypeContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ClassOrInterfaceTypeContext, 0)
 
         def primitiveType(self):
-            return self.getTypedRuleContext(JavaParser.PrimitiveTypeContext,0)
+            return self.getTypedRuleContext(JavaParser.PrimitiveTypeContext, 0)
 
-
-        def annotation(self, i:int=None):
+        def annotation(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.AnnotationContext)
             else:
-                return self.getTypedRuleContext(JavaParser.AnnotationContext,i)
+                return self.getTypedRuleContext(JavaParser.AnnotationContext, i)
 
-
-        def LBRACK(self, i:int=None):
+        def LBRACK(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.LBRACK)
             else:
                 return self.getToken(JavaParser.LBRACK, i)
 
-        def RBRACK(self, i:int=None):
+        def RBRACK(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.RBRACK)
             else:
@@ -12100,43 +11952,44 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_typeType
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTypeType" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterTypeType"):
                 listener.enterTypeType(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTypeType" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitTypeType"):
                 listener.exitTypeType(self)
-
-
-
 
     def typeType(self):
 
         localctx = JavaParser.TypeTypeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 240, self.RULE_typeType)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 1698
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,209,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 209, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 1695
-                    self.annotation() 
+                    self.annotation()
                 self.state = 1700
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,209,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 209, self._ctx)
 
             self.state = 1703
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS, JavaParser.IDENTIFIER]:
+            if token in [JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS,
+                         JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE,
+                         JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS,
+                         JavaParser.IDENTIFIER]:
                 self.state = 1701
                 self.classOrInterfaceType()
                 pass
-            elif token in [JavaParser.BOOLEAN, JavaParser.BYTE, JavaParser.CHAR, JavaParser.DOUBLE, JavaParser.FLOAT, JavaParser.INT, JavaParser.LONG, JavaParser.SHORT]:
+            elif token in [JavaParser.BOOLEAN, JavaParser.BYTE, JavaParser.CHAR, JavaParser.DOUBLE, JavaParser.FLOAT,
+                           JavaParser.INT, JavaParser.LONG, JavaParser.SHORT]:
                 self.state = 1702
                 self.primitiveType()
                 pass
@@ -12145,13 +11998,21 @@ class JavaParser ( Parser ):
 
             self.state = 1715
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,212,self._ctx)
-            while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
-                if _alt==1:
+            _alt = self._interp.adaptivePredict(self._input, 212, self._ctx)
+            while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
+                if _alt == 1:
                     self.state = 1708
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
-                    while ((((_la - 51)) & ~0x3f) == 0 and ((1 << (_la - 51)) & ((1 << (JavaParser.MODULE - 51)) | (1 << (JavaParser.OPEN - 51)) | (1 << (JavaParser.REQUIRES - 51)) | (1 << (JavaParser.EXPORTS - 51)) | (1 << (JavaParser.OPENS - 51)) | (1 << (JavaParser.TO - 51)) | (1 << (JavaParser.USES - 51)) | (1 << (JavaParser.PROVIDES - 51)) | (1 << (JavaParser.WITH - 51)) | (1 << (JavaParser.TRANSITIVE - 51)) | (1 << (JavaParser.VAR - 51)) | (1 << (JavaParser.YIELD - 51)) | (1 << (JavaParser.RECORD - 51)) | (1 << (JavaParser.SEALED - 51)) | (1 << (JavaParser.PERMITS - 51)))) != 0) or _la==JavaParser.AT or _la==JavaParser.IDENTIFIER:
+                    while ((((_la - 51)) & ~0x3f) == 0 and ((1 << (_la - 51)) & (
+                            (1 << (JavaParser.MODULE - 51)) | (1 << (JavaParser.OPEN - 51)) | (
+                            1 << (JavaParser.REQUIRES - 51)) | (1 << (JavaParser.EXPORTS - 51)) | (
+                                    1 << (JavaParser.OPENS - 51)) | (1 << (JavaParser.TO - 51)) | (
+                                    1 << (JavaParser.USES - 51)) | (1 << (JavaParser.PROVIDES - 51)) | (
+                                    1 << (JavaParser.WITH - 51)) | (1 << (JavaParser.TRANSITIVE - 51)) | (
+                                    1 << (JavaParser.VAR - 51)) | (1 << (JavaParser.YIELD - 51)) | (
+                                    1 << (JavaParser.RECORD - 51)) | (1 << (JavaParser.SEALED - 51)) | (1 << (
+                            JavaParser.PERMITS - 51)))) != 0) or _la == JavaParser.AT or _la == JavaParser.IDENTIFIER:
                         self.state = 1705
                         self.annotation()
                         self.state = 1710
@@ -12161,10 +12022,10 @@ class JavaParser ( Parser ):
                     self.state = 1711
                     self.match(JavaParser.LBRACK)
                     self.state = 1712
-                    self.match(JavaParser.RBRACK) 
+                    self.match(JavaParser.RBRACK)
                 self.state = 1717
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,212,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 212, self._ctx)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -12174,11 +12035,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class PrimitiveTypeContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -12209,27 +12069,27 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_primitiveType
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterPrimitiveType" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterPrimitiveType"):
                 listener.enterPrimitiveType(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitPrimitiveType" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitPrimitiveType"):
                 listener.exitPrimitiveType(self)
-
-
-
 
     def primitiveType(self):
 
         localctx = JavaParser.PrimitiveTypeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 242, self.RULE_primitiveType)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 1718
             _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << JavaParser.BOOLEAN) | (1 << JavaParser.BYTE) | (1 << JavaParser.CHAR) | (1 << JavaParser.DOUBLE) | (1 << JavaParser.FLOAT) | (1 << JavaParser.INT) | (1 << JavaParser.LONG) | (1 << JavaParser.SHORT))) != 0)):
+            if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & (
+                    (1 << JavaParser.BOOLEAN) | (1 << JavaParser.BYTE) | (1 << JavaParser.CHAR) | (
+                    1 << JavaParser.DOUBLE) | (1 << JavaParser.FLOAT) | (1 << JavaParser.INT) | (
+                            1 << JavaParser.LONG) | (1 << JavaParser.SHORT))) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -12242,28 +12102,26 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class TypeArgumentsContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def LT(self):
             return self.getToken(JavaParser.LT, 0)
 
-        def typeArgument(self, i:int=None):
+        def typeArgument(self, i: int = None):
             if i is None:
                 return self.getTypedRuleContexts(JavaParser.TypeArgumentContext)
             else:
-                return self.getTypedRuleContext(JavaParser.TypeArgumentContext,i)
-
+                return self.getTypedRuleContext(JavaParser.TypeArgumentContext, i)
 
         def GT(self):
             return self.getToken(JavaParser.GT, 0)
 
-        def COMMA(self, i:int=None):
+        def COMMA(self, i: int = None):
             if i is None:
                 return self.getTokens(JavaParser.COMMA)
             else:
@@ -12272,22 +12130,19 @@ class JavaParser ( Parser ):
         def getRuleIndex(self):
             return JavaParser.RULE_typeArguments
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTypeArguments" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterTypeArguments"):
                 listener.enterTypeArguments(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTypeArguments" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitTypeArguments"):
                 listener.exitTypeArguments(self)
-
-
-
 
     def typeArguments(self):
 
         localctx = JavaParser.TypeArgumentsContext(self, self._ctx, self.state)
         self.enterRule(localctx, 244, self.RULE_typeArguments)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 1720
@@ -12297,7 +12152,7 @@ class JavaParser ( Parser ):
             self.state = 1726
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==JavaParser.COMMA:
+            while _la == JavaParser.COMMA:
                 self.state = 1722
                 self.match(JavaParser.COMMA)
                 self.state = 1723
@@ -12316,48 +12171,41 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class SuperSuffixContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
         def arguments(self):
-            return self.getTypedRuleContext(JavaParser.ArgumentsContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ArgumentsContext, 0)
 
         def DOT(self):
             return self.getToken(JavaParser.DOT, 0)
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def typeArguments(self):
-            return self.getTypedRuleContext(JavaParser.TypeArgumentsContext,0)
-
+            return self.getTypedRuleContext(JavaParser.TypeArgumentsContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_superSuffix
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSuperSuffix" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterSuperSuffix"):
                 listener.enterSuperSuffix(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSuperSuffix" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitSuperSuffix"):
                 listener.exitSuperSuffix(self)
-
-
-
 
     def superSuffix(self):
 
         localctx = JavaParser.SuperSuffixContext(self, self._ctx, self.state)
         self.enterRule(localctx, 246, self.RULE_superSuffix)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.state = 1740
             self._errHandler.sync(self)
@@ -12374,20 +12222,18 @@ class JavaParser ( Parser ):
                 self.state = 1734
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==JavaParser.LT:
+                if _la == JavaParser.LT:
                     self.state = 1733
                     self.typeArguments()
-
 
                 self.state = 1736
                 self.identifier()
                 self.state = 1738
                 self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,215,self._ctx)
+                la_ = self._interp.adaptivePredict(self._input, 215, self._ctx)
                 if la_ == 1:
                     self.state = 1737
                     self.arguments()
-
 
                 pass
             else:
@@ -12401,11 +12247,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ExplicitGenericInvocationSuffixContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -12413,30 +12258,24 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.SUPER, 0)
 
         def superSuffix(self):
-            return self.getTypedRuleContext(JavaParser.SuperSuffixContext,0)
-
+            return self.getTypedRuleContext(JavaParser.SuperSuffixContext, 0)
 
         def identifier(self):
-            return self.getTypedRuleContext(JavaParser.IdentifierContext,0)
-
+            return self.getTypedRuleContext(JavaParser.IdentifierContext, 0)
 
         def arguments(self):
-            return self.getTypedRuleContext(JavaParser.ArgumentsContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ArgumentsContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_explicitGenericInvocationSuffix
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterExplicitGenericInvocationSuffix" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterExplicitGenericInvocationSuffix"):
                 listener.enterExplicitGenericInvocationSuffix(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitExplicitGenericInvocationSuffix" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitExplicitGenericInvocationSuffix"):
                 listener.exitExplicitGenericInvocationSuffix(self)
-
-
-
 
     def explicitGenericInvocationSuffix(self):
 
@@ -12453,7 +12292,10 @@ class JavaParser ( Parser ):
                 self.state = 1743
                 self.superSuffix()
                 pass
-            elif token in [JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS, JavaParser.OPENS, JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH, JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD, JavaParser.SEALED, JavaParser.PERMITS, JavaParser.IDENTIFIER]:
+            elif token in [JavaParser.MODULE, JavaParser.OPEN, JavaParser.REQUIRES, JavaParser.EXPORTS,
+                           JavaParser.OPENS, JavaParser.TO, JavaParser.USES, JavaParser.PROVIDES, JavaParser.WITH,
+                           JavaParser.TRANSITIVE, JavaParser.VAR, JavaParser.YIELD, JavaParser.RECORD,
+                           JavaParser.SEALED, JavaParser.PERMITS, JavaParser.IDENTIFIER]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 1744
                 self.identifier()
@@ -12471,11 +12313,10 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
     class ArgumentsContext(ParserRuleContext):
         __slots__ = 'parser'
 
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+        def __init__(self, parser, parent: ParserRuleContext = None, invokingState: int = -1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
@@ -12486,28 +12327,24 @@ class JavaParser ( Parser ):
             return self.getToken(JavaParser.RPAREN, 0)
 
         def expressionList(self):
-            return self.getTypedRuleContext(JavaParser.ExpressionListContext,0)
-
+            return self.getTypedRuleContext(JavaParser.ExpressionListContext, 0)
 
         def getRuleIndex(self):
             return JavaParser.RULE_arguments
 
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterArguments" ):
+        def enterRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "enterArguments"):
                 listener.enterArguments(self)
 
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitArguments" ):
+        def exitRule(self, listener: ParseTreeListener):
+            if hasattr(listener, "exitArguments"):
                 listener.exitArguments(self)
-
-
-
 
     def arguments(self):
 
         localctx = JavaParser.ArgumentsContext(self, self._ctx, self.state)
         self.enterRule(localctx, 250, self.RULE_arguments)
-        self._la = 0 # Token type
+        self._la = 0  # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 1749
@@ -12515,10 +12352,34 @@ class JavaParser ( Parser ):
             self.state = 1751
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if ((((_la - 3)) & ~0x3f) == 0 and ((1 << (_la - 3)) & ((1 << (JavaParser.BOOLEAN - 3)) | (1 << (JavaParser.BYTE - 3)) | (1 << (JavaParser.CHAR - 3)) | (1 << (JavaParser.DOUBLE - 3)) | (1 << (JavaParser.FLOAT - 3)) | (1 << (JavaParser.INT - 3)) | (1 << (JavaParser.LONG - 3)) | (1 << (JavaParser.NEW - 3)) | (1 << (JavaParser.SHORT - 3)) | (1 << (JavaParser.SUPER - 3)) | (1 << (JavaParser.SWITCH - 3)) | (1 << (JavaParser.THIS - 3)) | (1 << (JavaParser.VOID - 3)) | (1 << (JavaParser.MODULE - 3)) | (1 << (JavaParser.OPEN - 3)) | (1 << (JavaParser.REQUIRES - 3)) | (1 << (JavaParser.EXPORTS - 3)) | (1 << (JavaParser.OPENS - 3)) | (1 << (JavaParser.TO - 3)) | (1 << (JavaParser.USES - 3)) | (1 << (JavaParser.PROVIDES - 3)) | (1 << (JavaParser.WITH - 3)) | (1 << (JavaParser.TRANSITIVE - 3)) | (1 << (JavaParser.VAR - 3)) | (1 << (JavaParser.YIELD - 3)) | (1 << (JavaParser.RECORD - 3)) | (1 << (JavaParser.SEALED - 3)) | (1 << (JavaParser.PERMITS - 3)))) != 0) or ((((_la - 67)) & ~0x3f) == 0 and ((1 << (_la - 67)) & ((1 << (JavaParser.DECIMAL_LITERAL - 67)) | (1 << (JavaParser.HEX_LITERAL - 67)) | (1 << (JavaParser.OCT_LITERAL - 67)) | (1 << (JavaParser.BINARY_LITERAL - 67)) | (1 << (JavaParser.FLOAT_LITERAL - 67)) | (1 << (JavaParser.HEX_FLOAT_LITERAL - 67)) | (1 << (JavaParser.BOOL_LITERAL - 67)) | (1 << (JavaParser.CHAR_LITERAL - 67)) | (1 << (JavaParser.STRING_LITERAL - 67)) | (1 << (JavaParser.TEXT_BLOCK - 67)) | (1 << (JavaParser.NULL_LITERAL - 67)) | (1 << (JavaParser.LPAREN - 67)) | (1 << (JavaParser.LT - 67)) | (1 << (JavaParser.BANG - 67)) | (1 << (JavaParser.TILDE - 67)) | (1 << (JavaParser.INC - 67)) | (1 << (JavaParser.DEC - 67)) | (1 << (JavaParser.ADD - 67)) | (1 << (JavaParser.SUB - 67)) | (1 << (JavaParser.AT - 67)) | (1 << (JavaParser.IDENTIFIER - 67)))) != 0):
+            if ((((_la - 3)) & ~0x3f) == 0 and ((1 << (_la - 3)) & (
+                    (1 << (JavaParser.BOOLEAN - 3)) | (1 << (JavaParser.BYTE - 3)) | (1 << (JavaParser.CHAR - 3)) | (
+                    1 << (JavaParser.DOUBLE - 3)) | (1 << (JavaParser.FLOAT - 3)) | (1 << (JavaParser.INT - 3)) | (
+                            1 << (JavaParser.LONG - 3)) | (1 << (JavaParser.NEW - 3)) | (
+                            1 << (JavaParser.SHORT - 3)) | (1 << (JavaParser.SUPER - 3)) | (
+                            1 << (JavaParser.SWITCH - 3)) | (1 << (JavaParser.THIS - 3)) | (
+                            1 << (JavaParser.VOID - 3)) | (1 << (JavaParser.MODULE - 3)) | (
+                            1 << (JavaParser.OPEN - 3)) | (1 << (JavaParser.REQUIRES - 3)) | (
+                            1 << (JavaParser.EXPORTS - 3)) | (1 << (JavaParser.OPENS - 3)) | (
+                            1 << (JavaParser.TO - 3)) | (1 << (JavaParser.USES - 3)) | (
+                            1 << (JavaParser.PROVIDES - 3)) | (1 << (JavaParser.WITH - 3)) | (
+                            1 << (JavaParser.TRANSITIVE - 3)) | (1 << (JavaParser.VAR - 3)) | (
+                            1 << (JavaParser.YIELD - 3)) | (1 << (JavaParser.RECORD - 3)) | (
+                            1 << (JavaParser.SEALED - 3)) | (1 << (JavaParser.PERMITS - 3)))) != 0) or (
+                    (((_la - 67)) & ~0x3f) == 0 and ((1 << (_la - 67)) & (
+                    (1 << (JavaParser.DECIMAL_LITERAL - 67)) | (1 << (JavaParser.HEX_LITERAL - 67)) | (
+                    1 << (JavaParser.OCT_LITERAL - 67)) | (1 << (JavaParser.BINARY_LITERAL - 67)) | (
+                            1 << (JavaParser.FLOAT_LITERAL - 67)) | (1 << (JavaParser.HEX_FLOAT_LITERAL - 67)) | (
+                            1 << (JavaParser.BOOL_LITERAL - 67)) | (1 << (JavaParser.CHAR_LITERAL - 67)) | (
+                            1 << (JavaParser.STRING_LITERAL - 67)) | (1 << (JavaParser.TEXT_BLOCK - 67)) | (
+                            1 << (JavaParser.NULL_LITERAL - 67)) | (1 << (JavaParser.LPAREN - 67)) | (
+                            1 << (JavaParser.LT - 67)) | (1 << (JavaParser.BANG - 67)) | (
+                            1 << (JavaParser.TILDE - 67)) | (1 << (JavaParser.INC - 67)) | (
+                            1 << (JavaParser.DEC - 67)) | (1 << (JavaParser.ADD - 67)) | (
+                            1 << (JavaParser.SUB - 67)) | (1 << (JavaParser.AT - 67)) | (
+                            1 << (JavaParser.IDENTIFIER - 67)))) != 0):
                 self.state = 1750
                 self.expressionList()
-
 
             self.state = 1753
             self.match(JavaParser.RPAREN)
@@ -12530,9 +12391,7 @@ class JavaParser ( Parser ):
             self.exitRule()
         return localctx
 
-
-
-    def sempred(self, localctx:RuleContext, ruleIndex:int, predIndex:int):
+    def sempred(self, localctx: RuleContext, ruleIndex: int, predIndex: int):
         if self._predicates == None:
             self._predicates = dict()
         self._predicates[99] = self.expression_sempred
@@ -12543,80 +12402,58 @@ class JavaParser ( Parser ):
         else:
             return pred(localctx, predIndex)
 
-    def expression_sempred(self, localctx:ExpressionContext, predIndex:int):
-            if predIndex == 0:
-                return self.precpred(self._ctx, 14)
-         
+    def expression_sempred(self, localctx: ExpressionContext, predIndex: int):
+        if predIndex == 0:
+            return self.precpred(self._ctx, 14)
 
-            if predIndex == 1:
-                return self.precpred(self._ctx, 13)
-         
+        if predIndex == 1:
+            return self.precpred(self._ctx, 13)
 
-            if predIndex == 2:
-                return self.precpred(self._ctx, 12)
-         
+        if predIndex == 2:
+            return self.precpred(self._ctx, 12)
 
-            if predIndex == 3:
-                return self.precpred(self._ctx, 11)
-         
+        if predIndex == 3:
+            return self.precpred(self._ctx, 11)
 
-            if predIndex == 4:
-                return self.precpred(self._ctx, 9)
-         
+        if predIndex == 4:
+            return self.precpred(self._ctx, 9)
 
-            if predIndex == 5:
-                return self.precpred(self._ctx, 8)
-         
+        if predIndex == 5:
+            return self.precpred(self._ctx, 8)
 
-            if predIndex == 6:
-                return self.precpred(self._ctx, 7)
-         
+        if predIndex == 6:
+            return self.precpred(self._ctx, 7)
 
-            if predIndex == 7:
-                return self.precpred(self._ctx, 6)
-         
+        if predIndex == 7:
+            return self.precpred(self._ctx, 6)
 
-            if predIndex == 8:
-                return self.precpred(self._ctx, 5)
-         
+        if predIndex == 8:
+            return self.precpred(self._ctx, 5)
 
-            if predIndex == 9:
-                return self.precpred(self._ctx, 4)
-         
+        if predIndex == 9:
+            return self.precpred(self._ctx, 4)
 
-            if predIndex == 10:
-                return self.precpred(self._ctx, 3)
-         
+        if predIndex == 10:
+            return self.precpred(self._ctx, 3)
 
-            if predIndex == 11:
-                return self.precpred(self._ctx, 2)
-         
+        if predIndex == 11:
+            return self.precpred(self._ctx, 2)
 
-            if predIndex == 12:
-                return self.precpred(self._ctx, 25)
-         
+        if predIndex == 12:
+            return self.precpred(self._ctx, 25)
 
-            if predIndex == 13:
-                return self.precpred(self._ctx, 24)
-         
+        if predIndex == 13:
+            return self.precpred(self._ctx, 24)
 
-            if predIndex == 14:
-                return self.precpred(self._ctx, 22)
-         
+        if predIndex == 14:
+            return self.precpred(self._ctx, 22)
 
-            if predIndex == 15:
-                return self.precpred(self._ctx, 18)
-         
+        if predIndex == 15:
+            return self.precpred(self._ctx, 18)
 
-            if predIndex == 16:
-                return self.precpred(self._ctx, 10)
-         
+        if predIndex == 16:
+            return self.precpred(self._ctx, 10)
 
-    def guardedPattern_sempred(self, localctx:GuardedPatternContext, predIndex:int):
-            if predIndex == 17:
-                return self.precpred(self._ctx, 1)
-         
-
-
-
-
+    def guardedPattern_sempred(self, localctx: GuardedPatternContext, predIndex: int):
+        if predIndex == 17:
+            return self.precpred(self._ctx, 1)

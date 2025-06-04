@@ -111,39 +111,55 @@ class DynamicRAG:
         all_ids = []
         all_embeddings = []
         all_metadatas = []
+        print("prepare for methods:")
+        if os.path.exists("data/cache.json"):
+            data = json.load(open("data/cache.json", "r"))
+            all_ids = data["ids"]
+            all_embeddings = data["embeddings"]
+            all_metadatas = data["meta"]
+        else:
+            for item in items:
+                if isinstance(item, dict):
+                    continue
+                file_path = item.temp_file
+                content = item.get()
 
-        for item in items:
-            file_path = item.temp_file
-            content = item.get()
+                # 记录需要写入的文件
+                file_write_map[file_path] = content
+                for key, value in content["class_methods"].items():
+                    entry_id = str(hash(f"{key}_{file_path}"))
+                    self.metadata_store[entry_id] = {
+                        "original_key": key,
+                        "file_path": file_path
+                    }
 
-            # 记录需要写入的文件
-            file_write_map[file_path] = content
-            for key, value in content["class_methods"].items():
-                entry_id = str(hash(f"{key}_{file_path}"))
-                self.metadata_store[entry_id] = {
-                    "original_key": key,
-                    "file_path": file_path
-                }
+                    chunks = self._chunk_text(key)
+                    embeddings = self.embedder.encode(chunks).tolist()
 
-                chunks = self._chunk_text(key)
-                embeddings = self.embedder.encode(chunks).tolist()
-
-                all_ids.extend([f"{entry_id}_{i}" for i in range(len(chunks))])
-                all_embeddings.extend(embeddings)
-                all_metadatas.extend([{"source": entry_id} for _ in chunks])
-
+                    all_ids.extend([f"{entry_id}_{i}" for i in range(len(chunks))])
+                    all_embeddings.extend(embeddings)
+                    all_metadatas.extend([{"source": entry_id} for _ in chunks])
+            with open("data/cache.json", "w") as f:
+                json.dump({
+                    "ids": all_ids,
+                    "embeddings": all_embeddings,
+                    "meta": all_metadatas
+                }, f)
         # 批量写入文件
-        for path, content in file_write_map.items():
-            os.makedirs(os.path.dirname(path), exist_ok=True)
-            with open(path, 'w', encoding='utf-8') as f:
-                json.dump(content, f, indent=2, ensure_ascii=False)
+        # for path, content in file_write_map.items():
+        #     os.makedirs(os.path.dirname(path), exist_ok=True)
+        #     with open(path, 'w', encoding='utf-8') as f:
+        #         json.dump(content, f, indent=2, ensure_ascii=False)
 
         if all_ids:
-            self.collection.add(
-                ids=all_ids,
-                embeddings=all_embeddings,
-                metadatas=all_metadatas
-            )
+            maxlen = 8192
+            for i in range(0, len(all_ids), maxlen):
+                print(f"batch {i // 8192} adding.....")
+                self.collection.add(
+                    ids=all_ids[i:i + maxlen],
+                    embeddings=all_embeddings[i:i + maxlen],
+                    metadatas=all_metadatas[i:i + maxlen]
+                )
 
     def delete_data(self, key: str, value: dict):
         """删除数据 (仅删除元数据，不删除物理文件)"""
@@ -165,7 +181,8 @@ class DynamicRAG:
 
     def enhanced_query(self, query_text: str, top_k: int = 3) -> list[tuple[float, str, dict]]:
         """带相似度得分的增强检索
-        返回: 包含(得分, key, value)的元组列表
+        返回: 包含(得分, entry_id, 元数据)的元组列表
+        元数据包含: original_key 和 file_path
         """
         query_embedding = self.embedder.encode(query_text).tolist()
         results = self.collection.query(
@@ -174,14 +191,11 @@ class DynamicRAG:
         )
 
         score_map = {}
-        # 同时保存key和对应的metadata
-        key_metadata_map = {}
         for i, result_id in enumerate(results['ids'][0]):
-            source_id = results['metadatas'][0][i]['source']
+            entry_id = results['metadatas'][0][i]['source']
             distance = results['distances'][0][i]
-            if source_id not in score_map or distance < score_map[source_id]:
-                score_map[source_id] = distance
-                key_metadata_map[source_id] = results['metadatas'][0][i]
+            if entry_id not in score_map or distance < score_map[entry_id]:
+                score_map[entry_id] = distance
 
         # 按相似度排序并返回top_k
         sorted_results = sorted(
@@ -190,12 +204,10 @@ class DynamicRAG:
         )[:top_k]
 
         return [
-            (1 - res[1], res[0], json.loads(self.metadata_store[res[0]]['value']))  # 这里解析JSON字符串
+            (1 - res[1], res[0], self.metadata_store[res[0]])  # 直接返回整个metadata条目
             for res in sorted_results
+            if res[0] in self.metadata_store  # 安全检查
         ]
-
-
-
 
 # 使用示例
 

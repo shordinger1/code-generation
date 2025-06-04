@@ -59,6 +59,9 @@ class java_template_class:
         return self
 
     def init_code(self, code):
+        if self.code is not None:
+            print(f"code already inited for {self.file_path}/{self.class_name}, want convert?")
+            return
         self.code = code
 
     def syntax_check(self):
