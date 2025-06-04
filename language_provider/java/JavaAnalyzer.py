@@ -18,7 +18,7 @@ def analysis_java_file(file_path):
             msg.append(f"Line {error['line']}:{error['column']} - {error['type']} - {error['message']}")
         return False, msg
     else:
-        method = analyzer.extract_methods()
+        method = analyzer.extract_class_info()
         return True, method
 
 
@@ -34,13 +34,13 @@ def analysis_java_files(root_dir):
         tempfile = f"temp/{rt}/{name}.json"
         if os.path.exists(tempfile):
             # print(f"获取缓存文件：{file_path}")
-            return JavaMethods.read(tempfile)
+            return JavaClass.read(tempfile)
         """处理单个Java文件的线程任务"""
         try:
             analyzer = JavaAnalyzer(str(file_path))
             if analyzer.analyze_syntax():
                 # print(f"成功分析: {file_path}")
-                method = analyzer.extract_methods()
+                method = analyzer.extract_class_info()
                 method.write(tempfile)
                 return method
             print(f"语法错误: {file_path}")
@@ -69,91 +69,39 @@ def analysis_java_files(root_dir):
     return methods
 
 
-class JavaMethods:
-    def __init__(self, file_name, methods, temp_file=""):
+class JavaClass:
+    def __init__(self, file_name, methods=None, abstract_methods=None, parameters=None, temp_file=""):
         self.file_name = file_name
-        self.methods = methods
+        self.methods = methods if methods is not None else []
+        self.abstract_methods = abstract_methods if abstract_methods is not None else []
+        self.parameters = parameters if parameters is not None else []
         self.temp_file = temp_file
 
     def get(self):
         return {
             "file": self.file_name,
-            "class_methods": self.methods,
-            # "temp_file": self.temp_file
+            "methods": self.methods,
+            "abstract_methods": self.abstract_methods,
+            "parameters": self.parameters,
         }
 
     @classmethod
     def read(cls, file_path):
-        """从JSON文件读取数据并创建JavaMethods对象"""
         with open(file_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
-        return cls(data["file"], data["class_methods"], file_path)
+        return cls(
+            data["file"],
+            data.get("methods", []),
+            data.get("abstract_methods", []),
+            data.get("parameters", []),
+            file_path
+        )
 
     def write(self, file_path):
-        """将JavaMethods对象写入JSON文件，使用类中的file_name作为路径"""
         self.temp_file = file_path
         data = self.get()
-
         with open(file_path, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=4)
-
-
-class JavaAnalyzer:
-    def __init__(self, file_path):
-        self.file_path = file_path
-        self.errors = []
-        self.methods = {}
-
-        # 初始化解析器
-        self.input_stream = FileStream(file_path, encoding='utf-8')
-        self.lexer = JavaLexer(self.input_stream)
-        self.token_stream = CommonTokenStream(self.lexer)
-        self.parser = JavaParser(self.token_stream)
-
-        # 自定义错误监听器
-        self.error_listener = SyntaxErrorListener()
-        self.parser.removeErrorListeners()
-        self.parser.addErrorListener(self.error_listener)
-
-    def analyze_syntax(self):
-        """执行语法分析"""
-        try:
-            self.tree = self.parser.compilationUnit()
-            self.errors = self.error_listener.errors
-            return len(self.errors) == 0
-        except Exception as e:
-            self.errors.append(f"Critical error: {str(e)}")
-            return False
-
-    def extract_methods(self):
-        """提取类方法信息"""
-
-        class MethodExtractor(JavaParserListener):
-            def __init__(self, token_stream):
-                self.token_stream = token_stream
-                self.methods = {}
-                self.current_class = ""
-
-            def enterClassDeclaration(self, ctx: JavaParser.ClassDeclarationContext):
-                self.current_class = ctx.identifier().getText()
-
-            def enterMethodDeclaration(self, ctx: JavaParser.MethodDeclarationContext):
-                method_name = ctx.identifier().getText()
-
-                # 获取完整方法代码
-                start = ctx.start.tokenIndex
-                stop = ctx.stop.tokenIndex
-                method_code = self.token_stream.getText(start, stop)
-
-                full_name = f"{self.current_class}.{method_name}"
-                self.methods[full_name] = method_code
-
-        extractor = MethodExtractor(self.token_stream)
-        walker = ParseTreeWalker()
-        walker.walk(extractor, self.tree)
-
-        self.methods = extractor.methods
-        return JavaMethods(self.file_path, self.methods)
 
 
 class SyntaxErrorListener(ErrorListener):
@@ -162,15 +110,176 @@ class SyntaxErrorListener(ErrorListener):
         self.errors = []
 
     def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
-        error_type = "Syntax Error"
-        if "missing" in msg:
-            error_type = "Missing Token"
-        elif "extraneous" in msg:
-            error_type = "Extraneous Token"
+        self.errors.append(f"Line {line}:{column} {msg}")
 
-        self.errors.append({
-            "line": line,
-            "column": column,
-            "message": msg,
-            "type": error_type
-        })
+
+class JavaAnalyzer:
+    def __init__(self, file_path):
+        self.file_path = file_path
+        self.errors = []
+        self.methods = []
+        self.abstract_methods = []
+        self.parameters = []
+
+        self.input_stream = FileStream(file_path, encoding='utf-8')
+        self.lexer = JavaLexer(self.input_stream)
+        self.token_stream = CommonTokenStream(self.lexer)
+        self.parser = JavaParser(self.token_stream)
+
+        self.error_listener = SyntaxErrorListener()
+        self.parser.removeErrorListeners()
+        self.parser.addErrorListener(self.error_listener)
+
+    def analyze_syntax(self):
+        try:
+            self.tree = self.parser.compilationUnit()
+            self.errors = self.error_listener.errors
+            return len(self.errors) == 0
+        except Exception as e:
+            self.errors.append(f"Critical error: {str(e)}")
+            return False
+
+    def extract_class_info(self):
+        class ClassInfoExtractor(JavaParserListener):
+            def __init__(self, token_stream):
+                self.token_stream = token_stream
+                self.methods = []
+                self.abstract_methods = []
+                self.parameters = []
+                self.current_class = ""
+                self.in_interface = False
+
+            def enterClassDeclaration(self, ctx: JavaParser.ClassDeclarationContext):
+                self.current_class = ctx.identifier().getText()
+                self.in_interface = False
+
+            def enterInterfaceDeclaration(self, ctx: JavaParser.InterfaceDeclarationContext):
+                self.current_class = ctx.identifier().getText()
+                self.in_interface = True
+
+            def enterFieldDeclaration(self, ctx: JavaParser.FieldDeclarationContext):
+                """提取类属性"""
+                field_type = ctx.typeType().getText()
+
+                for var in ctx.variableDeclarators().variableDeclarator():
+                    field_name = var.variableDeclaratorId().getText()
+
+                    modifiers = []
+                    if ctx.parentCtx and isinstance(ctx.parentCtx, JavaParser.ClassBodyDeclarationContext):
+                        modifier_list = ctx.parentCtx.modifier()
+                        for mod in modifier_list:
+                            modifiers.append(mod.getText())
+
+                    self.parameters.append({
+                        "name": field_name,
+                        "type": field_type,
+                        "modifiers": modifiers
+                    })
+
+            def enterMethodDeclaration(self, ctx: JavaParser.MethodDeclarationContext):
+                """处理类中的方法"""
+                method_name = ctx.identifier().getText()
+
+                return_type_ctx = ctx.typeTypeOrVoid()
+                return_type = return_type_ctx.getText() if return_type_ctx else 'void'
+
+                parameters = []
+                params_ctx = ctx.formalParameters()
+                if params_ctx.formalParameterList():
+                    for param in params_ctx.formalParameterList().formalParameter():
+                        param_type = param.typeType().getText()
+                        param_name = param.variableDeclaratorId().getText()
+                        parameters.append({
+                            "type": param_type,
+                            "name": param_name
+                        })
+
+                modifiers = []
+                if ctx.parentCtx and isinstance(ctx.parentCtx, JavaParser.ClassBodyDeclarationContext):
+                    modifier_list = ctx.parentCtx.modifier()
+                    for mod in modifier_list:
+                        modifiers.append(mod.getText())
+
+                # 判断是否为抽象方法
+                is_abstract = 'abstract' in modifiers
+
+                # 获取完整方法代码
+                start = ctx.start.tokenIndex
+                stop = ctx.stop.tokenIndex
+                method_code = self.token_stream.getText(start, stop)
+
+                method_info = {
+                    "name": method_name,
+                    "return_type": return_type,
+                    "parameters": parameters,
+                    "modifiers": modifiers,
+                    "code": method_code,
+                    "is_abstract": is_abstract
+                }
+
+                if is_abstract:
+                    self.abstract_methods.append(method_info)
+                else:
+                    self.methods.append(method_info)
+
+            def enterInterfaceMethodDeclaration(self, ctx: JavaParser.InterfaceMethodDeclarationContext):
+                """处理接口中的方法 - 修正后的版本"""
+                # 直接访问接口方法声明的组成部分
+                body_ctx = ctx.interfaceCommonBodyDeclaration()
+                if not body_ctx:
+                    return
+
+                method_name = body_ctx.identifier().getText()
+
+                return_type_ctx = body_ctx.typeTypeOrVoid()
+                return_type = return_type_ctx.getText() if return_type_ctx else 'void'
+
+                parameters = []
+                if body_ctx.formalParameters().formalParameterList():
+                    for param in body_ctx.formalParameters().formalParameterList().formalParameter():
+                        param_type = param.typeType().getText()
+                        param_name = param.variableDeclaratorId().getText()
+                        parameters.append({
+                            "type": param_type,
+                            "name": param_name
+                        })
+
+                # 接口方法没有显式的修饰符节点，但可能有注解
+                modifiers = []
+
+                # 检查方法是否有默认实现
+                is_abstract = 'abstract' in modifiers or self.in_interface
+
+                # 获取完整方法代码
+                start = ctx.start.tokenIndex
+                stop = ctx.stop.tokenIndex
+                method_code = self.token_stream.getText(start, stop)
+
+                method_info = {
+                    "name": method_name,
+                    "return_type": return_type,
+                    "parameters": parameters,
+                    "modifiers": modifiers,
+                    "code": method_code,
+                    "is_abstract": is_abstract
+                }
+
+                if is_abstract:
+                    self.abstract_methods.append(method_info)
+                else:
+                    self.methods.append(method_info)
+
+        extractor = ClassInfoExtractor(self.token_stream)
+        walker = ParseTreeWalker()
+        walker.walk(extractor, self.tree)
+
+        self.methods = extractor.methods
+        self.abstract_methods = extractor.abstract_methods
+        self.parameters = extractor.parameters
+
+        return JavaClass(
+            self.file_path,
+            methods=self.methods,
+            abstract_methods=self.abstract_methods,
+            parameters=self.parameters
+        )
