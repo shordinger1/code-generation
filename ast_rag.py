@@ -123,11 +123,14 @@ class DynamicRAG:
                     continue
                 file_path = item.temp_file
                 content = item.get()
-
+                class_name = content['file'].split('\\')[-1][0:-5]
                 # 记录需要写入的文件
                 file_write_map[file_path] = content
-                for key, value in content["class_methods"].items():
-                    entry_id = str(hash(f"{key}_{file_path}"))
+                for it in content["methods"]:
+                    key = it['name']
+                    entry_id = str(hash(f"{class_name} {key}"))
+                    if self.metadata_store.keys().__contains__(entry_id):
+                        continue
                     self.metadata_store[entry_id] = {
                         "original_key": key,
                         "file_path": file_path

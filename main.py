@@ -1,167 +1,13 @@
-import os
 import re
 import shutil
-import subprocess
-import zipfile
 from pathlib import Path
-from Agent.minecraft.mod import minecraft_mod
+from language_provider.java.Gradle import DependencyAnalyzer
 from language_provider.java.JavaAnalyzer import analysis_java_files
 from util import get_rag
 
 project_dir = r"C:\Users\bcjPr\Desktop\gtnh\Twist-Space-Technology-Mod"
 
 RAG = get_rag()
-
-
-def _decompile_jar(jar_path, output_dir):
-    if os.path.exists(output_dir):
-        return
-    """使用JD-CLI反编译"""
-    jd_cli_path = Path('jd-cli.jar')
-    if not jd_cli_path.exists():
-        raise FileNotFoundError("JD-CLI not found, download from https://github.com/intoolswetrust/jd-cli")
-
-    subprocess.run([
-        'java', '-jar', str(jd_cli_path),
-        '--outputDir', str(output_dir),
-        '--srcFile', str(jar_path)
-    ], check=True)
-
-
-def _generate_dependency_tree():
-    """生成Gradle依赖树"""
-    print()
-    subprocess.run(
-        [f'{project_dir}/gradlew.bat',
-         'dependencies', '--configuration', 'compileClasspath'],
-        cwd=project_dir,
-        check=True,
-        stdout=subprocess.DEVNULL
-    )
-
-
-def _parse_dependencies():
-    """解析依赖树文件"""
-    dependencies = set()
-    dep_tree_path = Path(project_dir) / 'dependencies.txt'
-
-    with open(dep_tree_path, 'r') as f:
-        pattern = r'([\w\.-]+:[\w\.-]+:[\w\.-]+)'
-        for line in f:
-            matches = re.findall(pattern, line)
-            for match in matches:
-                if ' -> ' in match:
-                    actual = match.split(' -> ')[1]
-                    dependencies.add(actual)
-                else:
-                    dependencies.add(match)
-    return sorted(dependencies)
-
-
-class DependencyAnalyzer:
-    def __init__(self):
-        self.temp_dirs = []
-        self.gradle_cache = Path(
-            os.environ.get('GRADLE_HOME', r'C:\Users\bcjPr\.gradle')) / 'caches/modules-2/files-2.1'
-        print(self.gradle_cache)
-
-    def analyze_dependencies(self):
-        """解析项目依赖并进行分析"""
-        # 生成依赖树
-        _generate_dependency_tree()
-
-        # 解析依赖坐标
-        dependencies = _parse_dependencies()
-
-        # 分析每个依赖
-        dependency_methods = []
-        for dep in dependencies:
-            dep_methods = self._process_dependency(dep)
-            dependency_methods.extend(dep_methods)
-
-        return dependency_methods
-
-    def _process_dependency(self, dependency):
-        """处理单个依赖"""
-        source_jar = self._find_source_jar(dependency)
-        if source_jar:
-            return self._analyze_jar(dependency, source_jar, is_source=True)
-
-        binary_jar = self._find_binary_jar(dependency)
-        if binary_jar:
-            return self._analyze_jar(dependency, binary_jar, is_source=False)
-
-        print(f"⚠️ Dependency not found: {dependency}")
-        return {}
-
-    def _find_source_jar(self, dependency):
-        """查找源码JAR"""
-        parts = dependency.split(':')
-        group, artifact, version = parts[:3]
-        search_path = self.gradle_cache / group / artifact / version
-        print(f"source jar path:{search_path}")
-        return next(search_path.glob(f'**/{artifact}-{version}-sources.jar'), None)
-
-    def _find_binary_jar(self, dependency):
-        parts = dependency.split(':')
-        group, artifact, version = parts[:3]
-        #         group_path = group.replace('.', '/')
-
-        search_path = self.gradle_cache / group / artifact / version
-        print(f"binary jar path:{search_path}")
-        # 匹配主JAR和带分类器的JAR
-        for jar in search_path.glob(f"**/{artifact}-{version}*.jar"):
-            if not any(s in jar.name.lower() for s in ['-sources', '-javadoc']):
-                return jar
-        return None
-
-    def _analyze_jar(self, dependency, jar_path, is_source=True):
-        """分析JAR文件（修复方法调用）"""
-        parts = dependency.split(':')
-        group, artifact, version = parts[:3]
-        temp_dir = Path(f"syntax_db/temp_{jar_path.stem}")
-        self.temp_dirs.append(temp_dir)
-        if not os.path.exists(temp_dir):
-            temp_dir.mkdir(parents=True, exist_ok=True)
-
-            # 解压JAR文件
-            try:
-                with zipfile.ZipFile(jar_path) as zip_ref:
-                    zip_ref.extractall(temp_dir)
-            except zipfile.BadZipFile:
-                print(f"无效的ZIP文件: {jar_path}")
-                return {}
-        # 调用统一的分析函数
-        return analysis_java_files(temp_dir)
-
-    def _decompile_and_analyze(self, jar_path):
-        """反编译并分析二进制JAR"""
-        temp_dir = Path(f"syntax_db/temp_decompiled_{jar_path.stem}")
-        self.temp_dirs.append(temp_dir)
-
-        try:
-            # 使用JD-CLI反编译
-            subprocess.run(
-                ['java', '-jar', 'jd-cli.jar',
-                 '--outputDir', str(temp_dir),
-                 '--srcFile', str(jar_path)],
-                check=True,
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.PIPE
-            )
-        except subprocess.CalledProcessError as e:
-            print(f"反编译失败: {e.stderr.decode('utf-8', errors='replace')}")
-            return {}
-
-            # 调用统一分析函数
-            # return self._analyze_java_files(temp_dir)
-
-    def cleanup(self):
-        return
-        """清理临时文件"""
-        for d in self.temp_dirs:
-            shutil.rmtree(d, ignore_errors=True)
-
 
 # 可扩展的标签配置（不区分大小写）
 TAG_CONFIG = {
@@ -264,12 +110,11 @@ def rag_init(test=True):
     #         f.write(f"{k}\n:{v}\n\n")
     RAG.batch_add_data(project_methods)
     if test:
-        query = ""
         while True:
             query = input("please enter your question(quit to exit):")
             if query != "quit":
                 score, key, result = RAG.enhanced_query(query)[0]
-                print(key)
+                print(result)
             else:
                 break
     print("end rag init:\n")

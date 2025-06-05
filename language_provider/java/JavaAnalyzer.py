@@ -44,7 +44,7 @@ def analysis_java_files(root_dir):
                 method.write(tempfile)
                 return method
             print(f"语法错误: {file_path}")
-            return {}
+            return JavaClass(file_path)
         except Exception as e:
             print(f"处理失败 {file_path}: {str(e)}")
             return {}
@@ -79,9 +79,9 @@ class JavaClass:
 
     def get(self):
         return {
-            "file": self.file_name,
-            "methods": self.methods,
-            "abstract_methods": self.abstract_methods,
+            "file": str(self.file_name),
+            "methods": [*self.methods, *self.abstract_methods],
+            # "abstract_methods": self.abstract_methods,
             "parameters": self.parameters,
         }
 
