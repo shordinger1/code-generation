@@ -28,11 +28,6 @@ class logger:
 
 
 LOG = logger()
-RAG = DynamicRAG()
-
-
-def get_rag() -> DynamicRAG:
-    return RAG
 
 
 def get_logger():

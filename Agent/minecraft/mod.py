@@ -1,6 +1,5 @@
 import os.path
 import subprocess
-
 from Agent.minecraft.block import block_class
 from Agent.minecraft.item import item_class
 from Agent.minecraft.library_like_class import library_like_class
@@ -11,7 +10,9 @@ from Agent.minecraft.static_files import set_item_base, package_root, set_block_
     set_machine_entities_register, set_recipes_register, set_potions_register, set_renders_register, \
     set_entities_register, set_mobs_register
 from code_template.java_template_class import java_template_class
-from task_tree.task_tree import TaskTree
+from ast_rag import DynamicRAG
+from language_provider.java.Gradle import DependencyAnalyzer
+from language_provider.java.JavaAnalyzer import analysis_java_files
 
 
 class minecraft_mod:
@@ -39,8 +40,23 @@ class minecraft_mod:
         self.renders = {}
         self.entities = {}
         self.mobs = {}
+        self.lib_rag = DynamicRAG(f"{mod_name}_library")
+        self.mcp_rag = DynamicRAG(f"{mod_name}_minecraft")
+        self.mod_rag = DynamicRAG(f"{mod_name}_mod")
         # self.task_tree = TaskTree('automatic minecraft mod generation')
         init_base_and_registry()
+
+    def rag_init(self):
+        mcp = analysis_java_files(f"{get_root()}/build")
+        self.mcp_rag.batch_add_data(mcp)
+        mod = analysis_java_files(f"{get_root()}/src/main/java")
+        self.mod_rag.batch_add_data(mod)
+        dep_analyzer = DependencyAnalyzer()
+        try:
+            dependency_methods = dep_analyzer.analyze_dependencies()
+        finally:
+            dep_analyzer.cleanup()
+        self.lib_rag.batch_add_data(dependency_methods)
 
     def generate_main_mod_file(self):
         template = java_template_class(get_root(), self.mod_name,

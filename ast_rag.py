@@ -10,11 +10,11 @@ EMBEDDING_MODEL = 'all-MiniLM-L6-v2'  # 小型高效embedding模型
 
 
 class DynamicRAG:
-    def __init__(self):
+    def __init__(self, name):
         self.embedder = SentenceTransformer(EMBEDDING_MODEL)
         self.client = chromadb.Client(Settings())
         self.collection = self.client.get_or_create_collection(
-            name="rag_data",
+            name=name,
             metadata={"hnsw:space": "cosine"}
         )
         self.text_splitter = RecursiveCharacterTextSplitter(
@@ -22,6 +22,7 @@ class DynamicRAG:
             chunk_overlap=50,
             length_function=len
         )
+        self.name = name
         self.metadata_store = {}
 
     def _chunk_text(self, text: str) -> list:
@@ -112,8 +113,8 @@ class DynamicRAG:
         all_embeddings = []
         all_metadatas = []
         print("prepare for methods:")
-        if os.path.exists("data/cache.json"):
-            data = json.load(open("data/cache.json", "r"))
+        if os.path.exists(f"data/{self.name}/cache.json"):
+            data = json.load(open(f"data/{self.name}/cache.json", "r"))
             all_ids = data["ids"]
             all_embeddings = data["embeddings"]
             all_metadatas = data["meta"]
@@ -142,7 +143,9 @@ class DynamicRAG:
                     all_ids.extend([f"{entry_id}_{i}" for i in range(len(chunks))])
                     all_embeddings.extend(embeddings)
                     all_metadatas.extend([{"source": entry_id} for _ in chunks])
-            with open("data/cache.json", "w") as f:
+            if not os.path.exists(f"data/{self.name}"):
+                os.makedirs(f"data/{self.name}", exist_ok=True)
+            with open(f"data/{self.name}/cache.json", "w") as f:
                 json.dump({
                     "ids": all_ids,
                     "embeddings": all_embeddings,

@@ -1,5 +1,8 @@
+from task_tree.TaskProcessor import TaskProcessor
+
+
 class TaskNode:
-    def __init__(self, name, description=None, processor=None):
+    def __init__(self, name, description=None, processor: TaskProcessor = None):
         """
         任务节点类
         :param name: 任务名称

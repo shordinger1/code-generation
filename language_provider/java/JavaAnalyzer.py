@@ -176,10 +176,35 @@ class JavaAnalyzer:
                         "modifiers": modifiers
                     })
 
+            @staticmethod
+            def camel_to_words(s):
+                if not s:
+                    return ""
+                words = []
+                start = 0  # 当前单词的起始位置
+                n = len(s)
+
+                for i in range(1, n):
+                    if s[i].isupper():
+                        # 当前字符是大写字母，且满足以下条件之一则拆分：
+                        # 1. 下一个字符是小写字母（如：HTTPRequest的P后）
+                        # 2. 前一个字符是小写字母（如：myClass的y后）
+                        if (i + 1 < n and s[i + 1].islower()) or s[i - 1].islower():
+                            words.append(s[start:i].lower())
+                            start = i
+                words.append(s[start:].lower())  # 添加最后一个单词
+                return " ".join(words)
+
+            # 测试
+            # print(camel_to_words("MyClassFunction"))  # 输出: "my class function"
+            # print(camel_to_words("HTTPRequest"))  # 输出: "http request"
+            # print(camel_to_words("SimpleHTTPServer"))  # 输出: "simple http server"
+            # print(camel_to_words("getHTTPResponse"))  # 输出: "get http response"
+
             def enterMethodDeclaration(self, ctx: JavaParser.MethodDeclarationContext):
                 """处理类中的方法"""
-                method_name = ctx.identifier().getText()
-
+                method_name = f"{self.current_class} {ctx.identifier().getText()}"
+                method_name = ClassInfoExtractor.camel_to_words(method_name)
                 return_type_ctx = ctx.typeTypeOrVoid()
                 return_type = return_type_ctx.getText() if return_type_ctx else 'void'
 
@@ -229,8 +254,8 @@ class JavaAnalyzer:
                 if not body_ctx:
                     return
 
-                method_name = body_ctx.identifier().getText()
-
+                method_name = f"{self.current_class} {body_ctx.identifier().getText()}"
+                method_name = ClassInfoExtractor.camel_to_words(method_name)
                 return_type_ctx = body_ctx.typeTypeOrVoid()
                 return_type = return_type_ctx.getText() if return_type_ctx else 'void'
 
