@@ -2,11 +2,11 @@
 from antlr4 import *
 from io import StringIO
 import sys
+
 if sys.version_info[1] > 5:
     from typing import TextIO
 else:
     from typing.io import TextIO
-
 
 if __name__ is not None and "." in __name__:
     from .Python3LexerBase import Python3LexerBase
@@ -697,10 +697,9 @@ def serializedATN():
 
 
 class Python3Lexer(Python3LexerBase):
-
     atn = ATNDeserializer().deserialize(serializedATN())
 
-    decisionsToDFA = [ DFA(ds, i) for i, ds in enumerate(atn.decisionToState) ]
+    decisionsToDFA = [DFA(ds, i) for i, ds in enumerate(atn.decisionToState)]
 
     INDENT = 1
     DEDENT = 2
@@ -805,91 +804,90 @@ class Python3Lexer(Python3LexerBase):
     SKIP_ = 101
     UNKNOWN_CHAR = 102
 
-    channelNames = [ u"DEFAULT_TOKEN_CHANNEL", u"HIDDEN" ]
+    channelNames = [u"DEFAULT_TOKEN_CHANNEL", u"HIDDEN"]
 
-    modeNames = [ "DEFAULT_MODE" ]
+    modeNames = ["DEFAULT_MODE"]
 
-    literalNames = [ "<INVALID>",
-            "'and'", "'as'", "'assert'", "'async'", "'await'", "'break'", 
-            "'case'", "'class'", "'continue'", "'def'", "'del'", "'elif'", 
-            "'else'", "'except'", "'False'", "'finally'", "'for'", "'from'", 
-            "'global'", "'if'", "'import'", "'in'", "'is'", "'lambda'", 
-            "'match'", "'None'", "'nonlocal'", "'not'", "'or'", "'pass'", 
-            "'raise'", "'return'", "'True'", "'try'", "'_'", "'while'", 
-            "'with'", "'yield'", "'.'", "'...'", "'*'", "'('", "')'", "','", 
-            "':'", "';'", "'**'", "'='", "'['", "']'", "'|'", "'^'", "'&'", 
-            "'<<'", "'>>'", "'+'", "'-'", "'/'", "'%'", "'//'", "'~'", "'{'", 
-            "'}'", "'<'", "'>'", "'=='", "'>='", "'<='", "'<>'", "'!='", 
-            "'@'", "'->'", "'+='", "'-='", "'*='", "'@='", "'/='", "'%='", 
-            "'&='", "'|='", "'^='", "'<<='", "'>>='", "'**='", "'//='" ]
+    literalNames = ["<INVALID>",
+                    "'and'", "'as'", "'assert'", "'async'", "'await'", "'break'",
+                    "'case'", "'class'", "'continue'", "'def'", "'del'", "'elif'",
+                    "'else'", "'except'", "'False'", "'finally'", "'for'", "'from'",
+                    "'global'", "'if'", "'import'", "'in'", "'is'", "'lambda'",
+                    "'match'", "'None'", "'nonlocal'", "'not'", "'or'", "'pass'",
+                    "'raise'", "'return'", "'True'", "'try'", "'_'", "'while'",
+                    "'with'", "'yield'", "'.'", "'...'", "'*'", "'('", "')'", "','",
+                    "':'", "';'", "'**'", "'='", "'['", "']'", "'|'", "'^'", "'&'",
+                    "'<<'", "'>>'", "'+'", "'-'", "'/'", "'%'", "'//'", "'~'", "'{'",
+                    "'}'", "'<'", "'>'", "'=='", "'>='", "'<='", "'<>'", "'!='",
+                    "'@'", "'->'", "'+='", "'-='", "'*='", "'@='", "'/='", "'%='",
+                    "'&='", "'|='", "'^='", "'<<='", "'>>='", "'**='", "'//='"]
 
-    symbolicNames = [ "<INVALID>",
-            "INDENT", "DEDENT", "STRING", "NUMBER", "INTEGER", "AND", "AS", 
-            "ASSERT", "ASYNC", "AWAIT", "BREAK", "CASE", "CLASS", "CONTINUE", 
-            "DEF", "DEL", "ELIF", "ELSE", "EXCEPT", "FALSE", "FINALLY", 
-            "FOR", "FROM", "GLOBAL", "IF", "IMPORT", "IN", "IS", "LAMBDA", 
-            "MATCH", "NONE", "NONLOCAL", "NOT", "OR", "PASS", "RAISE", "RETURN", 
-            "TRUE", "TRY", "UNDERSCORE", "WHILE", "WITH", "YIELD", "NEWLINE", 
-            "NAME", "STRING_LITERAL", "BYTES_LITERAL", "DECIMAL_INTEGER", 
-            "OCT_INTEGER", "HEX_INTEGER", "BIN_INTEGER", "FLOAT_NUMBER", 
-            "IMAG_NUMBER", "DOT", "ELLIPSIS", "STAR", "OPEN_PAREN", "CLOSE_PAREN", 
-            "COMMA", "COLON", "SEMI_COLON", "POWER", "ASSIGN", "OPEN_BRACK", 
-            "CLOSE_BRACK", "OR_OP", "XOR", "AND_OP", "LEFT_SHIFT", "RIGHT_SHIFT", 
-            "ADD", "MINUS", "DIV", "MOD", "IDIV", "NOT_OP", "OPEN_BRACE", 
-            "CLOSE_BRACE", "LESS_THAN", "GREATER_THAN", "EQUALS", "GT_EQ", 
-            "LT_EQ", "NOT_EQ_1", "NOT_EQ_2", "AT", "ARROW", "ADD_ASSIGN", 
-            "SUB_ASSIGN", "MULT_ASSIGN", "AT_ASSIGN", "DIV_ASSIGN", "MOD_ASSIGN", 
-            "AND_ASSIGN", "OR_ASSIGN", "XOR_ASSIGN", "LEFT_SHIFT_ASSIGN", 
-            "RIGHT_SHIFT_ASSIGN", "POWER_ASSIGN", "IDIV_ASSIGN", "SKIP_", 
-            "UNKNOWN_CHAR" ]
+    symbolicNames = ["<INVALID>",
+                     "INDENT", "DEDENT", "STRING", "NUMBER", "INTEGER", "AND", "AS",
+                     "ASSERT", "ASYNC", "AWAIT", "BREAK", "CASE", "CLASS", "CONTINUE",
+                     "DEF", "DEL", "ELIF", "ELSE", "EXCEPT", "FALSE", "FINALLY",
+                     "FOR", "FROM", "GLOBAL", "IF", "IMPORT", "IN", "IS", "LAMBDA",
+                     "MATCH", "NONE", "NONLOCAL", "NOT", "OR", "PASS", "RAISE", "RETURN",
+                     "TRUE", "TRY", "UNDERSCORE", "WHILE", "WITH", "YIELD", "NEWLINE",
+                     "NAME", "STRING_LITERAL", "BYTES_LITERAL", "DECIMAL_INTEGER",
+                     "OCT_INTEGER", "HEX_INTEGER", "BIN_INTEGER", "FLOAT_NUMBER",
+                     "IMAG_NUMBER", "DOT", "ELLIPSIS", "STAR", "OPEN_PAREN", "CLOSE_PAREN",
+                     "COMMA", "COLON", "SEMI_COLON", "POWER", "ASSIGN", "OPEN_BRACK",
+                     "CLOSE_BRACK", "OR_OP", "XOR", "AND_OP", "LEFT_SHIFT", "RIGHT_SHIFT",
+                     "ADD", "MINUS", "DIV", "MOD", "IDIV", "NOT_OP", "OPEN_BRACE",
+                     "CLOSE_BRACE", "LESS_THAN", "GREATER_THAN", "EQUALS", "GT_EQ",
+                     "LT_EQ", "NOT_EQ_1", "NOT_EQ_2", "AT", "ARROW", "ADD_ASSIGN",
+                     "SUB_ASSIGN", "MULT_ASSIGN", "AT_ASSIGN", "DIV_ASSIGN", "MOD_ASSIGN",
+                     "AND_ASSIGN", "OR_ASSIGN", "XOR_ASSIGN", "LEFT_SHIFT_ASSIGN",
+                     "RIGHT_SHIFT_ASSIGN", "POWER_ASSIGN", "IDIV_ASSIGN", "SKIP_",
+                     "UNKNOWN_CHAR"]
 
-    ruleNames = [ "STRING", "NUMBER", "INTEGER", "AND", "AS", "ASSERT", 
-                  "ASYNC", "AWAIT", "BREAK", "CASE", "CLASS", "CONTINUE", 
-                  "DEF", "DEL", "ELIF", "ELSE", "EXCEPT", "FALSE", "FINALLY", 
-                  "FOR", "FROM", "GLOBAL", "IF", "IMPORT", "IN", "IS", "LAMBDA", 
-                  "MATCH", "NONE", "NONLOCAL", "NOT", "OR", "PASS", "RAISE", 
-                  "RETURN", "TRUE", "TRY", "UNDERSCORE", "WHILE", "WITH", 
-                  "YIELD", "NEWLINE", "NAME", "STRING_LITERAL", "BYTES_LITERAL", 
-                  "DECIMAL_INTEGER", "OCT_INTEGER", "HEX_INTEGER", "BIN_INTEGER", 
-                  "FLOAT_NUMBER", "IMAG_NUMBER", "DOT", "ELLIPSIS", "STAR", 
-                  "OPEN_PAREN", "CLOSE_PAREN", "COMMA", "COLON", "SEMI_COLON", 
-                  "POWER", "ASSIGN", "OPEN_BRACK", "CLOSE_BRACK", "OR_OP", 
-                  "XOR", "AND_OP", "LEFT_SHIFT", "RIGHT_SHIFT", "ADD", "MINUS", 
-                  "DIV", "MOD", "IDIV", "NOT_OP", "OPEN_BRACE", "CLOSE_BRACE", 
-                  "LESS_THAN", "GREATER_THAN", "EQUALS", "GT_EQ", "LT_EQ", 
-                  "NOT_EQ_1", "NOT_EQ_2", "AT", "ARROW", "ADD_ASSIGN", "SUB_ASSIGN", 
-                  "MULT_ASSIGN", "AT_ASSIGN", "DIV_ASSIGN", "MOD_ASSIGN", 
-                  "AND_ASSIGN", "OR_ASSIGN", "XOR_ASSIGN", "LEFT_SHIFT_ASSIGN", 
-                  "RIGHT_SHIFT_ASSIGN", "POWER_ASSIGN", "IDIV_ASSIGN", "SKIP_", 
-                  "UNKNOWN_CHAR", "SHORT_STRING", "LONG_STRING", "LONG_STRING_ITEM", 
-                  "LONG_STRING_CHAR", "STRING_ESCAPE_SEQ", "NON_ZERO_DIGIT", 
-                  "DIGIT", "OCT_DIGIT", "HEX_DIGIT", "BIN_DIGIT", "POINT_FLOAT", 
-                  "EXPONENT_FLOAT", "INT_PART", "FRACTION", "EXPONENT", 
-                  "SHORT_BYTES", "LONG_BYTES", "LONG_BYTES_ITEM", "SHORT_BYTES_CHAR_NO_SINGLE_QUOTE", 
-                  "SHORT_BYTES_CHAR_NO_DOUBLE_QUOTE", "LONG_BYTES_CHAR", 
-                  "BYTES_ESCAPE_SEQ", "SPACES", "COMMENT", "LINE_JOINING", 
-                  "UNICODE_OIDS", "UNICODE_OIDC", "ID_START", "ID_CONTINUE" ]
+    ruleNames = ["STRING", "NUMBER", "INTEGER", "AND", "AS", "ASSERT",
+                 "ASYNC", "AWAIT", "BREAK", "CASE", "CLASS", "CONTINUE",
+                 "DEF", "DEL", "ELIF", "ELSE", "EXCEPT", "FALSE", "FINALLY",
+                 "FOR", "FROM", "GLOBAL", "IF", "IMPORT", "IN", "IS", "LAMBDA",
+                 "MATCH", "NONE", "NONLOCAL", "NOT", "OR", "PASS", "RAISE",
+                 "RETURN", "TRUE", "TRY", "UNDERSCORE", "WHILE", "WITH",
+                 "YIELD", "NEWLINE", "NAME", "STRING_LITERAL", "BYTES_LITERAL",
+                 "DECIMAL_INTEGER", "OCT_INTEGER", "HEX_INTEGER", "BIN_INTEGER",
+                 "FLOAT_NUMBER", "IMAG_NUMBER", "DOT", "ELLIPSIS", "STAR",
+                 "OPEN_PAREN", "CLOSE_PAREN", "COMMA", "COLON", "SEMI_COLON",
+                 "POWER", "ASSIGN", "OPEN_BRACK", "CLOSE_BRACK", "OR_OP",
+                 "XOR", "AND_OP", "LEFT_SHIFT", "RIGHT_SHIFT", "ADD", "MINUS",
+                 "DIV", "MOD", "IDIV", "NOT_OP", "OPEN_BRACE", "CLOSE_BRACE",
+                 "LESS_THAN", "GREATER_THAN", "EQUALS", "GT_EQ", "LT_EQ",
+                 "NOT_EQ_1", "NOT_EQ_2", "AT", "ARROW", "ADD_ASSIGN", "SUB_ASSIGN",
+                 "MULT_ASSIGN", "AT_ASSIGN", "DIV_ASSIGN", "MOD_ASSIGN",
+                 "AND_ASSIGN", "OR_ASSIGN", "XOR_ASSIGN", "LEFT_SHIFT_ASSIGN",
+                 "RIGHT_SHIFT_ASSIGN", "POWER_ASSIGN", "IDIV_ASSIGN", "SKIP_",
+                 "UNKNOWN_CHAR", "SHORT_STRING", "LONG_STRING", "LONG_STRING_ITEM",
+                 "LONG_STRING_CHAR", "STRING_ESCAPE_SEQ", "NON_ZERO_DIGIT",
+                 "DIGIT", "OCT_DIGIT", "HEX_DIGIT", "BIN_DIGIT", "POINT_FLOAT",
+                 "EXPONENT_FLOAT", "INT_PART", "FRACTION", "EXPONENT",
+                 "SHORT_BYTES", "LONG_BYTES", "LONG_BYTES_ITEM", "SHORT_BYTES_CHAR_NO_SINGLE_QUOTE",
+                 "SHORT_BYTES_CHAR_NO_DOUBLE_QUOTE", "LONG_BYTES_CHAR",
+                 "BYTES_ESCAPE_SEQ", "SPACES", "COMMENT", "LINE_JOINING",
+                 "UNICODE_OIDS", "UNICODE_OIDC", "ID_START", "ID_CONTINUE"]
 
     grammarFileName = "Python3Lexer.g4"
 
-    def __init__(self, input=None, output:TextIO = sys.stdout):
+    def __init__(self, input=None, output: TextIO = sys.stdout):
         super().__init__(input, output)
         self.checkVersion("4.9.2")
         self._interp = LexerATNSimulator(self, self.atn, self.decisionsToDFA, PredictionContextCache())
         self._actions = None
         self._predicates = None
 
-
-    def action(self, localctx:RuleContext, ruleIndex:int, actionIndex:int):
+    def action(self, localctx: RuleContext, ruleIndex: int, actionIndex: int):
         if self._actions is None:
             actions = dict()
-            actions[41] = self.NEWLINE_action 
-            actions[54] = self.OPEN_PAREN_action 
-            actions[55] = self.CLOSE_PAREN_action 
-            actions[61] = self.OPEN_BRACK_action 
-            actions[62] = self.CLOSE_BRACK_action 
-            actions[74] = self.OPEN_BRACE_action 
-            actions[75] = self.CLOSE_BRACE_action 
+            actions[41] = self.NEWLINE_action
+            actions[54] = self.OPEN_PAREN_action
+            actions[55] = self.CLOSE_PAREN_action
+            actions[61] = self.OPEN_BRACK_action
+            actions[62] = self.CLOSE_BRACK_action
+            actions[74] = self.OPEN_BRACE_action
+            actions[75] = self.CLOSE_BRACE_action
             self._actions = actions
         action = self._actions.get(ruleIndex, None)
         if action is not None:
@@ -897,43 +895,35 @@ class Python3Lexer(Python3LexerBase):
         else:
             raise Exception("No registered action for:" + str(ruleIndex))
 
-
-    def NEWLINE_action(self, localctx:RuleContext , actionIndex:int):
+    def NEWLINE_action(self, localctx: RuleContext, actionIndex: int):
         if actionIndex == 0:
             this.onNewLine();
-     
 
-    def OPEN_PAREN_action(self, localctx:RuleContext , actionIndex:int):
+    def OPEN_PAREN_action(self, localctx: RuleContext, actionIndex: int):
         if actionIndex == 1:
             this.openBrace();
-     
 
-    def CLOSE_PAREN_action(self, localctx:RuleContext , actionIndex:int):
+    def CLOSE_PAREN_action(self, localctx: RuleContext, actionIndex: int):
         if actionIndex == 2:
             this.closeBrace();
-     
 
-    def OPEN_BRACK_action(self, localctx:RuleContext , actionIndex:int):
+    def OPEN_BRACK_action(self, localctx: RuleContext, actionIndex: int):
         if actionIndex == 3:
             this.openBrace();
-     
 
-    def CLOSE_BRACK_action(self, localctx:RuleContext , actionIndex:int):
+    def CLOSE_BRACK_action(self, localctx: RuleContext, actionIndex: int):
         if actionIndex == 4:
             this.closeBrace();
-     
 
-    def OPEN_BRACE_action(self, localctx:RuleContext , actionIndex:int):
+    def OPEN_BRACE_action(self, localctx: RuleContext, actionIndex: int):
         if actionIndex == 5:
             this.openBrace();
-     
 
-    def CLOSE_BRACE_action(self, localctx:RuleContext , actionIndex:int):
+    def CLOSE_BRACE_action(self, localctx: RuleContext, actionIndex: int):
         if actionIndex == 6:
             this.closeBrace();
-     
 
-    def sempred(self, localctx:RuleContext, ruleIndex:int, predIndex:int):
+    def sempred(self, localctx: RuleContext, ruleIndex: int, predIndex: int):
         if self._predicates is None:
             preds = dict()
             preds[41] = self.NEWLINE_sempred
@@ -944,9 +934,6 @@ class Python3Lexer(Python3LexerBase):
         else:
             raise Exception("No registered predicate for:" + str(ruleIndex))
 
-    def NEWLINE_sempred(self, localctx:RuleContext, predIndex:int):
-            if predIndex == 0:
-                return this.atStartOfInput()
-         
-
-
+    def NEWLINE_sempred(self, localctx: RuleContext, predIndex: int):
+        if predIndex == 0:
+            return this.atStartOfInput()

@@ -1,11 +1,9 @@
-import json
 import os.path
 import subprocess
-
-from language_provider.java.JavaAnalyzer import analysis_java_file
+import json
 from chat.client import generation
-from chat.model import code_generation, prompt_code_generation, prompt_code_reflection, prompt_rag_question_generator, \
-    rag_problems
+from chat.model import code_generation, prompt_code_generation, prompt_code_reflection
+from language_provider.java.JavaAnalyzer import analysis_java_file
 from task_tree.TaskProcessor import TaskProcessor
 from util import get_logger
 
@@ -15,9 +13,10 @@ LOG = get_logger()
 class java_template_class(TaskProcessor):
 
     def __init__(self, project_root: str, class_name: str, package: str):
-        super().__init__()
-        class_name = ''.join(words.capitalize() for words in class_name.split(' ')) if ' ' in class_name else class_name
+        super().__init__(class_name)
 
+        class_name = ''.join(words.capitalize() for words in class_name.split(' ')) if ' ' in class_name else class_name
+        self.description = None
         self.project_root = project_root
         self.class_name = class_name
         self.package = package
@@ -29,19 +28,123 @@ class java_template_class(TaskProcessor):
         # self.read_from_file()
         print(f'java class inited as {class_name} in {self.class_path}')
 
+    def print_info(self):
+        print({
+            'project_root': self.project_root,
+            'class_name': self.class_name,
+            'package': self.package,
+            'imports': self.imports,
+            'code': self.code,
+            'inited': self.inited,
+            'description': self.description
+        })
+
+    def save_to_json(self):
+        """
+        将类属性保存为JSON文件
+        """
+        # 创建保存目录
+        root = os.path.join(self.project_root, 'generation')
+        os.makedirs(root, exist_ok=True)
+
+        # 构建文件路径
+        file = os.path.join(root, self.class_name + '.json')
+
+        # 准备要保存的数据
+        data = {
+            'project_root': self.project_root,
+            'class_name': self.class_name,
+            'package': self.package,
+            'imports': self.imports,
+            'code': self.code,
+            'inited': self.inited,
+            'description': self.description
+            # 注意：class_path和file_path是计算属性，不需要保存
+        }
+
+        # 写入JSON文件
+        with open(file, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=4)
+
+        return file
+
+    @classmethod
+    def load_from_json(cls, json_file):
+        """
+        从JSON文件加载并创建新的类对象
+        """
+        with open(json_file, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+        # 创建新对象
+        new_obj = type(cls.__name__, (), {})()
+
+        # 设置基本属性
+        new_obj.project_root = data['project_root']
+        new_obj.class_name = data['class_name']
+        new_obj.package = data['package']
+        new_obj.imports = data['imports']
+        new_obj.code = data['code']
+        new_obj.inited = data['inited']
+        new_obj.description = data['description']
+
+        # 计算派生属性
+        new_obj.class_path = os.path.join(
+            new_obj.project_root, 'src', 'main', 'java', new_obj.package)
+        new_obj.file_path = os.path.join(
+            new_obj.class_path, new_obj.class_name + '.java')
+
+        return new_obj
+
     def write_to_file(self):
 
         os.makedirs(self.class_path, exist_ok=True)
         with open(self.file_path, "w", encoding='utf-8') as f:
             f.write(self.formatted_code())
 
-    def read_from_file(self):
-        if os.path.exists(self.file_path):
-            with open(self.file_path, 'r', encoding='utf-8') as f:
-                self.package, self.imports, self.code = split_java_file(f.read())
-                self.inited = True
-        else:
-            self.inited = False
+    @classmethod
+    def create_from_java_file(cls, java_file_path: str, project_root: str, generation) :
+        """
+        从Java文件创建并返回一个新的java_template_class对象
+
+        Args:
+            java_file_path: Java文件的完整路径
+            project_root: 项目根目录路径
+            generation: 用于生成描述的生成函数
+
+        Returns:
+            初始化好的java_template_class对象
+        """
+        # 读取Java文件内容
+        with open(java_file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+
+        # 解析Java文件
+        package_line, imports_list, class_code = split_java_file(content)
+
+        # 从文件路径获取类名
+        class_name = os.path.basename(java_file_path).replace('.java', '')
+
+        # 从package行提取包名
+        package = package_line.replace('package', '').replace(';', '').strip()
+
+        # 创建新对象
+        template = java_template_class(
+            project_root=project_root,
+            class_name=class_name,
+            package=package
+        )
+
+        # 设置其他属性
+        template.imports = imports_list
+        template.code = class_code
+        template.inited = True
+
+        # 使用生成函数创建描述
+        prompt = f"Generate a description for Java class {class_name} with package {package}"
+        template.description = generation(prompt)
+
+        return template
 
     def formatted_code(self):
         if self.code is None:
@@ -54,6 +157,7 @@ class java_template_class(TaskProcessor):
         return code
 
     def add_import(self, *imports):
+        # Should resolve imports from RAG?
         for impt in imports:
             if impt not in self.imports:
                 self.imports.append(impt)
@@ -92,7 +196,10 @@ class java_template_class(TaskProcessor):
         return True, error
 
     def get_template(self):
-        return None
+        raise NotImplementedError()
+
+    def analyze(self, **kwargs):
+        raise NotImplementedError()
 
     def process(self, description):
         LOG.write(f"START AUTO PROCESSING FOR {self.file_path}:\n TASK DESCRIPTION:{description}\n processing:\n")
@@ -144,6 +251,16 @@ class java_template_class(TaskProcessor):
             res, msg = self.build_project()
 
 
+# def init_java_from_file(root, path: str):
+#     if not path.endswith(".java"):
+#         raise ValueError("This is not a java file!")
+#     with open(path, "r") as f:
+#         p, i, c = split_java_file(f.read())
+#         p = p.replace(".", "/")
+#         path = path.split("\\")
+#         new_obj = java_template_class(root, )
+
+
 def split_java_file(content: str) -> tuple:
     """
     分割Java源代码文件为package、imports和class三部分
@@ -162,14 +279,18 @@ def split_java_file(content: str) -> tuple:
     imports_list = []
     class_lines = []
     in_import_section = True  # 标志是否仍在import部分
-
+    line_count = 0
     # 处理package行
-    if lines and lines[0].lstrip().startswith('package'):
-        package_line = lines[0][7:-2]
-        lines = lines[1:]
-
+    if not lines:
+        return None, None, None
+    size = len(lines)
+    while line_count < size and not lines[line_count].lstrip().startswith('package'):
+        line_count += 1
+    package_line = lines[line_count][7:-2]
+    line_count += 1
     # 处理imports和class部分
-    for line in lines:
+    while line_count < size:
+        line = lines[line_count]
         stripped = line.lstrip()  # 移除行首空白（保留行尾）
 
         if not in_import_section:
@@ -187,6 +308,7 @@ def split_java_file(content: str) -> tuple:
             # 遇到非import/空行/注释行，进入class部分
             in_import_section = False
             class_lines.append(line)
+        line_count += 1
 
     class_code = ''.join(class_lines)
     return package_line, imports_list, class_code

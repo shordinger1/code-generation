@@ -1,5 +1,7 @@
 import os.path
 import subprocess
+from enum import Enum
+
 from Agent.minecraft.block import block_class
 from Agent.minecraft.item import item_class
 from Agent.minecraft.library_like_class import library_like_class
@@ -13,11 +15,15 @@ from code_template.java_template_class import java_template_class
 from ast_rag import DynamicRAG
 from language_provider.java.Gradle import DependencyAnalyzer
 from language_provider.java.JavaAnalyzer import analysis_java_files
+from task_tree.TaskProcessor import TaskProcessor
+from pydantic import BaseModel
+from chat.client import generation
 
 
-class minecraft_mod:
+class minecraft_mod(TaskProcessor):
 
     def __init__(self, mod_name: str, dev_root: str, dev_name: str):
+        super().__init__(mod_name)
         self.mod_name = mod_name
         self.dev_name = dev_name
         init_global(dev_root, f"com/{self.dev_name}/{self.mod_name}")
@@ -44,7 +50,12 @@ class minecraft_mod:
         self.mcp_rag = DynamicRAG(f"{mod_name}_minecraft")
         self.mod_rag = DynamicRAG(f"{mod_name}_mod")
         # self.task_tree = TaskTree('automatic minecraft mod generation')
+
+        self.requirement = None
         init_base_and_registry()
+
+    def analyze(self, **kwargs):
+        pass
 
     def rag_init(self):
         mcp = analysis_java_files(f"{get_root()}/build")
@@ -378,10 +389,26 @@ disableSpotless = true\n \
         )
         client_proxy.write_to_file()
 
+    def set_requirement(self, requirement):
+        self.requirement = requirement
+
     def process(self):
-        pass
+        result = generation(minecraft_mod.template.prompt(self.requirement), minecraft_mod.template)
+        l = len(result.item)
+
+        for i in range(0, l):
+            item = generation(
+                item_class.template.prompt(f"item name:{result.item[i]},full description:{result.item_description[i]}"),
+                item_class.template)
+            new_item = item_class(get_root(), item.name, f"com/{self.dev_name}/{self.mod_name}/common/item")
+            item = item_class.generate(new_item, item)
+            self.items[new_item.item_name] = new_item
+            self.lang_en[new_item.class_name] = new_item.item_name
+
+        self.write_items()
 
     def add_items(self, *item_names):
+        # this method only generate items with no other function, only name
         for item in item_names:
             print(f"Item {item} added to com/{self.dev_name}/{self.mod_name}/item")
             self.items[item] = item_class(get_root(), item, f"com/{self.dev_name}/{self.mod_name}/common/item")
@@ -420,13 +447,13 @@ disableSpotless = true\n \
         zh.close()
 
     def write_lang_all(self, reset=True):
-        # TODO should update all lang files? Or just refresh some of key?
+        # TODO, should update all lang files? Or just refresh some of key?
         en = open(self.lang_file_en, 'w')
         zh = open(self.lang_file_zh, 'w')
         for k, v in self.lang_en.items():
             en.write(f"{k}={v}\n")
         for k, v in self.lang_zh.items():
-            en.write(f"{k}={v}\n")
+            zh.write(f"{k}={v}\n")
 
     def read_lang_all(self):
         en = open(self.lang_file_en, 'r')
@@ -449,6 +476,73 @@ disableSpotless = true\n \
         subprocess.run([self.gradle_root, 'spotlessApply'], cwd=get_root(),
                        check=True,
                        stdout=subprocess.DEVNULL)
+
+    class template(BaseModel):
+        item: list[str]
+        item_description: list[str]
+        block: list[str]
+        block_description: list[str]
+
+        ## ... ##
+        @staticmethod
+        def prompt(user_requirement):
+            return f"""
+            You are a professional Minecraft mod developer.You should Analyze on the following user requirement:  
+        "{user_requirement}" 
+        You need to analyze and output result like: 
+        items: ["ThunderAxe", "ThunderSword"] 
+        item_description: [" example description for ThunderAxe "," example description for ThunderSword"]
+        blocks:["stone","wood"]
+        block_description:[" example description for stone"," example description for wood"]
+    
+        
+        
+            """
+
+    class GameComponent(Enum):
+        """枚举游戏组件及其对应的类"""
+        ITEMS = "items"
+        BLOCKS = "blocks"
+        ITEM_BLOCKS = "item_blocks"
+        MACHINE_ENTITIES = "machine_entities"
+        RECIPES = "recipes"
+        POTIONS = "potions"
+        RENDERS = "renders"
+        ENTITIES = "entities"
+        MOBS = "mobs"
+
+        # 映射字典（字段名称 -> 类）
+        _class_map = {
+            "items": item_class,
+            "blocks": block_class,
+            # "item_blocks": ItemBlock,
+            # "machine_entities": MachineEntity,
+            # "recipes": Recipe,
+            # "potions": Potion,
+            # "renders": Render,
+            # "entities": Entity,
+            # "mobs": Mob
+        }
+
+        @classmethod
+        def get_class(cls, component_name: str):
+            """根据组件名称返回对应的类"""
+            try:
+                return cls._class_map[component_name]
+            except KeyError:
+                raise ValueError(f"Unknown component: {component_name}")
+
+        def value_class(self):
+            """返回当前枚举值对应的类"""
+            return self._class_map[self.value]
+
+        @classmethod
+        def __getitem__(cls, name):
+            """支持通过[]运算符访问枚举成员"""
+            try:
+                return cls._member_map_[name.upper()]
+            except KeyError:
+                raise KeyError(f"{name} is not a valid GameComponent")
 
 
 def init_base_and_registry():

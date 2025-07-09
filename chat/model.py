@@ -36,7 +36,7 @@ class classes_definition_generation(BaseModel):
 
 class code_generation(BaseModel):
     package: str
-    imports: str
+    imports: list[str]
     contents: str
 
 
