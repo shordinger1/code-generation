@@ -1,8 +1,48 @@
 from task_tree.TaskProcessor import TaskProcessor
 
 
+class TaskTree:
+    def __init__(self, root_name):
+        """
+        任务树管理类
+        :param root_name: 根节点名称
+        """
+        self.root = TaskNode(self, root_name)
+        self.task_map = {root_name: self.root}
+        print(f"[任务树] 创建任务树，根节点: '{root_name}'")
+
+    def get_task(self, task_name):
+        return self.task_map[task_name] if self.task_map.__contains__(task_name) else None
+
+    def create_task(self, name, processor=None, description=None, parent=None):
+        """
+        创建新任务
+        :param description: 任务描述，会实际出现在prompt中，请慎重填写
+        :param name: 任务名称
+        :param processor: 任务处理对象
+        :param parent: 父任务节点，默认为根节点
+        """
+        if parent is None:
+            parent = self.root
+
+        new_task = TaskNode(self, name, description, processor)
+        self.task_map[name] = new_task
+        parent.add_child(new_task)
+        return new_task
+
+    def add_task(self, task):
+        self.task_map[task.name] = task
+
+    def execute(self):
+        """执行整个任务树"""
+        print(f"[任务树] === 开始执行任务树 ===")
+        result = self.root.execute()
+        print(f"[任务树] === 任务树执行完成 ===")
+        return result
+
+
 class TaskNode:
-    def __init__(self, name, description=None, processor: TaskProcessor = None):
+    def __init__(self, tree: TaskTree, name, description=None, processor: TaskProcessor = None):
         """
         任务节点类
         :param name: 任务名称
@@ -13,6 +53,7 @@ class TaskNode:
         self.processor = processor
         self.children = []
         self.status = None  # 任务状态: True=成功, False=失败, None=未执行
+        self.tree = tree
 
     def add_child(self, child_node):
         """添加子任务"""
@@ -29,70 +70,46 @@ class TaskNode:
         print(f"[任务树] 开始执行任务: '{self.name}'")
         print(f"[任务描述] : '{self.description}'")
         # 先执行所有子任务
-        if self.children:
-            print(f"[任务树] 任务 '{self.name}' 有 {len(self.children)} 个子任务，开始执行子任务...")
+        while not self.status:
+            if self.children:
+                print(f"[任务树] 任务 '{self.name}' 有 {len(self.children)} 个子任务，开始执行子任务...")
 
-            all_children_success = True
-            for i, child in enumerate(self.children, 1):
-                print(f"[任务树] 正在执行子任务 ({i}/{len(self.children)}): '{child.name}'")
-                if not child.execute():
-                    all_children_success = False
+                all_children_success = True
+                for i, child in enumerate(self.children, 1):
+                    print(f"[任务树] 正在执行子任务 ({i}/{len(self.children)}): '{child.name}'")
+                    if not child.execute():
+                        all_children_success = False
 
-            # 检查子任务执行结果
-            if not all_children_success:
-                self.status = False
-                print(f"[任务树] 任务 '{self.name}' 的子任务执行失败，终止执行")
-                return False
+                # 检查子任务执行结果
+                if not all_children_success:
+                    self.status = False
+                    print(f"[任务树] 任务 '{self.name}' 的子任务执行失败，终止执行")
+                    return False
 
-        # 执行当前任务（当没有子任务或所有子任务成功时）
-        if self.processor:
-            try:
-                print(f"[任务树] 开始执行 '{self.name}' 的主任务处理")
-                result = self.processor.process()
-                self.status = result
-                status_str = "成功" if result else "失败"
-                print(f"[任务树] 任务 '{self.name}' 执行{status_str}")
-                return result
-            except Exception as e:
-                self.status = False
-                print(f"[任务树] 任务 '{self.name}' 执行时发生异常: {str(e)}")
-                return False
-        else:
-            # 没有处理器的中间节点默认成功
-            self.status = True
-            print(f"[任务树] 任务 '{self.name}' 是汇总节点，无需执行，状态成功")
-            return True
-
-
-class TaskTree:
-    def __init__(self, root_name):
-        """
-        任务树管理类
-        :param root_name: 根节点名称
-        """
-        self.root = TaskNode(root_name)
-        print(f"[任务树] 创建任务树，根节点: '{root_name}'")
-
-    def create_task(self, name, processor=None, parent=None):
-        """
-        创建新任务
-        :param name: 任务名称
-        :param processor: 任务处理对象
-        :param parent: 父任务节点，默认为根节点
-        """
-        if parent is None:
-            parent = self.root
-
-        new_task = TaskNode(name, processor)
-        parent.add_child(new_task)
-        return new_task
-
-    def execute(self):
-        """执行整个任务树"""
-        print(f"[任务树] === 开始执行任务树 ===")
-        result = self.root.execute()
-        print(f"[任务树] === 任务树执行完成 ===")
-        return result
+            # 执行当前任务（当没有子任务或所有子任务成功时）
+            if self.processor:
+                try:
+                    print(f"[任务树] 开始执行 '{self.name}' 的主任务分析")
+                    tasks = self.processor.analyze()
+                    for task in tasks:
+                        print(f"[任务树] 开始执行 '{self.name}' 的任务添加进程：新子任务已创建：{task.name}")
+                        self.tree.add_task(task)
+                        self.add_child(task)
+                    print(f"[任务树] 开始执行 '{self.name}' 的主任务处理")
+                    result = self.processor.process(description=self.description)
+                    self.status = result
+                    status_str = "成功" if result else "失败"
+                    print(f"[任务树] 任务 '{self.name}' 执行{status_str}")
+                    return result
+                except Exception as e:
+                    self.status = False
+                    print(f"[任务树] 任务 '{self.name}' 执行时发生异常: {str(e)}")
+                    return False
+            else:
+                # 没有处理器的中间节点默认成功
+                self.status = True
+                print(f"[任务树] 任务 '{self.name}' 是汇总节点，无需执行，状态成功")
+                return True
 
 
 # 示例使用

@@ -15,7 +15,7 @@ class DependencyAnalyzer:
         self.temp_dirs = []
         self.gradle_cache = Path(
             os.environ.get('GRADLE_HOME', r'C:\Users\bcjPr\.gradle')) / 'caches/modules-2/files-2.1'
-        print(self.gradle_cache)
+        print('project gradle cached lib in ', self.gradle_cache)
 
     def analyze_dependencies(self):
         """解析项目依赖并进行分析"""
@@ -126,7 +126,7 @@ def _decompile_jar(jar_path, output_dir):
         'java', '-jar', str(jd_cli_path),
         str(jar_path),
         '--outputDir', str(output_dir),
-    ], check=True,timeout=120)
+    ], check=True, timeout=120)
 
 
 def _generate_dependency_tree():

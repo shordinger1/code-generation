@@ -17,7 +17,8 @@ def generation(content, generation_structure, model_type="gpt-4o-mini", logger=L
         messages=[
             {"role": "user", "content": content}
         ],
-        response_format=generation_structure
+        response_format=generation_structure,
+        timeout=60
     )
     logger.write('--------------got response--------------\n')
     logger.write(str(completion.choices[0].message.parsed) + '\n')
